@@ -1,0 +1,171 @@
+<?php
+/* @var $this \yii\web\View */
+/* @var $content string */
+
+use yii\helpers\Html;
+use yii\bootstrap\Nav;
+use yii\bootstrap\NavBar;
+use yii\widgets\Breadcrumbs;
+use app\assets\AppAsset;
+use app\models\Users;
+use app\models\Dragonsrights;
+use app\models\Zayavka;
+use app\models\BusyLogin;
+use app\models\Params;
+use app\models\LastActiveActions;
+
+AppAsset::register($this);
+
+$settings = new Params();
+$settings->loadSettings();
+?>
+<?php $this->beginPage() ?>
+<!DOCTYPE html>
+<html lang="<?= Yii::$app->language ?>">
+    <head>
+        <meta charset="<?= Yii::$app->charset ?>">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <?= Html::csrfMetaTags() ?>
+        <title><?= Html::encode($this->title) ?></title>
+        <?php $this->head() ?>
+    </head>
+    <body>
+        <?php $this->beginBody() ?>
+
+        <div class="wrap">
+            <?php
+            NavBar::begin([
+                'brandLabel' => 'Орден Драконов',
+                'brandUrl' => Yii::$app->homeUrl,
+                'options' => [
+                    'class' => 'navbar-inverse navbar-fixed-top',
+                ],
+            ]);
+            $menuItems = [];
+
+
+            if (!Yii::$app->user->isGuest) {
+                $user = Users::findById(Yii::$app->user->getId());
+                if ($user->groupId > 9 && $user->active == 1) {
+                    $dragonRights = Dragonsrights::findOneById($user->id);
+                    //check approver
+                    if ($user->groupId == 99 || $dragonRights->approver == 1) {
+                        $approvalCount = Users::getApprovalCount();
+                        $approvalCount += BusyLogin::getRequestsCount();
+                        if ($approvalCount > 0) {
+                            array_push($menuItems, ['label' => 'Модерация (' . $approvalCount . ')', 'url' => ['/site/approval']]);
+                        }
+                    }
+                    //finish approver
+                    array_push($menuItems, ['label' => 'Админка', 'url' => ['/site/superadmin']]
+                    );
+                }
+                array_push($menuItems, ['label' => 'Моя чистота', 'items' => [
+                        ['label' => 'Мои заявки', 'url' => ['/site/index']],
+                        ['label' => 'Подача заявки на чистоту', 'url' => ['/site/zayavka']],
+                    ]]
+                );
+            }
+            $items_additional_text = "";
+            //check New Items Count
+            if ($settings->show_new_items_count == 1 && isset($dragonRights)) {
+                if ($dragonRights->fullbp == 1 || $dragonRights->boi_prov == 1 || $dragonRights->boi == 1) {
+                    $newItemsCount = 0;
+                    $cities = [];
+                    if ($dragonRights->kovcheg == 1) {
+                        array_push($cities, "kovcheg");
+                    }
+                    if ($dragonRights->smorye == 1) {
+                        array_push($cities, "smorye");
+                    }
+                    if ($dragonRights->utes == 1) {
+                        array_push($cities, "utes");
+                    }
+                    if (sizeof($cities) > 0) {
+                        $newItemsCount = Zayavka::getNewItemsCount($cities);
+                        $items_additional_text .= " (Нов: " . $newItemsCount . ")";
+                    }
+                }
+            }
+            $commonCalculation = "";
+            if (isset($dragonRights)) {
+                if ($settings->show_ready_items == 1 || $settings->enable_nevid_count == 1) {
+                    if ($dragonRights->chistota == 1 || $dragonRights->nevid == 1) {
+                        $cities = [];
+                        if ($dragonRights->kovcheg == 1) {
+                            array_push($cities, "kovcheg");
+                        }
+                        if ($dragonRights->smorye == 1) {
+                            array_push($cities, "smorye");
+                        }
+                        if ($dragonRights->utes == 1) {
+                            array_push($cities, "utes");
+                        }
+                        if (sizeof($cities) > 0) {
+                            $commonCalculation = LastActiveActions::getReadyAndNevidReadyItems($cities);
+                        }
+                    }
+                }
+            }
+            //check ready zayavki
+            if ($settings->show_ready_items == 1 && isset($dragonRights)) {
+                if ($dragonRights->chistota == 1) {
+                    $ready_count = explode('|', $commonCalculation)[0];
+                    $items_additional_text .= " (Б/П: " . $ready_count . ")";
+                }
+            }
+            //check Nevid
+            if ($settings->enable_nevid_count == 1 && isset($dragonRights)) {
+                if ($dragonRights->nevid == 1) {
+                    $nevidCount = explode('|', $commonCalculation)[1];
+                    $items_additional_text .= " (Доп: " . $nevidCount . ")";
+                }
+            }
+            array_push($menuItems, ['label' => 'Все заявки' . $items_additional_text . '', 'url' => ['/site/zlist']]);
+            array_push($menuItems, ['label' => 'Официально', 'url' => ['/site/official']]);
+            array_push($menuItems, ['label' => 'Суд', 'url' => ['/site/sud']]);
+            array_push($menuItems, [
+                'label' => 'Форум',
+                'url' => 'http://' . Yii::$app->getRequest()->serverName . '/forum',
+                'linkOptions' => array('target' => '_blank'),
+            ]);
+            array_push($menuItems, Yii::$app->user->isGuest ? (
+                            ['label' => 'Войти', 'url' => ['/site/login']]
+                            ) : (
+                            '<li>'
+                            . Html::beginForm(['/site/logout'], 'post')
+                            . Html::submitButton(
+                                    'Выйти (' . Yii::$app->user->identity->username . ')', ['class' => 'btn btn-link logout']
+                            )
+                            . Html::endForm()
+                            . '</li>'
+                            )
+            );
+            echo Nav::widget([
+                'options' => ['class' => 'navbar-nav navbar-right'],
+                'items' => $menuItems,
+            ]);
+
+            NavBar::end();
+            ?>
+
+            <div class="container">
+                <?=
+                Breadcrumbs::widget([
+                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                ])
+                ?>
+                <?= $content ?>
+            </div>
+        </div>
+        <footer class="footer">
+            <div class="container">
+                <p class="pull-left">&copy; Орден Драконов <?= date('Y') ?></p>
+            </div>
+        </footer>
+
+        <?php $this->endBody() ?>
+
+    </body>
+</html>
+<?php $this->endPage() ?>
