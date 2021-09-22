@@ -34,15 +34,6 @@ $settings->loadSettings();
 <?php $this->beginBody() ?>
 
 <div class="wrap">
-    <div id="shilula_banner" style="
-                 display: block;
-                 position: absolute;
-                 bottom: 60px;
-                 right: 1%;
-                 z-index: -1;
-                 ">
-        <a href="https://shilula.ru" target="_blank"><img src="https://shilula.ru/shilula_button/?theme=light"/></a>
-    </div>
     <?php
     NavBar::begin([
         'brandLabel' => 'Орден Драконов',
