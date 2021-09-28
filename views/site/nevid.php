@@ -20,23 +20,26 @@ $this->params['breadcrumbs'][] = ['label' => 'Заявки на чистоту',
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style>
-    .name{
+    .name {
         font-size: 14px;
         color: <?= $settings->sign_color ?>;
     }
-    .text_italic{
+
+    .text_italic {
         font-size: 13px;
         color: <?= $settings->comment_color ?>;
         font-style: italic;
     }
-    .text{
+
+    .text {
         font-size: 14px;
         color: <?= $settings->comment_color ?>;
-    }    
-    .text_otkaz{
+    }
+
+    .text_otkaz {
         font-size: 14px;
         color: <?= $settings->otkaz_color ?>;
-    }    
+    }
 
 
 </style>
@@ -45,50 +48,50 @@ $this->params['breadcrumbs'][] = $this->title;
     <br/>
     <?php
     if (sizeof($model->zayavkiArray) > 0) {
-        //MAIN WORK HERE
-        foreach ($model->zayavkiArray as $zayavka) {
-            echo "<center>";
-            $actions = ActionsUserView::findActionsByZid($zayavka->zId);
-            ?>
-            <table style="width:800px; border: 0px none; padding: 5px; background-color: <?= $settings->color_background ?>;
-            <?php
-            if ($zayavka->status == "new") {
-                echo "box-shadow: 0 0 20px  grey";
-            }
-            if ($zayavka->status == "cancelled") {
-                echo "box-shadow: 0 0 20px  " . $settings->color_cancelled;
-            }
-            if ($zayavka->status == "inprogress") {
-                echo "box-shadow: 0 0 20px  " . $settings->color_inprogress;
-            }
-            if ($zayavka->status == "otkaz") {
-                echo "box-shadow: 0 0 20px  " . $settings->color_otkaz;
-            }
-            if ($zayavka->status == "chist") {
-                echo "box-shadow: 0 0 20px  " . $settings->color_chist;
-            }
-            if ($zayavka->status == "katorga") {
-                echo "box-shadow: 0 0 20px  " . $settings->color_killed;
-            }
-            if ($zayavka->status == "prokli") {
-                echo "box-shadow: 0 0 20px  " . $settings->color_killed;
-            }
-            if ($zayavka->status == "block") {
-                echo "box-shadow: 0 0 20px  " . $settings->color_killed;
-            }
-            ?>
-                   ">
-                <tr style="height: 40px">
-                    <td width="10%" style="padding: 5px;"><?php
-                        if (!Yii::$app->user->isGuest) {
-                            if (true) {
-                                echo Html::a(
-                                        '#' . $zayavka->zId, Url::to([
-                                            '/site/sitem', 'id' => $zayavka->zId
-                                        ])
-                                );
-                                ?>
-                                <button class="btn_<?= $zayavka->zId ?>" style="
+    //MAIN WORK HERE
+    foreach ($model->zayavkiArray as $zayavka) {
+    echo "<center>";
+    $actions = ActionsUserView::findActionsByZid($zayavka->zId);
+    ?>
+    <table style="width:800px; border: 0px none; padding: 5px; background-color: <?= $settings->color_background ?>;
+    <?php
+    if ($zayavka->status == "new") {
+        echo "box-shadow: 0 0 20px  grey";
+    }
+    if ($zayavka->status == "cancelled") {
+        echo "box-shadow: 0 0 20px  " . $settings->color_cancelled;
+    }
+    if ($zayavka->status == "inprogress") {
+        echo "box-shadow: 0 0 20px  " . $settings->color_inprogress;
+    }
+    if ($zayavka->status == "otkaz") {
+        echo "box-shadow: 0 0 20px  " . $settings->color_otkaz;
+    }
+    if ($zayavka->status == "chist") {
+        echo "box-shadow: 0 0 20px  " . $settings->color_chist;
+    }
+    if ($zayavka->status == "katorga") {
+        echo "box-shadow: 0 0 20px  " . $settings->color_killed;
+    }
+    if ($zayavka->status == "prokli") {
+        echo "box-shadow: 0 0 20px  " . $settings->color_killed;
+    }
+    if ($zayavka->status == "block") {
+        echo "box-shadow: 0 0 20px  " . $settings->color_killed;
+    }
+    ?>
+            ">
+        <tr style="height: 40px">
+            <td width="10%" style="padding: 5px;"><?php
+                if (!Yii::$app->user->isGuest) {
+                    if (true) {
+                        echo Html::a(
+                            '#' . $zayavka->zId, Url::to([
+                            '/site/sitem', 'id' => $zayavka->zId
+                        ])
+                        );
+                        ?>
+                        <button class="btn_<?= $zayavka->zId ?>" style="
                                         position: relative;
                                         display: inline-block;
                                         padding: 2px 4px;
@@ -109,209 +112,206 @@ $this->params['breadcrumbs'][] = $this->title;
                                         user-select: none;
                                         -webkit-appearance: none;
                                         ">
-                                    <img width="14px" src="<?= Yii::$app->request->baseUrl ?>/img/clippy.svg" alt="Copy to clipboard">
-                                </button>
-                                <script>
-                                    var clipboard = new Clipboard('.btn_<?= $zayavka->zId ?>', {
-                                        text: function () {
-                                            return 'http://<?= Yii::$app->getRequest()->serverName ?><?= Yii::$app->getHomeUrl() ?>sitem/<?= $zayavka->zId ?>/';
-                                        }
-                                    });
+                            <img width="14px" src="<?= Yii::$app->request->baseUrl ?>/img/clippy.svg"
+                                 alt="Copy to clipboard">
+                        </button>
+                        <script>
+                            var clipboard = new Clipboard('.btn_<?= $zayavka->zId ?>', {
+                                text: function () {
+                                    return 'http://<?= Yii::$app->getRequest()->serverName ?><?= Yii::$app->getHomeUrl() ?>sitem/<?= $zayavka->zId ?>/';
+                                }
+                            });
 
-                                    clipboard.on('success', function (e) {
-                                        console.log(e);
-                                    });
+                            clipboard.on('success', function (e) {
+                                console.log(e);
+                            });
 
-                                    clipboard.on('error', function (e) {
-                                        console.log(e);
-                                    });
-                                </script>
-                                <?php
-                            } else {
-                                echo "#" . $zayavka->zId;
-                            }
-                        } else {
-                            echo "#" . $zayavka->zId;
-                        }
-                        ?>
-                    </td>
-                    <td width="25%" style="padding: 5px;"><a href="http://newforest.apeha.ru/info.html?nick=<?= urlencode(iconv("UTF-8", "CP1251", $zayavka->username)) ?>" target="_blank"><?= $zayavka->username ?></a></td>
-                    <td width="35%" style="padding: 5px;">Статус: <?= getStatus($zayavka->status) ?></td>
-                    <td align="right" width="30%" style="padding: 5px;">Подана: <?= $zayavka->date_added ?></td>
-                </tr>
-                <tr>
-                    <td colspan="2" style="padding: 5px;">
-                        <?= switchType($zayavka->type) ?>
-                    </td>
-                    <td colspan = "2" style="padding: 5px;">
-                        <?= switchCity($zayavka->city) ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="4" style="padding:15px">
+                            clipboard.on('error', function (e) {
+                                console.log(e);
+                            });
+                        </script>
                         <?php
-                        $boiDone = false;
-                        $perDone = false;
-                        $boiRecheck = false;
-                        $perRecheck = false;
-                        $dopproverka = false;
-                        $otkaz = false;
-                        $allowToTake = true;
-                        $allowToFinish = false;
-                        $stagerId = "";
-                        $stagerName = "";
-                        $st_note = "";
-                        $nevid_action = "";
-                        $chist = false;
-                        $nevid_done = false;
-                        $katorga = false;
-                        $prokli = false;
-                        if (sizeof($actions) > 0) {
-                            //START FOREACH
-                            foreach ($actions as $action) {
-                                if ($action->action == "b_done") {
-                                    $boiDone = true;
-                                    $stagerId = $action->dragon_id;
-                                    $stagerName = $action->username;
-                                    $st_note = $action->notes;
-                                }
-                                if ($action->action == "p_done") {
-                                    $perDone = true;
-                                    $st_note = $action->notes;
-                                }
-                                if ($action->action == "bp_done") {
-                                    $boiDone = true;
-                                    $perDone = true;
-                                }
-                                if ($action->action == "b_recheck") {
-                                    $boiRecheck = true;
-                                    $stagerId = $action->dragon_id;
-                                    $stagerName = $action->username;
-                                    $st_note = $action->notes;
-                                }
-                                if ($action->action == "b_done_p_recheck") {
-                                    $boiDone = true;
-                                    $perRecheck = true;
-                                    $stagerId = $action->dragon_id;
-                                    $stagerName = $action->username;
-                                    $st_note = $action->notes;
-                                }
-                                if ($action->action == "otkaz") {
-                                    $otkaz = true;
-                                }
-                                if ($action->action == "dopproverka_p") {
-                                    $dopproverka = true;
-                                    $nevid_action = "p";
-                                }
-                                if ($action->action == "dopproverka_bp") {
-                                    $dopproverka = true;
-                                    $nevid_action = "bp";
-                                }
-                            }
+                    } else {
+                        echo "#" . $zayavka->zId;
+                    }
+                } else {
+                    echo "#" . $zayavka->zId;
+                }
+                ?>
+            </td>
+            <td width="25%" style="padding: 5px;"><a
+                        href="http://newforest.apeha.ru/info.html?nick=<?= urlencode(iconv("UTF-8", "CP1251", $zayavka->username)) ?>"
+                        target="_blank"><?= $zayavka->username ?></a></td>
+            <td width="35%" style="padding: 5px;">Статус: <?= getStatus($zayavka->status) ?></td>
+            <td align="right" width="30%" style="padding: 5px;">Подана: <?= $zayavka->date_added ?></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="padding: 5px;">
+                <?= switchType($professions, $zayavka->type) ?>
+            </td>
+            <td colspan="2" style="padding: 5px;">
+                <?= switchCity($zayavka->city) ?>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4" style="padding:15px">
+                <?php
+                $boiDone = false;
+                $perDone = false;
+                $boiRecheck = false;
+                $perRecheck = false;
+                $dopproverka = false;
+                $otkaz = false;
+                $allowToTake = true;
+                $allowToFinish = false;
+                $stagerId = "";
+                $stagerName = "";
+                $st_note = "";
+                $nevid_action = "";
+                $chist = false;
+                $nevid_done = false;
+                $katorga = false;
+                $prokli = false;
+                if (sizeof($actions) > 0) {
+                    //START FOREACH
+                    foreach ($actions as $action) {
+                        if ($action->action == "b_done") {
+                            $boiDone = true;
+                            $stagerId = $action->dragon_id;
+                            $stagerName = $action->username;
+                            $st_note = $action->notes;
                         }
-                        $stager_text = "";
-                        $stager_comment = "";
-                        if ($stagerId != "") {
-                            foreach ($actions as $action) {
-                                if ($action->dragon_id == $stagerId) {
-                                    if ($action->action == "b_done") {
-                                        $stager_text = "Б *" . $action->username;
-                                        $stager_comment = $action->notes;
-                                    }
-                                    if ($action->action == "b_recheck") {
-                                        $stager_text = "Б *" . $action->username;
+                        if ($action->action == "p_done") {
+                            $perDone = true;
+                            $st_note = $action->notes;
+                        }
+                        if ($action->action == "bp_done") {
+                            $boiDone = true;
+                            $perDone = true;
+                        }
+                        if ($action->action == "b_recheck") {
+                            $boiRecheck = true;
+                            $stagerId = $action->dragon_id;
+                            $stagerName = $action->username;
+                            $st_note = $action->notes;
+                        }
+                        if ($action->action == "b_done_p_recheck") {
+                            $boiDone = true;
+                            $perRecheck = true;
+                            $stagerId = $action->dragon_id;
+                            $stagerName = $action->username;
+                            $st_note = $action->notes;
+                        }
+                        if ($action->action == "otkaz") {
+                            $otkaz = true;
+                        }
+                        if ($action->action == "dopproverka_p") {
+                            $dopproverka = true;
+                            $nevid_action = "p";
+                        }
+                        if ($action->action == "dopproverka_bp") {
+                            $dopproverka = true;
+                            $nevid_action = "bp";
+                        }
+                    }
+                }
+                $stager_text = "";
+                $stager_comment = "";
+                if ($stagerId != "") {
+                    foreach ($actions as $action) {
+                        if ($action->dragon_id == $stagerId) {
+                            if ($action->action == "b_done") {
+                                $stager_text = "Б *" . $action->username;
+                                $stager_comment = $action->notes;
+                            }
+                            if ($action->action == "b_recheck") {
+                                $stager_text = "Б *" . $action->username;
 
-                                        $stager_comment = $action->notes;
-                                    }
-                                    if ($action->action == "b_done_p_recheck") {
-                                        $stager_text = "Б/П *" . $action->username;
-                                        $stager_comment = $action->notes;
-                                    }
-                                }
+                                $stager_comment = $action->notes;
+                            }
+                            if ($action->action == "b_done_p_recheck") {
+                                $stager_text = "Б/П *" . $action->username;
+                                $stager_comment = $action->notes;
                             }
                         }
-                        if (strlen($stager_text) > 1) {
-                            ?>
-                            <span style="font-size:13px; color: green"><b><?= $stager_text ?></b><br></span>
-                            <?php
-                            if (strlen($stager_comment) > 1) {
-                                ?>
-                                <span style="font-size:13px; color: red"><b><?= returnComment($stager_comment) ?></b><br></span>
-                                <?php
-                            }
-                        }
+                    }
+                }
+                if (strlen($stager_text) > 1) {
+                    ?>
+                    <span style="font-size:13px; color: green"><b><?= $stager_text ?></b><br></span>
+                    <?php
+                    if (strlen($stager_comment) > 1) {
+                        ?>
+                        <span style="font-size:13px; color: red"><b><?= returnComment($stager_comment) ?></b><br></span>
+                        <?php
+                    }
+                }
+                $dragon_text = "";
+                $dragon_notes = "";
+                foreach ($actions as $action) {
+                    if ($action->action != "b_done_p_recheck" && $action->action != "b_recheck" && $action->action != "b_done_p_recheck") {
+                        $dragon_notes = $action->notes;
                         $dragon_text = "";
-                        $dragon_notes = "";
-                        foreach ($actions as $action) {
-                            if ($action->action != "b_done_p_recheck" && $action->action != "b_recheck" && $action->action != "b_done_p_recheck") {
-                                $dragon_notes = $action->notes;
-                                $dragon_text = "";
-                                if ($nevid_action == "p") {
-                                    $dragon_text = "П *" . $action->username;
-                                }
-                                if ($nevid_action == "bp") {
-                                    $dragon_text = "Б/П *" . $action->username;
-                                }
-                                if ($action->action == "bp_done") {
-                                    $dragon_text = "Б/П *" . $action->username;
-                                }
-                                if ($action->action == "p_done") {
-                                    $dragon_text = "П *" . $action->username;
-                                }
-                            }
+                        if ($nevid_action == "p") {
+                            $dragon_text = "П *" . $action->username;
                         }
-                        ?>
-                        <span style="font-size:13px; color: green"><b><?= $dragon_text ?></b><br></span>
+                        if ($nevid_action == "bp") {
+                            $dragon_text = "Б/П *" . $action->username;
+                        }
+                        if ($action->action == "bp_done") {
+                            $dragon_text = "Б/П *" . $action->username;
+                        }
+                        if ($action->action == "p_done") {
+                            $dragon_text = "П *" . $action->username;
+                        }
+                    }
+                }
+                ?>
+                <span style="font-size:13px; color: green"><b><?= $dragon_text ?></b><br></span>
+                <?php
+                if (strlen($dragon_notes) > 1) {
+                    ?>
+                    <span style="font-size:13px; color: red"><b><?= returnComment($dragon_notes) ?></b><br></span>
+                    <?php
+                }
+                echo "<br><span style=\"font-size:13px; color: black\"><b>Доппроверка</b><br></span>";
+                //END DISPLAYING PROVERKA INFO
+                //CHECK IF DRAGON HAS RIGHTS TO PERFORM NEVID ACITON
+                if ($dragonRights->nevid == 1) {
+                    ?>
+                    <span style="font-size:13px; text-decoration: underline; cursor: pointer"
+                          onclick="toggleView('finish_recheck_<?= $zayavka->zId ?>')">Закончить ДОППРОВЕРКУ</span><br>
+                    <div style="padding:15px; display:none" id="finish_recheck_<?= $zayavka->zId ?>">
+
                         <?php
-                        if (strlen($dragon_notes) > 1) {
-                            ?>
-                            <span style="font-size:13px; color: red"><b><?= returnComment($dragon_notes) ?></b><br></span>
-                            <?php
-                        }
-                        echo "<br><span style=\"font-size:13px; color: black\"><b>Доппроверка</b><br></span>";
-                        //END DISPLAYING PROVERKA INFO
-                        //CHECK IF DRAGON HAS RIGHTS TO PERFORM NEVID ACITON
-                        if ($dragonRights->nevid == 1) {
-                            ?>
-                            <span style="font-size:13px; text-decoration: underline; cursor: pointer" onclick="toggleView('finish_recheck_<?= $zayavka->zId ?>')">Закончить ДОППРОВЕРКУ</span><br>
-                            <div style="padding:15px; display:none" id="finish_recheck_<?= $zayavka->zId ?>">
-
-                                <?php
-                                echo Html::beginForm(['/site/nevid'], 'post');
-                                echo Html::dropDownList('Nevid[action]', null, [
-                                    'nevid_done_chist' => 'Чист',
-                                    'nevid_done_katorga' => 'Каторга',
-                                    'nevid_done_prokli' => 'Прокли',
-                                    'nevid_done_block' => 'Блок',
-                                    'nevid_done_otkaz' => 'Отказ',
-                                ]);
-                                echo "<br><br>";
-                                echo Html::hiddenInput('Nevid[z_id]', $zayavka->zId);
-                                echo Html::textarea('Nevid[comment]', '', ['cols' => '105']);
-                                echo "<br><br>";
-                                echo Html::submitButton(
-                                        'Закончить доппроверку', ['class' => 'button', 'onclick' => 'return confirm("Продолжаем?")']
-                                );
-                                echo Html::endForm();
-                                ?>
-                            </div>
-                            <?php
-                        }
+                        echo Html::beginForm(['/site/nevid'], 'post');
+                        echo Html::dropDownList('Nevid[action]', null, [
+                            'nevid_done_chist' => 'Чист',
+                            'nevid_done_katorga' => 'Каторга',
+                            'nevid_done_prokli' => 'Прокли',
+                            'nevid_done_block' => 'Блок',
+                            'nevid_done_otkaz' => 'Отказ',
+                        ]);
+                        echo "<br><br>";
+                        echo Html::hiddenInput('Nevid[z_id]', $zayavka->zId);
+                        echo Html::textarea('Nevid[comment]', '', ['cols' => '105']);
+                        echo "<br><br>";
+                        echo Html::submitButton(
+                            'Закончить доппроверку', ['class' => 'button', 'onclick' => 'return confirm("Продолжаем?")']
+                        );
+                        echo Html::endForm();
                         ?>
-                    </td>
-                </tr>
-            </table>
-            <br/><br/>
+                    </div>
+                    <?php
+                }
+                ?>
+            </td>
+        </tr>
+    </table>
+    <br/><br/>
 
 
-
-
-
-
-
-
-
-            <?php
+    <?php
         }
     } else {
         echo "<p>Нет невидов для проверки</p>";
@@ -369,108 +369,17 @@ $this->params['breadcrumbs'][] = $this->title;
         }
         return $result;
     }
-
-    function switchType($type) {
-        $result = "";
-        switch ($type) {
-            case 'travnik':
-                $result = "Травник";
-                break;
-            case 'ohotnik':
-                $result = "Охотник";
-                break;
-            case 'portnoi':
-                $result = "Портной";
-                break;
-            case 'charodei':
-                $result = "Чародей";
-                break;
-            case 'razboinik':
-                $result = "Разбойник";
-                break;
-            case 'oruzheinik':
-                $result = "Оружейник";
-                break;
-            case 'str_bashen':
-                $result = "Строитель башен";
-                break;
-            case 'kapitan':
-                $result = "Капитан корабля";
-                break;
-            case 'str_domov':
-                $result = "Строитель домов";
-                break;
-            case 'str_forpostov':
-                $result = "Строитель форпостов";
-                break;
-            case 'str_istrochnikov':
-                $result = "Строитель источников";
-                break;
-            case 'lesorub_les':
-                $result = "Лесоруб/Рудокоп(лес)";
-                break;
-            case 'plotnik_les':
-                $result = "Плотник/метталург(лес)";
-                break;
-            case 'skornyak':
-                $result = "Скорняк";
-                break;
-            case 'vstup':
-                $result = "Вступление в клан";
-                break;
-            case 'reg_clan_souz':
-                $result = "Регистрация клана/союза";
-                break;
-            case 'vstup_souz':
-                $result = "Вступление в союз";
-                break;
-            case 'lavochnik':
-                $result = "Лавочник/торговец";
-                break;
-            case 'naim':
-                $result = "Наёмник/Оф.найм";
-                break;
-            case 'lekar':
-                $result = "Лекарь";
-                break;
-            case 'drovosek':
-                $result = "Дровосек/рудокоп";
-                break;
-            case 'org_turnirov':
-                $result = "Организатор турниров";
-                break;
-            case 'ogranshik':
-                $result = "Огранщик";
-                break;
-            case 'kuznec':
-                $result = "Кузнец";
-                break;
-            case 'hudozhnik':
-                $result = "Художник";
-                break;
-            case 'mast_prognozov':
-                $result = "Мастер прогнозов";
-                break;
-            case 'alhimik':
-                $result = "Алхимик";
-                break;
-            case 'torgovec_snad':
-                $result = "Торговец снадобьями";
-                break;
-            case 'zaklinatel':
-                $result = "Заклинатель";
-                break;
-            case 'ribolov':
-                $result = "Дровосек/рыболов";
-                break;
-            case 'korabl_master':
-                $result = "Корабельный мастер";
-                break;
-            case 'kamenotes':
-                $result = "Дровосек/каменотес";
-                break;
+    public function switchType($type)
+    {
+        if (is_null($this->allProfessions)) {
+            $this->allProfessions = Professions::getAllProfessions();
         }
-        return $result;
+        foreach ($this->allProfessions as $pr) {
+            if ($pr->system_name == $type) {
+                return $pr->view_name;
+            }
+        }
+        return $type;
     }
 
     function returnComment($comment) {

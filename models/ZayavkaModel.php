@@ -2,13 +2,15 @@
 
 namespace app\models;
 
+use app\models\Professions;
 use Yii;
 use yii\base\Model;
 use app\models\Zayavka;
 use app\models\Settings;
 use app\models\ZayavkiFullActions;
 
-class ZayavkaModel extends Model {
+class ZayavkaModel extends Model
+{
 
     public $city;
     public $type;
@@ -26,21 +28,50 @@ class ZayavkaModel extends Model {
     public $settings;
     public $userActive;
     public $approveKey;
+    public $allProfessions;
+    public $kovchegProfessionsOptions;
+    public $smoryeProfessionsOptions;
+    public $utesProfessionsOptions;
+    public $commonProfessionsOptions;
 
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return [
             'city' => 'Город приобретения',
             'type' => 'Для чего заявка',
         ];
     }
 
-    public function rules() {
+    public function rules()
+    {
         return [
             [['city', 'type', 'z_id', 'action'], 'required'],
         ];
     }
 
-    public function verifyIsActiveZayavkaExists() {
+    public function readCitiesProfessions()
+    {
+        $this->commonProfessionsOptions = $this->getProfessionsHtmlForLists(Professions::getActiveByCity('common'));
+        $this->kovchegProfessionsOptions = $this->getProfessionsHtmlForLists(Professions::getActiveByCity('kovcheg'));
+        $this->smoryeProfessionsOptions = $this->getProfessionsHtmlForLists(Professions::getActiveByCity('smorye'));
+        $this->utesProfessionsOptions = $this->getProfessionsHtmlForLists(Professions::getActiveByCity('utes'));
+    }
+
+    public function getProfessionsHtmlForLists($list)
+    {
+        $result = '';
+        if (is_array($list) || is_object($list)) {
+            foreach ($list as $pr) {
+                $result .= "<option value='" . $pr->system_name . "'>" . $pr->view_name . "</option>";
+            }
+
+        }
+        return $result;
+
+    }
+
+    public function verifyIsActiveZayavkaExists()
+    {
         $this->activeZayavka = Zayavka::findActiveZayavkaByUserId(Yii::$app->user->getId());
         if ($this->activeZayavka) {
             $this->allowNewZayavka = false;
@@ -52,7 +83,8 @@ class ZayavkaModel extends Model {
         }
     }
 
-    public function saveZayavka() {
+    public function saveZayavka()
+    {
         if ($this->action == "saveZayavka") {
             $this->verifyIsActiveZayavkaExists();
             if (!$this->activeZayavka) {
@@ -71,7 +103,8 @@ class ZayavkaModel extends Model {
         }
     }
 
-    public function filterProverkaCity() {
+    public function filterProverkaCity()
+    {
         $loadKovcheg = 1;
         $loadSmorye = 1;
         $loadUtes = 1;
@@ -186,7 +219,8 @@ class ZayavkaModel extends Model {
         return $prCity;
     }
 
-    public function isCancel() {
+    public function isCancel()
+    {
         //true if calncel zayavka
         if ($this->city == 0 && $this->type == 0 && $this->z_id > 0 && $this->action == 'cancelZayavka') {
             return true;
@@ -194,7 +228,8 @@ class ZayavkaModel extends Model {
         return false;
     }
 
-    public function cancelZayavka() {
+    public function cancelZayavka()
+    {
         $this->item = Zayavka::findOne(['id' => $this->z_id]);
         if (Yii::$app->user->getId() === $this->item->user_id) {
             if ($this->item->active === 1) {
@@ -206,117 +241,124 @@ class ZayavkaModel extends Model {
         }
     }
 
-    public function getCategory($z_type) {
-        $result = "";
-        switch ($z_type) {
-            case 'travnik':
-                $result = "trav";
-                break;
-            case 'ohotnik':
-                $result = "common";
-                break;
-            case 'portnoi':
-                $result = "common";
-                break;
-            case 'charodei':
-                $result = "common";
-                break;
-            case 'razboinik':
-                $result = "common";
-                break;
-            case 'oruzheinik':
-                $result = "common";
-                break;
-            case 'str_bashen':
-                $result = "common";
-                break;
-            case 'kapitan':
-                $result = "common";
-                break;
-            case 'str_domov':
-                $result = "common";
-                break;
-            case 'str_forpostov':
-                $result = "common";
-                break;
-            case 'str_istrochnikov':
-                $result = "common";
-                break;
-            case 'lesorub_les':
-                $result = "common";
-                break;
-            case 'plotnik_les':
-                $result = "common";
-                break;
-            case 'skornyak':
-                $result = "common";
-                break;
-            case 'vstup':
-                $result = "klan";
-                break;
-            case 'reg_clan_souz':
-                $result = "klan";
-                break;
-            case 'vstup_souz':
-                $result = "klan";
-                break;            
-            case 'lavochnik':
-                $result = "common";
-                break;
-            case 'naim':
-                $result = "naim";
-                break;
-            case 'lekar':
-                $result = "common";
-                break;
-            case 'drovosek':
-                $result = "common";
-                break;
-            case 'org_turnirov':
-                $result = "common";
-                break;
-            case 'ogranshik':
-                $result = "common";
-                break;
-            case 'kuznec':
-                $result = "common";
-                break;
-            case 'hudozhnik':
-                $result = "common";
-                break;
-            case 'mast_prognozov':
-                $result = "common";
-                break;
-            case 'alhimik':
-                $result = "trav";
-                break;
-            case 'torgovec_snad':
-                $result = "trav";
-                break;
-            case 'zaklinatel':
-                $result = "common";
-                break;
-            case 'ribolov':
-                $result = "common";
-                break;
-            case 'korabl_master':
-                $result = "common";
-                break;
-            case 'kamenotes':
-                $result = "common";
-                break;
-        }
-        return $result;
+    public function getCategory($z_type)
+    {
+        return Professions::getCategoryBySystemName($z_type)->category;
+//        $result = "";
+//        switch ($z_type) {
+//            case 'travnik':
+//                $result = "trav";
+//                break;
+//            case 'ohotnik':
+//                $result = "common";
+//                break;
+//            case 'portnoi':
+//                $result = "common";
+//                break;
+//            case 'charodei':
+//                $result = "common";
+//                break;
+//            case 'razboinik':
+//                $result = "common";
+//                break;
+//            case 'oruzheinik':
+//                $result = "common";
+//                break;
+//            case 'str_bashen':
+//                $result = "common";
+//                break;
+//            case 'kapitan':
+//                $result = "common";
+//                break;
+//            case 'str_domov':
+//                $result = "common";
+//                break;
+//            case 'str_forpostov':
+//                $result = "common";
+//                break;
+//            case 'str_istrochnikov':
+//                $result = "common";
+//                break;
+//            case 'lesorub_les':
+//                $result = "common";
+//                break;
+//            case 'plotnik_les':
+//                $result = "common";
+//                break;
+//            case 'skornyak':
+//                $result = "common";
+//                break;
+//            case 'vstup':
+//                $result = "common";
+//                break;
+//            case 'reg_clan_souz':
+//                $result = "klan";
+//                break;
+//            case 'vstup_souz':
+//                $result = "klan";
+//                break;
+//            case 'lavochnik':
+//                $result = "common";
+//                break;
+//            case 'naim':
+//                $result = "naim";
+//                break;
+//            case 'lekar':
+//                $result = "common";
+//                break;
+//            case 'drovosek':
+//                $result = "common";
+//                break;
+//            case 'org_turnirov':
+//                $result = "common";
+//                break;
+//            case 'ogranshik':
+//                $result = "common";
+//                break;
+//            case 'kuznec':
+//                $result = "common";
+//                break;
+//            case 'hudozhnik':
+//                $result = "common";
+//                break;
+//            case 'mast_prognozov':
+//                $result = "common";
+//                break;
+//            case 'alhimik':
+//                $result = "trav";
+//                break;
+//            case 'torgovec_snad':
+//                $result = "trav";
+//                break;
+//            case 'zaklinatel':
+//                $result = "common";
+//                break;
+//            case 'ribolov':
+//                $result = "common";
+//                break;
+//            case 'korabl_master':
+//                $result = "common";
+//                break;
+//            case 'kamenotes':
+//                $result = "common";
+//                break;
+//        }
+//        return $result;
     }
 
-    public function getUserZayavki() {
+    public function getUserZayavki()
+    {
+        if (is_null($this->allProfessions)) {
+            $this->allProfessions = Professions::getAllProfessions();
+        }
         $this->allZayavki = ZayavkiFullActions::find()
-                ->where(['user_id' => Yii::$app->user->getId()])
-                ->all();
+            ->where(['user_id' => Yii::$app->user->getId()])
+            ->all();
         $this->replaceAllZayavkiText();
     }
 
-    public function replaceAllZayavkiText() {
+    public function replaceAllZayavkiText()
+    {
         if ($this->allZayavki) {
             foreach ($this->allZayavki as $zayava) {
                 $zayava->city = $this->switchCity($zayava->city);
@@ -326,7 +368,8 @@ class ZayavkaModel extends Model {
         }
     }
 
-    public function switchCity($city) {
+    public function switchCity($city)
+    {
         $result = "";
         switch ($city) {
             case 'kovcheg':
@@ -345,107 +388,17 @@ class ZayavkaModel extends Model {
         return $result;
     }
 
-    public function switchType($type) {
-        $result = "";
-        switch ($type) {
-            case 'travnik':
-                $result = "Травник";
-                break;
-            case 'ohotnik':
-                $result = "Охотник";
-                break;
-            case 'portnoi':
-                $result = "Портной";
-                break;
-            case 'charodei':
-                $result = "Чародей";
-                break;
-            case 'razboinik':
-                $result = "Разбойник";
-                break;
-            case 'oruzheinik':
-                $result = "Оружейник";
-                break;
-            case 'str_bashen':
-                $result = "Строитель башен";
-                break;
-            case 'kapitan':
-                $result = "Капитан корабля";
-                break;
-            case 'str_domov':
-                $result = "Строитель домов";
-                break;
-            case 'str_forpostov':
-                $result = "Строитель форпостов";
-                break;
-            case 'str_istrochnikov':
-                $result = "Строитель источников";
-                break;
-            case 'lesorub_les':
-                $result = "Лесоруб/Рудокоп(лес)";
-                break;
-            case 'plotnik_les':
-                $result = "Плотник/метталург(лес)";
-                break;
-            case 'skornyak':
-                $result = "Скорняк";
-                break;
-            case 'vstup':
-                $result = "Вступление в клан";
-                break;
-            case 'reg_clan_souz':
-                $result = "Регистрация клана/союза";
-                break;
-            case 'vstup_souz':
-                $result = "Вступление в союз";
-                break;            
-            case 'lavochnik':
-                $result = "Лавочник/торговец";
-                break;
-            case 'naim':
-                $result = "Наёмник/Оф.найм";
-                break;
-            case 'lekar':
-                $result = "Лекарь";
-                break;
-            case 'drovosek':
-                $result = "Дровосек/рудокоп";
-                break;
-            case 'org_turnirov':
-                $result = "Организатор турниров";
-                break;
-            case 'ogranshik':
-                $result = "Огранщик";
-                break;
-            case 'kuznec':
-                $result = "Кузнец";
-                break;
-            case 'hudozhnik':
-                $result = "Художник";
-                break;
-            case 'mast_prognozov':
-                $result = "Мастер прогнозов";
-                break;
-            case 'alhimik':
-                $result = "Алхимик";
-                break;
-            case 'torgovec_snad':
-                $result = "Торговец снадобьями";
-                break;
-            case 'zaklinatel':
-                $result = "Заклинатель";
-                break;
-            case 'ribolov':
-                $result = "Дровосек/рыболов";
-                break;
-            case 'korabl_master':
-                $result = "Корабельный мастер";
-                break;
-            case 'kamenotes':
-                $result = "Дровосек/каменотес";
-                break;
+    public function switchType($type)
+    {
+        if (is_null($this->allProfessions)) {
+            $this->allProfessions = Professions::getAllProfessions();
         }
-        return $result;
+        foreach ($this->allProfessions as $pr) {
+            if ($pr->system_name == $type) {
+                return $pr->view_name;
+            }
+        }
+        return $type;
     }
 
 }

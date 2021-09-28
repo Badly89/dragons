@@ -8,14 +8,23 @@ $this->title = 'Настройки системы';
 $this->params['breadcrumbs'][] = ['label' => 'Админка', 'url' => ['superadmin']];
 $this->params['breadcrumbs'][] = $this->title;
 
+echo "<br>";
+echo Html::beginForm(['/site/professions'], 'post');
+echo Html::hiddenInput('Params[action]', 'view');
+echo Html::submitButton(
+        'Профессии чистоты', ['class' => 'btn btn-primary']
+);
+echo Html::endForm();
+echo "<br>";
+
 $form = ActiveForm::begin([
             'id' => 'login-form',
             'layout' => 'horizontal',
             'fieldConfig' => [
                 'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
                 'labelOptions' => ['class' => 'col-lg-2 control-label', 'style' => [
-                    'white-space' => 'nowrap'
-                ]],
+                        'white-space' => 'nowrap'
+                    ]],
             ],
         ]);
 $model->action = 'saveSettings';
@@ -51,7 +60,7 @@ echo "</div>";
 ?>
 <div class="form-group">
     <div class="col-lg-offset-1 col-lg-11">
-        <?= Html::submitButton('Сохранить настройки', ['class' => 'btn btn-primary', 'name' => 'login-button', 'onclick' => 'return validateSettings()'], ['id' => 'submit']) ?>
+<?= Html::submitButton('Сохранить настройки', ['class' => 'btn btn-primary', 'name' => 'login-button', 'onclick' => 'return validateSettings()'], ['id' => 'submit']) ?>
     </div>    
 </div>
 <?php

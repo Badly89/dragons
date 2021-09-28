@@ -21,25 +21,29 @@ $active_shadow = "#00FF04";
 global $dragonR;
 $dragonR = $dragonRights;
 
+
 ?>
 <style>
-    .name{
+    .name {
         font-size: 14px;
         color: <?= $settings->sign_color ?>;
     }
-    .text_italic{
+
+    .text_italic {
         font-size: 13px;
         color: <?= $settings->comment_color ?>;
         font-style: italic;
     }
-    .text{
+
+    .text {
         font-size: 14px;
         color: <?= $settings->comment_color ?>;
-    }    
-    .text_otkaz{
+    }
+
+    .text_otkaz {
         font-size: 14px;
         color: <?= $settings->otkaz_color ?>;
-    }    
+    }
 
 
 </style>
@@ -51,73 +55,73 @@ $dragonR = $dragonRights;
             if ($city == 'kovcheg') {
                 echo "box-shadow: 0 0 34px $active_shadow";
             }
-            ?>"  align="center" width="33%"
+            ?>" align="center" width="33%"
                 <?php
                 if ($city == 'kovcheg') {
                     echo "bgcolor=\"$active_bg\"";
                 } else {
                     echo "bgcolor=\"$td_bg_color\"";
                 }
-                ?>> 
-                    <?php
-                    if ($city == "kovcheg") {
-                        echo "Ковчег";
-                    } else {
-                        echo Html::a(
-                                'Ковчег', Url::to([
-                                    '/site/zlist', 'city' => 'kovcheg', 'type' => $type
-                                ])
-                        );
-                    }
-                    ?>
+                ?>>
+                <?php
+                if ($city == "kovcheg") {
+                    echo "Ковчег";
+                } else {
+                    echo Html::a(
+                        'Ковчег', Url::to([
+                        '/site/zlist', 'city' => 'kovcheg', 'type' => $type
+                    ])
+                    );
+                }
+                ?>
             </td>
             <td style="border:1px solid; <?php
             if ($city == 'smorye') {
                 echo "box-shadow: 0 0 34px $active_shadow";
             }
-            ?>"  align="center" width="34%"
+            ?>" align="center" width="34%"
                 <?php
                 if ($city == 'smorye') {
                     echo "bgcolor=\"$active_bg\"";
                 } else {
                     echo "bgcolor=\"$td_bg_color\"";
                 }
-                ?>> 
-                    <?php
-                    if ($city == "smorye") {
-                        echo "Среднеморье";
-                    } else {
-                        echo Html::a(
-                                'Среднеморье', Url::to([
-                                    '/site/zlist', 'city' => 'smorye', 'type' => $type
-                                ])
-                        );
-                    }
-                    ?>
+                ?>>
+                <?php
+                if ($city == "smorye") {
+                    echo "Среднеморье";
+                } else {
+                    echo Html::a(
+                        'Среднеморье', Url::to([
+                        '/site/zlist', 'city' => 'smorye', 'type' => $type
+                    ])
+                    );
+                }
+                ?>
             </td>
             <td style="border:1px solid; <?php
             if ($city == 'utes') {
                 echo "box-shadow: 0 0 30px $active_shadow";
             }
-            ?>"  align="center" width="33%"
+            ?>" align="center" width="33%"
                 <?php
                 if ($city == 'utes') {
                     echo "bgcolor=\"$active_bg\"";
                 } else {
                     echo "bgcolor=\"$td_bg_color\"";
                 }
-                ?>> 
-                    <?php
-                    if ($city == "utes") {
-                        echo "Утёс дракона";
-                    } else {
-                        echo Html::a(
-                                'Утёс', Url::to([
-                                    '/site/zlist', 'city' => 'utes', 'type' => $type
-                                ])
-                        );
-                    }
-                    ?>
+                ?>>
+                <?php
+                if ($city == "utes") {
+                    echo "Утёс дракона";
+                } else {
+                    echo Html::a(
+                        'Утёс', Url::to([
+                        '/site/zlist', 'city' => 'utes', 'type' => $type
+                    ])
+                    );
+                }
+                ?>
             </td>
         </tr>
     </table>
@@ -127,98 +131,98 @@ $dragonR = $dragonRights;
             if ($type == 'klan') {
                 echo "box-shadow: 0 0 30px $active_shadow";
             }
-            ?>"  align="center" width="25%"
+            ?>" align="center" width="25%"
                 <?php
                 if ($type == 'klan') {
                     echo "bgcolor=\"$active_bg\"";
                 } else {
                     echo "bgcolor=\"$td_bg_color\"";
                 }
-                ?>> 
-                    <?php
-                    if ($type == "klan") {
-                        echo "Клан";
-                    } else {
-                        echo Html::a(
-                                'Клан', Url::to([
-                                    '/site/zlist', 'city' => $city, 'type' => 'klan'
-                                ])
-                        );
-                    }
-                    ?>
+                ?>>
+                <?php
+                if ($type == "klan") {
+                    echo "Клан";
+                } else {
+                    echo Html::a(
+                        'Клан', Url::to([
+                        '/site/zlist', 'city' => $city, 'type' => 'klan'
+                    ])
+                    );
+                }
+                ?>
             </td>
 
             <td style="border:1px solid; <?php
             if ($type == 'naim') {
                 echo "box-shadow: 0 0 30px $active_shadow";
             }
-            ?>"  align="center" width="25%" 
+            ?>" align="center" width="25%"
                 <?php
                 if ($type == 'naim') {
                     echo "bgcolor=\"$active_bg\"";
                 } else {
                     echo "bgcolor=\"$td_bg_color\"";
                 }
-                ?>> 
-                    <?php
-                    if ($type == "naim") {
-                        echo "Наймы";
-                    } else {
-                        echo Html::a(
-                                'Наймы', Url::to([
-                                    '/site/zlist', 'city' => $city, 'type' => 'naim'
-                                ])
-                        );
-                    }
-                    ?>
+                ?>>
+                <?php
+                if ($type == "naim") {
+                    echo "Наймы";
+                } else {
+                    echo Html::a(
+                        'Наймы', Url::to([
+                        '/site/zlist', 'city' => $city, 'type' => 'naim'
+                    ])
+                    );
+                }
+                ?>
             </td>
             <td style="border:1px solid; <?php
             if ($type == 'trav') {
                 echo "box-shadow: 0 0 30px $active_shadow";
             }
-            ?>"  align="center" width="25%"
+            ?>" align="center" width="25%"
                 <?php
                 if ($type == 'trav') {
                     echo "bgcolor=\"$active_bg\"";
                 } else {
                     echo "bgcolor=\"$td_bg_color\"";
                 }
-                ?>> 
-                    <?php
-                    if ($type == "trav") {
-                        echo "Травники";
-                    } else {
-                        echo Html::a(
-                                'Травники', Url::to([
-                                    '/site/zlist', 'city' => $city, 'type' => 'trav'
-                                ])
-                        );
-                    }
-                    ?>
+                ?>>
+                <?php
+                if ($type == "trav") {
+                    echo "Травники";
+                } else {
+                    echo Html::a(
+                        'Травники', Url::to([
+                        '/site/zlist', 'city' => $city, 'type' => 'trav'
+                    ])
+                    );
+                }
+                ?>
             </td>
             <td style="border:1px solid; <?php
             if ($type == 'common') {
                 echo "box-shadow: 0 0 30px $active_shadow";
             }
-            ?>"  align="center" width="25%"
+            ?>" align="center" width="25%"
                 <?php
                 if ($type == 'common') {
                     echo "bgcolor=\"$active_bg\"";
                 } else {
                     echo "bgcolor=\"$td_bg_color\"";
                 }
-                ?>> 
-                    <?php
-                    if ($type == "common") {
-                        echo "Общие";
-                    } else {
-                        echo Html::a(
-                                'Общие', Url::to([
-                                    '/site/zlist', 'city' => $city, 'type' => 'common'
-                                ])
-                        );
-                    }
-                    ?>
+                ?>>
+                <?php
+                if ($type == "common") {
+                    echo "Общие";
+                } else {
+                    echo Html::a(
+                        'Общие', Url::to([
+                        '/site/zlist', 'city' => $city, 'type' => 'common'
+                    ])
+                    );
+                }
+                ?>
             </td>
 
         </tr>
@@ -239,8 +243,8 @@ echo ZlistLinkPager::widget([
 echo "</center>";
 foreach ($zayavki as $zayavka) {
     echo "<center>";
-	//if (sizeof($dragonRights) > 0) {
-    if ($dragonRights!= null) {
+    //if (sizeof($dragonRights) > 0) {
+    if ($dragonRights != null) {
         $actions = ActionsUserView::findActionsByZid($zayavka->zId);
     } else {
         $actions = ActionsUserView::findActiveActionsByZid($zayavka->zId);
@@ -248,7 +252,7 @@ foreach ($zayavki as $zayavka) {
     ?>
 
 
-    <table style="width:800px; border: 0px none; padding: 5px; background-color: 
+    <table style="width:800px; border: 0px none; padding: 5px; background-color:
     <?php
     if ($zayavka->user_id == Yii::$app->user->getId()) {
         echo $settings->own_z_color;
@@ -258,33 +262,33 @@ foreach ($zayavki as $zayavka) {
     echo ";";
     ?>
 
-           <?php
-           if ($zayavka->status == "new") {
-               echo "box-shadow: 0 0 20px  grey";
-           }
-           if ($zayavka->status == "cancelled") {
-               echo "box-shadow: 0 0 20px  " . $settings->color_cancelled;
-           }
-           if ($zayavka->status == "inprogress") {
-               echo "box-shadow: 0 0 20px  " . $settings->color_inprogress;
-           }
-           if ($zayavka->status == "otkaz") {
-               echo "box-shadow: 0 0 20px  " . $settings->color_otkaz;
-           }
-           if ($zayavka->status == "chist") {
-               echo "box-shadow: 0 0 20px  " . $settings->color_chist;
-           }
-           if ($zayavka->status == "katorga") {
-               echo "box-shadow: 0 0 20px  " . $settings->color_killed;
-           }
-           if ($zayavka->status == "prokli") {
-               echo "box-shadow: 0 0 20px  " . $settings->color_killed;
-           }
-           if ($zayavka->status == "block") {
-               echo "box-shadow: 0 0 20px  " . $settings->color_killed;
-           }
-           ?>
-           ">
+    <?php
+    if ($zayavka->status == "new") {
+        echo "box-shadow: 0 0 20px  grey";
+    }
+    if ($zayavka->status == "cancelled") {
+        echo "box-shadow: 0 0 20px  " . $settings->color_cancelled;
+    }
+    if ($zayavka->status == "inprogress") {
+        echo "box-shadow: 0 0 20px  " . $settings->color_inprogress;
+    }
+    if ($zayavka->status == "otkaz") {
+        echo "box-shadow: 0 0 20px  " . $settings->color_otkaz;
+    }
+    if ($zayavka->status == "chist") {
+        echo "box-shadow: 0 0 20px  " . $settings->color_chist;
+    }
+    if ($zayavka->status == "katorga") {
+        echo "box-shadow: 0 0 20px  " . $settings->color_killed;
+    }
+    if ($zayavka->status == "prokli") {
+        echo "box-shadow: 0 0 20px  " . $settings->color_killed;
+    }
+    if ($zayavka->status == "block") {
+        echo "box-shadow: 0 0 20px  " . $settings->color_killed;
+    }
+    ?>
+            ">
         <tr style="height: 40px">
             <td width="10%" style="padding: 5px;"><?php
                 if (!Yii::$app->user->isGuest) {
@@ -313,9 +317,9 @@ foreach ($zayavki as $zayavka) {
                                 <td>
                                     <?php
                                     echo Html::a(
-                                            '#' . $zayavka->zId, Url::to([
-                                                '/site/sitem', 'id' => $zayavka->zId
-                                            ])
+                                        '#' . $zayavka->zId, Url::to([
+                                        '/site/sitem', 'id' => $zayavka->zId
+                                    ])
                                     );
                                     ?>
                                 </td>
@@ -341,7 +345,8 @@ foreach ($zayavki as $zayavka) {
                                             user-select: none;
                                             -webkit-appearance: none;
                                             ">
-                                        <img width="14px" src="<?= Yii::$app->request->baseUrl ?>/img/clippy.svg" alt="Copy to clipboard">
+                                        <img width="14px" src="<?= Yii::$app->request->baseUrl ?>/img/clippy.svg"
+                                             alt="Copy to clipboard">
                                     </button>
                                     <script>
                                         var clipboard = new Clipboard('.btn_<?= $zayavka->zId ?>', {
@@ -361,10 +366,10 @@ foreach ($zayavki as $zayavka) {
                                 <td>
                                     <?php
                                     if ($zayavka->status == "inprogress") {
-                                        ?>
-                                    <td>
-                                        <div id="spec_button_<?= $zayavka->zId ?>_div" style="display: none;">
-                                            <button class="ext_btn_<?= $zayavka->zId ?>" style="
+                                    ?>
+                                <td>
+                                    <div id="spec_button_<?= $zayavka->zId ?>_div" style="display: none;">
+                                        <button class="ext_btn_<?= $zayavka->zId ?>" style="
                                                     position: relative;
                                                     display: inline-block;
                                                     padding: 2px 4px;
@@ -385,27 +390,30 @@ foreach ($zayavki as $zayavka) {
                                                     user-select: none;
                                                     -webkit-appearance: none;
                                                     ">
-                                                <img width="14px" src="<?= Yii::$app->request->baseUrl ?>/img/clippy_red.png" alt="Copy to clipboard">
-                                            </button>
-                                            <div id="spectext_<?= $zayavka->zId ?>" style="display: none"><?= switchType($zayavka->type) ?> <?= switchCity($zayavka->city) ?></div>
-                                            <script>
-                                                var clipboard = new Clipboard('.ext_btn_<?= $zayavka->zId ?>', {
-                                                    text: function () {
-                                                        text = document.getElementById('spectext_<?= $zayavka->zId ?>').innerHTML;
-                                                        return text;
-                                                    }
-                                                });
+                                            <img width="14px"
+                                                 src="<?= Yii::$app->request->baseUrl ?>/img/clippy_red.png"
+                                                 alt="Copy to clipboard">
+                                        </button>
+                                        <div id="spectext_<?= $zayavka->zId ?>"
+                                             style="display: none"><?= switchType($professions, $zayavka->type) ?> <?= switchCity($zayavka->city) ?></div>
+                                        <script>
+                                            var clipboard = new Clipboard('.ext_btn_<?= $zayavka->zId ?>', {
+                                                text: function () {
+                                                    text = document.getElementById('spectext_<?= $zayavka->zId ?>').innerHTML;
+                                                    return text;
+                                                }
+                                            });
 
-                                                clipboard.on('success', function (e) {
-                                                    console.log(e);
-                                                });
+                                            clipboard.on('success', function (e) {
+                                                console.log(e);
+                                            });
 
-                                                clipboard.on('error', function (e) {
-                                                    console.log(e);
-                                                });
-                                            </script>
-                                        </div>
-                                    </td>
+                                            clipboard.on('error', function (e) {
+                                                console.log(e);
+                                            });
+                                        </script>
+                                    </div>
+                                </td>
                                 <?php } ?>
                             </tr>
                         </table>
@@ -418,20 +426,22 @@ foreach ($zayavki as $zayavka) {
                 }
                 ?>
             </td>
-            <td width="25%" style="padding: 5px;"><a href="http://newforest.apeha.ru/info.html?nick=<?= urlencode(iconv("UTF-8", "CP1251", $zayavka->username)) ?>" target="_blank"><?= $zayavka->username ?></a></td>
+            <td width="25%" style="padding: 5px;"><a
+                        href="http://newforest.apeha.ru/info.html?nick=<?= urlencode(iconv("UTF-8", "CP1251", $zayavka->username)) ?>"
+                        target="_blank"><?= $zayavka->username ?></a></td>
             <td width="35%" style="padding: 5px;">Статус: <?= getStatus($zayavka->status) ?></td>
             <td align="right" width="30%" style="padding: 5px;">Подана: <?= $zayavka->date_added ?></td>
         </tr>
         <tr>
             <td colspan="2" style="padding: 5px;">
-                <?= switchType($zayavka->type) ?>
+                <?= switchType($professions, $zayavka->type) ?>
             </td>
-            <td colspan = "2" style="padding: 5px;">
+            <td colspan="2" style="padding: 5px;">
                 <?= switchCity($zayavka->city) ?>
             </td>
         </tr>
         <?php
-//      if (is_array($dragonRights) && sizeof($dragonRights) > 0) {
+        //      if (is_array($dragonRights) && sizeof($dragonRights) > 0) {
         if ($dragonRights != null) {
             //DRAGON
             // if (!($zayavka->active == 0 && sizeof($actions) == 0)) {
@@ -514,7 +524,7 @@ foreach ($zayavki as $zayavka) {
                                     }
                                 }
                                 ?>
-                                Отказано.. причина бла бла бла 
+                                Отказано.. причина бла бла бла
                             </td>
                         </tr>
                         <?php
@@ -589,7 +599,9 @@ foreach ($zayavki as $zayavka) {
                                 //CHECK IF DRAGON HAS RIGHTS TO PERFORM NEVID ACITON
                                 if ($dragonRights->nevid == 1) {
                                     ?>
-                                    <span style="font-size:13px; text-decoration: underline; cursor: pointer" onclick="toggleView('finish_recheck_<?= $zayavka->zId ?>')">Закончить ДОППРОВЕРКУ</span><br>
+                                    <span style="font-size:13px; text-decoration: underline; cursor: pointer"
+                                          onclick="toggleView('finish_recheck_<?= $zayavka->zId ?>')">Закончить ДОППРОВЕРКУ</span>
+                                    <br>
                                     <div style="padding:15px; display:none" id="finish_recheck_<?= $zayavka->zId ?>">
 
                                         <?php
@@ -597,6 +609,7 @@ foreach ($zayavki as $zayavka) {
                                         echo Html::hiddenInput('Zlist[city]', $city);
                                         echo Html::hiddenInput('Zlist[type]', $type);
                                         echo Html::dropDownList('Zlist[action]', null, [
+                                            'nevid_done_chist' => 'Чист',
                                             'nevid_done_chist' => 'Чист',
                                             'nevid_done_katorga' => 'Каторга',
                                             'nevid_done_prokli' => 'Прокли',
@@ -611,7 +624,7 @@ foreach ($zayavki as $zayavka) {
                                         echo Html::textarea('Zlist[comment]', '', ['cols' => '105']);
                                         echo "<br><br>";
                                         echo Html::submitButton(
-                                                'Закончить доппроверку', ['class' => 'button', 'onclick' => 'return confirm("Продолжаем?")']
+                                            'Закончить доппроверку', ['class' => 'button', 'onclick' => 'return confirm("Продолжаем?")']
                                         );
                                         echo Html::endForm();
                                         ?>
@@ -710,7 +723,9 @@ foreach ($zayavki as $zayavka) {
                                 }
                                 if (isset($items)) {
                                     ?>
-                                    <span style="font-size:13px; text-decoration: underline; cursor: pointer" onclick="toggleView('finish_recheck_<?= $zayavka->zId ?>')">Закрыть заявку</span><br>
+                                    <span style="font-size:13px; text-decoration: underline; cursor: pointer"
+                                          onclick="toggleView('finish_recheck_<?= $zayavka->zId ?>')">Закрыть заявку</span>
+                                    <br>
                                     <div style="padding:15px; display:none" id="finish_recheck_<?= $zayavka->zId ?>">
 
                                         <?php
@@ -726,7 +741,7 @@ foreach ($zayavki as $zayavka) {
                                         echo Html::textarea('Zlist[comment]', '', ['cols' => '105']);
                                         echo "<br><br>";
                                         echo Html::submitButton(
-                                                'Закрыть заявку', ['class' => 'button', 'onclick' => 'return confirm("Продолжаем?")']
+                                            'Закрыть заявку', ['class' => 'button', 'onclick' => 'return confirm("Продолжаем?")']
                                         );
                                         echo Html::endForm();
                                         ?>
@@ -753,8 +768,11 @@ foreach ($zayavki as $zayavka) {
                                             $allowToFinish = true;
                                             echo "<span style=\"font-size:14px; color: red\">Заявка рассматривается <b>Вами</b><br></span>";
                                             ?>
-                                            <span style="font-size:13px; text-decoration: underline; cursor: pointer" onclick="toggleView('finish_check_<?= $zayavka->zId ?>')">Закончить проверку</span><br>
-                                            <div style="padding:15px; display:none" id="finish_check_<?= $zayavka->zId ?>">
+                                            <span style="font-size:13px; text-decoration: underline; cursor: pointer"
+                                                  onclick="toggleView('finish_check_<?= $zayavka->zId ?>')">Закончить проверку</span>
+                                            <br>
+                                            <div style="padding:15px; display:none"
+                                                 id="finish_check_<?= $zayavka->zId ?>">
 
                                                 <?php
                                                 echo Html::beginForm(['/site/zlist'], 'post');
@@ -762,23 +780,23 @@ foreach ($zayavki as $zayavka) {
                                                 echo Html::hiddenInput('Zlist[type]', $type);
                                                 if ($dragonRights->fullbp == 1) {
                                                     ?>
-                                                    <script>updateSpecText("bp", "<?= $zayavka->zId ?>");</script>        
-                                                    <?php
-                                                    $items = ['select_action' => '--==выберите==--', 'bp_done' => 'Б/П проверено', 'dopproverka_bp' => 'Б/П+Доппроверка', 'otkaz' => 'Отказ'];
+                                                    <script>updateSpecText("bp", "<?= $zayavka->zId ?>");</script>
+                                                <?php
+                                                $items = ['select_action' => '--==выберите==--', 'bp_done' => 'Б/П проверено', 'dopproverka_bp' => 'Б/П+Доппроверка', 'otkaz' => 'Отказ'];
                                                 } else {
-                                                    if ($dragonRights->boi_prov == 1 && $dragonRights->per_prov == 1 & $dragonRights->boi == 1 & $dragonRights->peredachi == 1) {
-                                                        ?>
-                                                        <script>updateSpecText("bp", "<?= $zayavka->zId ?>");</script>        
-                                                        <?php
-                                                        $items = [
-                                                            'select_action' => '--==выберите==--',
-                                                            'b_recheck' => 'Б на перепроверку',
-                                                            'b_done' => 'Б проверено',
-                                                            'b_done_p_recheck' => 'Б проверено + П на перепроверку',
-                                                            'bp_done' => 'Б/П проверено',
-                                                            'dopproverka_bp' => 'Б/П+Доппроверка',
-                                                            'otkaz' => 'Отказ'];
-                                                    }
+                                                if ($dragonRights->boi_prov == 1 && $dragonRights->per_prov == 1 & $dragonRights->boi == 1 & $dragonRights->peredachi == 1) {
+                                                ?>
+                                                    <script>updateSpecText("bp", "<?= $zayavka->zId ?>");</script>
+                                                    <?php
+                                                    $items = [
+                                                        'select_action' => '--==выберите==--',
+                                                        'b_recheck' => 'Б на перепроверку',
+                                                        'b_done' => 'Б проверено',
+                                                        'b_done_p_recheck' => 'Б проверено + П на перепроверку',
+                                                        'bp_done' => 'Б/П проверено',
+                                                        'dopproverka_bp' => 'Б/П+Доппроверка',
+                                                        'otkaz' => 'Отказ'];
+                                                }
                                                     if ($dragonRights->boi_prov == 1 && $dragonRights->per_prov == 1 & $dragonRights->boi == 1 & $dragonRights->peredachi == 0) {
                                                         $items = [
                                                             'select_action' => '--==выберите==--',
@@ -823,7 +841,7 @@ foreach ($zayavki as $zayavka) {
                                                 echo Html::textarea('Zlist[comment]', '', ['cols' => '105']);
                                                 echo "<br><br>";
                                                 echo Html::submitButton(
-                                                        'Отметить проверку законченной', ['class' => 'button', 'onclick' => 'return confirm("Помечаем Б/П. Продолжаем?")']
+                                                    'Отметить проверку законченной', ['class' => 'button', 'onclick' => 'return confirm("Помечаем Б/П. Продолжаем?")']
                                                 );
                                                 echo Html::endForm();
                                                 ?>
@@ -842,7 +860,7 @@ foreach ($zayavki as $zayavka) {
                                                 echo Html::hiddenInput('Zlist[peredachi]', true);
                                                 echo Html::hiddenInput('Zlist[active_page]', $active_page);
                                                 echo Html::submitButton(
-                                                        'Забрать на Б/П проверку, отменив предыдущую проверку', ['class' => 'btn btn-link logout', 'onclick' => 'return confirm("Забираем заявку себе. Продолжаем?")']
+                                                    'Забрать на Б/П проверку, отменив предыдущую проверку', ['class' => 'btn btn-link logout', 'onclick' => 'return confirm("Забираем заявку себе. Продолжаем?")']
                                                 );
                                                 echo Html::endForm();
                                             }
@@ -879,19 +897,22 @@ foreach ($zayavki as $zayavka) {
                                                         echo "<span style=\"font-size:13px; color:red\">" . $st_note . "<br></span>";
                                                     }
                                                     if ($action->dragon_id == $dragonRights->dragonid) {
-                                                        if ($boiDone) {
-                                                            ?>
-                                                            <script>updateSpecText("p", "<?= $zayavka->zId ?>");</script>        
-                                                            <?php
-                                                        } else {
-                                                            ?>
-                                                            <script>updateSpecText("bp", "<?= $zayavka->zId ?>");</script>        
-                                                            <?php
-                                                        }
-                                                        echo "<span style=\"font-size:14px; color: red\">Заявка перепроверяется <b>Вами</b><br></span>";
+                                                    if ($boiDone) {
                                                         ?>
-                                                        <span style="font-size:13px; text-decoration: underline; cursor: pointer" onclick="toggleView('finish_recheck_<?= $zayavka->zId ?>')">Закончить перепроверку</span><br>
-                                                        <div style="padding:15px; display:none" id="finish_recheck_<?= $zayavka->zId ?>">
+                                                        <script>updateSpecText("p", "<?= $zayavka->zId ?>");</script>
+                                                    <?php
+                                                    } else {
+                                                    ?>
+                                                        <script>updateSpecText("bp", "<?= $zayavka->zId ?>");</script>
+                                                    <?php
+                                                    }
+                                                    echo "<span style=\"font-size:14px; color: red\">Заявка перепроверяется <b>Вами</b><br></span>";
+                                                    ?>
+                                                        <span style="font-size:13px; text-decoration: underline; cursor: pointer"
+                                                              onclick="toggleView('finish_recheck_<?= $zayavka->zId ?>')">Закончить перепроверку</span>
+                                                        <br>
+                                                        <div style="padding:15px; display:none"
+                                                             id="finish_recheck_<?= $zayavka->zId ?>">
 
                                                             <?php
                                                             echo Html::beginForm(['/site/zlist'], 'post');
@@ -906,7 +927,7 @@ foreach ($zayavki as $zayavka) {
                                                             echo Html::textarea('Zlist[comment]', '', ['cols' => '105']);
                                                             echo "<br><br>";
                                                             echo Html::submitButton(
-                                                                    'Отметить перепроверку законченной', ['class' => 'button', 'onclick' => 'return confirm("Продолжаем?")']
+                                                                'Отметить перепроверку законченной', ['class' => 'button', 'onclick' => 'return confirm("Продолжаем?")']
                                                             );
                                                             echo Html::endForm();
                                                             ?>
@@ -937,7 +958,7 @@ foreach ($zayavki as $zayavka) {
                                         echo Html::hiddenInput('Zlist[peredachi]', true);
                                         echo Html::hiddenInput('Zlist[active_page]', $active_page);
                                         echo Html::submitButton(
-                                                'Взять на проверку', ['class' => 'btn btn-link logout', 'onclick' => 'return confirm("Берём заявку на проверку. Продолжаем?")']
+                                            'Взять на проверку', ['class' => 'btn btn-link logout', 'onclick' => 'return confirm("Берём заявку на проверку. Продолжаем?")']
                                         );
                                         echo Html::endForm();
                                     } else {
@@ -956,7 +977,7 @@ foreach ($zayavki as $zayavka) {
                                                 echo Html::hiddenInput('Zlist[peredachi]', true);
                                                 echo Html::hiddenInput('Zlist[active_page]', $active_page);
                                                 echo Html::submitButton(
-                                                        'Взять на перепроверку', ['class' => 'btn btn-link logout', 'onclick' => 'return confirm("Берём заявку на перепроверку. Продолжаем?")']
+                                                    'Взять на перепроверку', ['class' => 'btn btn-link logout', 'onclick' => 'return confirm("Берём заявку на перепроверку. Продолжаем?")']
                                                 );
                                                 echo Html::endForm();
                                             }
@@ -976,7 +997,7 @@ foreach ($zayavki as $zayavka) {
                                                 echo Html::hiddenInput('Zlist[peredachi]', true);
                                                 echo Html::hiddenInput('Zlist[active_page]', $active_page);
                                                 echo Html::submitButton(
-                                                        'Взять на перепроверку', ['class' => 'btn btn-link logout', 'onclick' => 'return confirm("Берём заявку на перепроверку. Продолжаем?")']
+                                                    'Взять на перепроверку', ['class' => 'btn btn-link logout', 'onclick' => 'return confirm("Берём заявку на перепроверку. Продолжаем?")']
                                                 );
                                                 echo Html::endForm();
                                             }
@@ -996,7 +1017,7 @@ foreach ($zayavki as $zayavka) {
                                                 echo Html::hiddenInput('Zlist[peredachi]', true);
                                                 echo Html::hiddenInput('Zlist[active_page]', $active_page);
                                                 echo Html::submitButton(
-                                                        'Взять на перепроверку', ['class' => 'btn btn-link logout', 'onclick' => 'return confirm("Берём заявку на перепроверку. Продолжаем?")']
+                                                    'Взять на перепроверку', ['class' => 'btn btn-link logout', 'onclick' => 'return confirm("Берём заявку на перепроверку. Продолжаем?")']
                                                 );
                                                 echo Html::endForm();
                                             }
@@ -1016,7 +1037,7 @@ foreach ($zayavki as $zayavka) {
                                                 echo Html::hiddenInput('Zlist[peredachi]', true);
                                                 echo Html::hiddenInput('Zlist[active_page]', $active_page);
                                                 echo Html::submitButton(
-                                                        'Взять на перепроверку', ['class' => 'btn btn-link logout', 'onclick' => 'return confirm("Берём заявку на перепроверку. Продолжаем?")']
+                                                    'Взять на перепроверку', ['class' => 'btn btn-link logout', 'onclick' => 'return confirm("Берём заявку на перепроверку. Продолжаем?")']
                                                 );
                                                 echo Html::endForm();
                                             }
@@ -1036,7 +1057,7 @@ foreach ($zayavki as $zayavka) {
                                                 echo Html::hiddenInput('Zlist[peredachi]', true);
                                                 echo Html::hiddenInput('Zlist[active_page]', $active_page);
                                                 echo Html::submitButton(
-                                                        'Взять на перепроверку', ['class' => 'btn btn-link logout', 'onclick' => 'return confirm("Продолжаем?")']
+                                                    'Взять на перепроверку', ['class' => 'btn btn-link logout', 'onclick' => 'return confirm("Продолжаем?")']
                                                 );
                                                 echo Html::endForm();
                                             }
@@ -1089,7 +1110,8 @@ echo ZlistLinkPager::widget([
 ]);
 echo "</center>";
 
-function getReadOnlyActions($allActions, $zayava) {
+function getReadOnlyActions($allActions, $zayava)
+{
     $result = "";
     $counter = 0;
     if (sizeof($allActions) > 0) {
@@ -1327,7 +1349,8 @@ function getReadOnlyActions($allActions, $zayava) {
     return $result;
 }
 
-function getReadOnlyActionsWithAliases($allActions, $zayava) {
+function getReadOnlyActionsWithAliases($allActions, $zayava)
+{
     $result = "";
     $counter = 0;
     if (sizeof($allActions) > 0) {
@@ -1546,7 +1569,8 @@ function getReadOnlyActionsWithAliases($allActions, $zayava) {
     return $result;
 }
 
-function getStatus($status) {
+function getStatus($status)
+{
     $result = "";
     switch ($status) {
         case "cancelled":
@@ -1580,7 +1604,8 @@ function getStatus($status) {
     return $result;
 }
 
-function switchCity($city) {
+function switchCity($city)
+{
     $result = "";
     switch ($city) {
         case 'kovcheg':
@@ -1599,110 +1624,18 @@ function switchCity($city) {
     return $result;
 }
 
-function switchType($type) {
-    $result = "";
-    switch ($type) {
-        case 'travnik':
-            $result = "Травник";
-            break;
-        case 'ohotnik':
-            $result = "Охотник";
-            break;
-        case 'portnoi':
-            $result = "Портной";
-            break;
-        case 'charodei':
-            $result = "Чародей";
-            break;
-        case 'razboinik':
-            $result = "Разбойник";
-            break;
-        case 'oruzheinik':
-            $result = "Оружейник";
-            break;
-        case 'str_bashen':
-            $result = "Строитель башен";
-            break;
-        case 'kapitan':
-            $result = "Капитан корабля";
-            break;
-        case 'str_domov':
-            $result = "Строитель домов";
-            break;
-        case 'str_forpostov':
-            $result = "Строитель форпостов";
-            break;
-        case 'str_istrochnikov':
-            $result = "Строитель источников";
-            break;
-        case 'lesorub_les':
-            $result = "Лесоруб/Рудокоп(лес)";
-            break;
-        case 'plotnik_les':
-            $result = "Плотник/метталург(лес)";
-            break;
-        case 'skornyak':
-            $result = "Скорняк";
-            break;
-        case 'vstup':
-            $result = "Вступление в клан";
-            break;
-        case 'reg_clan_souz':
-            $result = "Регистрация клана/союза";
-            break;
-        case 'vstup_souz':
-            $result = "Вступление в союз";
-            break;
-        case 'lavochnik':
-            $result = "Лавочник/торговец";
-            break;
-        case 'naim':
-            $result = "Наёмник/Оф.найм";
-            break;
-        case 'lekar':
-            $result = "Лекарь";
-            break;
-        case 'drovosek':
-            $result = "Дровосек/рудокоп";
-            break;
-        case 'org_turnirov':
-            $result = "Организатор турниров";
-            break;
-        case 'ogranshik':
-            $result = "Огранщик";
-            break;
-        case 'kuznec':
-            $result = "Кузнец";
-            break;
-        case 'hudozhnik':
-            $result = "Художник";
-            break;
-        case 'mast_prognozov':
-            $result = "Мастер прогнозов";
-            break;
-        case 'alhimik':
-            $result = "Алхимик";
-            break;
-        case 'torgovec_snad':
-            $result = "Торговец снадобьями";
-            break;
-        case 'zaklinatel':
-            $result = "Заклинатель";
-            break;
-        case 'ribolov':
-            $result = "Дровосек/рыболов";
-            break;
-        case 'korabl_master':
-            $result = "Корабельный мастер";
-            break;
-        case 'kamenotes':
-            $result = "Дровосек/каменотес";
-            break;
+function switchType($professions, $type)
+{
+    foreach ($professions as $pr) {
+        if ($pr->system_name == $type) {
+            return $pr->view_name;
+        }
     }
-    return $result;
+    return $type;
 }
 
-function echoComment($comment) {
+function echoComment($comment)
+{
     $split = explode(' ', $comment);
     foreach ($split as $str) {
         if (strpos($str, 'http://dragons.apeha.ru/forum') !== false) {
@@ -1713,7 +1646,8 @@ function echoComment($comment) {
     }
 }
 
-function returnComment($comment) {
+function returnComment($comment)
+{
     $result = "";
     $split = explode(' ', $comment);
     if (sizeof($split) > 0) {
@@ -1733,6 +1667,7 @@ function returnComment($comment) {
     }
     return $result;
 }
+
 ?>
 
 

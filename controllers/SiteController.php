@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Professions;
 use OAuth\Common\Exception\Exception;
 use Yii;
 use yii\filters\AccessControl;
@@ -34,6 +35,7 @@ use app\models\Nevid;
 use app\models\Ready;
 use app\models\Changepass;
 use app\models\Logs;
+use app\models\ProfessionsModel;
 
 class SiteController extends Controller
 {
@@ -61,7 +63,6 @@ class SiteController extends Controller
 
         return parent::afterAction($action, $result);
     }
-
 
     /**
      * @inheritdoc
@@ -205,7 +206,6 @@ class SiteController extends Controller
         ]);
     }
 
-
     public function actionLibrary()
     {
         $model = new LibraryModel();
@@ -306,6 +306,7 @@ class SiteController extends Controller
                 }
                 return $this->render('sitem', [
                     'model' => $model,
+                    'professions' => Professions::getAllProfessions()
                 ]);
             } else {
                 $this->redirect(array('site/index'));
@@ -328,6 +329,29 @@ class SiteController extends Controller
                     $model->loadSettings(true);
                 }
                 return $this->render('settings', [
+                    'model' => $model,
+                ]);
+            } else {
+                $this->redirect(array('site/index'));
+            }
+        }
+    }
+
+
+    public function actionProfessions()
+    {
+        if (Yii::$app->user->isGuest) {
+            $this->redirect(array('site/login'));
+        } else {
+            if (Users::findGroupById(Yii::$app->user->getId()) == 99) {
+                $model = new ProfessionsModel();
+                if ($model->load(Yii::$app->request->post())) {
+                    $model->checkAction();
+                } else {
+                    $model->action = "view";
+                }
+                $model->loadProfessions();
+                return $this->render('professions', [
                     'model' => $model,
                 ]);
             } else {
@@ -379,6 +403,7 @@ class SiteController extends Controller
                     return $this->render('nevid', [
                         'model' => $model,
                         'dragonRights' => $dragonRights,
+                        'professions' => Professions::getAllProfessions()
                     ]);
                 }
             } else {
@@ -409,6 +434,7 @@ class SiteController extends Controller
                     return $this->render('ready', [
                         'model' => $model,
                         'dragonRights' => $dragonRights,
+                        'professions' => Professions::getAllProfessions()
                     ]);
                 }
             }
@@ -576,6 +602,7 @@ class SiteController extends Controller
             'dragonRights' => $dragonRights,
             'pagination' => $pagination,
             'model' => $model,
+            'professions' => Professions::getAllProfessions()
         ]);
     }
 
@@ -873,6 +900,7 @@ class SiteController extends Controller
             } else {
                 $model->userActive = false;
             }
+            $model->readCitiesProfessions();
             return $this->render('zayavka', [
                 'model' => $model,
             ]);

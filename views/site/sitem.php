@@ -92,7 +92,7 @@ if (Zayavka::findZayavkaById($model->id)) {
             </tr>
             <tr>
                 <td colspan="2" style="padding: 5px;">
-                    <?= switchType($zayavka->type) ?>
+                    <?= switchType($professions, $zayavka->type) ?>
                 </td>
                 <td colspan = "2" style="padding: 5px;">
                     <?= switchCity($zayavka->city) ?>
@@ -360,106 +360,13 @@ function switchCity($city) {
     return $result;
 }
 
-function switchType($type) {
-    $result = "";
-    switch ($type) {
-        case 'travnik':
-            $result = "Травник";
-            break;
-        case 'ohotnik':
-            $result = "Охотник";
-            break;
-        case 'portnoi':
-            $result = "Портной";
-            break;
-        case 'charodei':
-            $result = "Чародей";
-            break;
-        case 'razboinik':
-            $result = "Разбойник";
-            break;
-        case 'oruzheinik':
-            $result = "Оружейник";
-            break;
-        case 'str_bashen':
-            $result = "Строитель башен";
-            break;
-        case 'kapitan':
-            $result = "Капитан корабля";
-            break;
-        case 'str_domov':
-            $result = "Строитель домов";
-            break;
-        case 'str_forpostov':
-            $result = "Строитель форпостов";
-            break;
-        case 'str_istrochnikov':
-            $result = "Строитель источников";
-            break;
-        case 'lesorub_les':
-            $result = "Лесоруб/Рудокоп(лес)";
-            break;
-        case 'plotnik_les':
-            $result = "Плотник/метталург(лес)";
-            break;
-        case 'skornyak':
-            $result = "Скорняк";
-            break;
-        case 'vstup':
-            $result = "Вступление в клан";
-            break;
-        case 'reg_clan_souz':
-            $result = "Регистрация клана/союза";
-            break;
-        case 'vstup_souz':
-            $result = "Вступление в союз";
-            break;        
-        case 'lavochnik':
-            $result = "Лавочник/торговец";
-            break;
-        case 'naim':
-            $result = "Наёмник/Оф.найм";
-            break;
-        case 'lekar':
-            $result = "Лекарь";
-            break;
-        case 'drovosek':
-            $result = "Дровосек/рудокоп";
-            break;
-        case 'org_turnirov':
-            $result = "Организатор турниров";
-            break;
-        case 'ogranshik':
-            $result = "Огранщик";
-            break;
-        case 'kuznec':
-            $result = "Кузнец";
-            break;
-        case 'hudozhnik':
-            $result = "Художник";
-            break;
-        case 'mast_prognozov':
-            $result = "Мастер прогнозов";
-            break;
-        case 'alhimik':
-            $result = "Алхимик";
-            break;
-        case 'torgovec_snad':
-            $result = "Торговец снадобьями";
-            break;
-        case 'zaklinatel':
-            $result = "Заклинатель";
-            break;
-        case 'ribolov':
-            $result = "Дровосек/рыболов";
-            break;
-        case 'korabl_master':
-            $result = "Корабельный мастер";
-            break;
-        case 'kamenotes':
-            $result = "Дровосек/каменотес";
-            break;
+function switchType($professions, $type)
+{
+    foreach ($professions as $pr) {
+        if ($pr->system_name == $type) {
+            return $pr->view_name;
+        }
     }
-    return $result;
+    return $type;
 }
 ?>

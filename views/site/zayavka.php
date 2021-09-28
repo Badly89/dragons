@@ -17,80 +17,82 @@ $settings->loadSettings();
 if ($model->userActive) {
     ?>
     <center>
-        <div class="site-login">
-            <h1><?= Html::encode($this->title) ?></h1>
+    <div class="site-login">
+    <h1><?= Html::encode($this->title) ?></h1>
 
-                    <!--<p>Пожалуйста, заполните все поля для входа:</p>-->
-            <?php
-            if ($model->allowNewZayavka) {
-                if (getUserZayavkiToday() < $settings->max_z_per_day) {
-                    $form = ActiveForm::begin([
-                                'id' => 'login-form',
-                                'layout' => 'horizontal',
-                                'fieldConfig' => [
-                                    'template' => "<table><tr><td nowrap>{label}</td></tr><tr><td>{input}</td></tr></table>",
-                                    'labelOptions' => ['class' => 'col-lg-1 control-label'],
-                                ],
-                    ]);
-                    ?>
+    <!--<p>Пожалуйста, заполните все поля для входа:</p>-->
+    <?php
+    if ($model->allowNewZayavka) {
+        if (getUserZayavkiToday() < $settings->max_z_per_day) {
+            $form = ActiveForm::begin([
+                'id' => 'login-form',
+                'layout' => 'horizontal',
+                'fieldConfig' => [
+                    'template' => "<table><tr><td nowrap>{label}</td></tr><tr><td>{input}</td></tr></table>",
+                    'labelOptions' => ['class' => 'col-lg-1 control-label'],
+                ],
+            ]);
+            ?>
 
-                    <?php $model->action = 'saveZayavka'; ?>
-                    <?php $model->z_id = -1; ?>
-                    <?= $form->field($model, 'action')->hiddenInput()->label(false) ?>
-                    <?= $form->field($model, 'z_id')->hiddenInput()->label(false) ?>
-                    <table width="40%">
-                        <tr width="100%">    
-                            <td valign="top" width="50%">
-                                <?=
-                                $form->field($model, 'city')->listBox([
-                                    'kovcheg' => 'Ковчег',
-                                    'smorye' => 'Среднеморье',
-                                    'utes' => 'Утёс дракона',
-                                    'common' => 'Единые',
-                                        ], [
-                                    'style' => 'height:' . $height . '; width:200px',
-                                    'onchange' => 'changeValue(this)',
-                                    'id' => 'city',
-                                    'text' => 'Please select',
-                                    'unselect' => false,
-                                ])
-                                ?>
-                            </td>
-                            <td valign="top" width="50%">
-                                <?=
-                                $form->field($model, 'type')->listBox([], [
-                                    'id' => 'type',
-                                    'style' => 'height:' . $height . '; width:250px',
-                                ])
-                                ?>
-                            </td>                    
-                        </tr>
-                    </table>     
+            <?php $model->action = 'saveZayavka'; ?>
+            <?php $model->z_id = -1; ?>
+            <?= $form->field($model, 'action')->hiddenInput()->label(false) ?>
+            <?= $form->field($model, 'z_id')->hiddenInput()->label(false) ?>
+            <table width="40%">
+                <tr width="100%">
+                    <td valign="top" width="50%">
+                        <?=
+                        $form->field($model, 'city')->listBox([
+                            'kovcheg' => 'Ковчег',
+                            'smorye' => 'Среднеморье',
+                            'utes' => 'Утёс дракона',
+                            'common' => 'Единые'
+                        ], [
+                            'style' => 'height:' . $height . '; width:200px',
+                            'onchange' => 'changeValue(this)',
+                            'id' => 'city',
+                            'text' => 'Please select',
+                            'unselect' => false,
+                        ])
+                        ?>
+                    </td>
+                    <td valign="top" width="50%">
+                        <?=
+                        $form->field($model, 'type')->listBox([], [
+                            'id' => 'type',
+                            'style' => 'height:' . $height . '; width:250px',
+                        ])
+                        ?>
+                    </td>
+                </tr>
+            </table>
 
-                    <div class="form-group">
-                        <div class="col-lg-offset-1 col-lg-11">
-                            <?= Html::submitButton('Подать заявку', ['class' => 'btn btn-primary', 'name' => 'login-button', 'onclick' => 'return validateForm()',], ['id' => 'submit']) ?>
-                        </div>
-
-                    </div>
-
-                    <?php ActiveForm::end(); ?>
+            <div class="form-group">
+                <div class="col-lg-offset-1 col-lg-11">
+                    <?= Html::submitButton('Подать заявку', ['class' => 'btn btn-primary', 'name' => 'login-button', 'onclick' => 'return validateForm()',], ['id' => 'submit']) ?>
                 </div>
-                <?php
-            } else {
-                ?>
+
             </div>
-            <h3>Вы достигли лимита подачи заявок в сутки (<?= $settings->max_z_per_day ?>). Приходите завтра.</h3> 
+
+            <?php ActiveForm::end(); ?>
+            </div>
+            <?php
+        } else {
+            ?>
+            </div>
+            <h3>Вы достигли лимита подачи заявок в сутки (<?= $settings->max_z_per_day ?>). Приходите завтра.</h3>
             <?php
         }
     } else {
         ?></center>
-        Уже есть поданная Вами заявка на чистоту. Согласно правил подачи заявки на чистоту, игрок не может подать более одной заявки на чистоту.<br>
-        Вы можете использовать полученную по заявке чистоту как угодно, после того, как используете её по назначению. 
-        Т.е., подав заявку на вступление в клан, Вы можете после вступления в клан по этой же чистоте купить профессию. <br><br>
+        Уже есть поданная Вами заявка на чистоту. Согласно правил подачи заявки на чистоту, игрок не может подать более одной заявки на чистоту.
+        <br>
+        Вы можете использовать полученную по заявке чистоту как угодно, после того, как используете её по назначению.
+        Т.е., подав заявку на вступление в клан, Вы можете после вступления в клан по этой же чистоте купить профессию.
+        <br><br>
         <span style="font-size:18px"><b>Ваша заявка на рассмотрении:</b></span><br><br>
         <center>
-            <table style="width:800px; border: 0px none; padding: 5px; background-color: <?= $settings->own_z_color ?>; 
+            <table style="width:800px; border: 0px none; padding: 5px; background-color: <?= $settings->own_z_color ?>;
             <?php
             if ($model->activeZayavka->status == "new") {
                 echo "box-shadow: 0 0 15px  grey";
@@ -117,14 +119,14 @@ if ($model->userActive) {
                 echo "box-shadow: 0 0 15px  " . $settings->color_killed;
             }
             ?>
-                   ">
+                    ">
                 <tr style="height: 40px">
                     <td width="5%" style="padding: 5px;"><?php
                         if (Users::findGroupById(Yii::$app->user->getId()) > 1) {
                             echo Html::a(
-                                    '#' . $model->activeZayavka->id, Url::to([
-                                        '/site/sitem', 'id' => $model->activeZayavka->id
-                                    ])
+                                '#' . $model->activeZayavka->id, Url::to([
+                                '/site/sitem', 'id' => $model->activeZayavka->id
+                            ])
                             );
                         } else {
                             echo "#" . $model->activeZayavka->id;
@@ -133,19 +135,20 @@ if ($model->userActive) {
                     </td>
                     <td width="25%" style="padding: 5px;"></td>
                     <td width="35%" style="padding: 5px;">Статус: <?= getStatus($model->activeZayavka->status) ?> </td>
-                    <td align="right" width="35%" style="padding: 5px;">Подана: <?= $model->activeZayavka->date_added ?></td>
+                    <td align="right" width="35%" style="padding: 5px;">
+                        Подана: <?= $model->activeZayavka->date_added ?></td>
                 </tr>
                 <tr>
                     <td colspan="2" style="padding: 5px;">
                         <?= $model->activeZayavka->type ?><br>
                     </td>
-                    <td colspan = "2" style="padding: 5px;">
+                    <td colspan="2" style="padding: 5px;">
                         <?php
                         if (strlen($model->activeZayavka->city) > 0) {
                             echo "Город: " . $model->activeZayavka->city;
                         }
                         ?>
-                        <span style="font-size: 12px; font-style: italic">(Рассматривается в: <?= $model->activeZayavka->proverka_city ?>)</span>                        
+                        <span style="font-size: 12px; font-style: italic">(Рассматривается в: <?= $model->activeZayavka->proverka_city ?>)</span>
                     </td>
                 </tr>
                 <tr>
@@ -169,12 +172,12 @@ if ($model->userActive) {
 
                             <?php
                             $form = ActiveForm::begin([
-                                        'id' => 'login-form',
-                                        'layout' => 'horizontal',
-                                        'fieldConfig' => [
-                                            'template' => "{label}{input}",
-                                            'labelOptions' => ['class' => 'col-lg-1 control-label'],
-                                        ],
+                                'id' => 'login-form',
+                                'layout' => 'horizontal',
+                                'fieldConfig' => [
+                                    'template' => "{label}{input}",
+                                    'labelOptions' => ['class' => 'col-lg-1 control-label'],
+                                ],
                             ]);
                             ?>
                             <?php $model->action = 'cancelZayavka'; ?>
@@ -202,22 +205,22 @@ if ($model->userActive) {
                     <td colspan="4">
                         <?php
                         echo Html::a(
-                                "Показать в топе проверок", Url::to([
-                                    '/site/zlist', 'action' => 'show', 'zayavka' => $model->activeZayavka->id
-                                ]), [
-                            'style' => [
-                                'color' => '#666',
-                                'cursor' => 'pointer',
-                                'display' => 'block',
-                                'font-size' => '12px',
-                                'font-weight' => 'bold',
-                                'line-height' => 'normal',
-                                'padding' => '10px',
-                                'margin-top' => '-10px',
-                                'text-decoration' => 'underline',
-                                'word-wrap' => 'break-word'
-                            ]
+                            "Показать в топе проверок", Url::to([
+                            '/site/zlist', 'action' => 'show', 'zayavka' => $model->activeZayavka->id
+                        ]), [
+                                'style' => [
+                                    'color' => '#666',
+                                    'cursor' => 'pointer',
+                                    'display' => 'block',
+                                    'font-size' => '12px',
+                                    'font-weight' => 'bold',
+                                    'line-height' => 'normal',
+                                    'padding' => '10px',
+                                    'margin-top' => '-10px',
+                                    'text-decoration' => 'underline',
+                                    'word-wrap' => 'break-word'
                                 ]
+                            ]
                         );
                         ?>
                     </td>
@@ -231,11 +234,13 @@ if ($model->userActive) {
     echo "<center><br><h2>Ваш аккаунт ещё не был проверен и активирован. Подождите немного</h2></center>";
 }
 
-function getUserZayavkiToday() {
+function getUserZayavkiToday()
+{
     return Zayavka::getUserZayavkaTodayCount(Yii::$app->user->getId());
 }
 
-function getReadOnlyActions($zId) {
+function getReadOnlyActions($zId)
+{
     $result = "";
     $zayava = Zayavka::findZayavkaById($zId);
     $allActions = Actions::findActionsByZid($zId);
@@ -381,7 +386,8 @@ function getReadOnlyActions($zId) {
     return $result;
 }
 
-function getReadOnlyActionsWithAliases($zId) {
+function getReadOnlyActionsWithAliases($zId)
+{
     $result = "";
     $zayava = Zayavka::findZayavkaById($zId);
     $allActions = Actions::findActionsByZid($zId);
@@ -527,7 +533,8 @@ function getReadOnlyActionsWithAliases($zId) {
     return $result;
 }
 
-function getStatus($status) {
+function getStatus($status)
+{
     switch ($status) {
         case "cancelled":
             $result = "Отменена";
@@ -559,21 +566,8 @@ function getStatus($status) {
     }
     return $result;
 }
+
 ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 <script>
@@ -590,149 +584,18 @@ function getStatus($status) {
     }
 
     function changeValue(obj) {
-        html = "";
         select = document.getElementById('type');
         if (obj.value === 'common') {
-            var new_options = [
-                'travnik',
-                'ohotnik',
-                'skornyak',
-                'portnoi',
-                'charodei',
-                'razboinik',
-                'oruzheinik',
-                'str_bashen',
-                'kapitan',
-                'str_domov',
-                'str_forpostov',
-                'str_istrochnikov',
-                'lesorub_les',
-                'plotnik_les'
-            ];
-            var new_options_names = [
-                'Травник',
-                'Охотник',
-                'Скорняк',
-                'Портной',
-                'Чародей',
-                'Разбойник',
-                'Оружейник',
-                'Строитель башен',
-                'Капитан корабля',
-                'Строитель домов',
-                'Строитель форпостов',
-                'Строитель источников',
-                'Лесоруб/Рудокоп(лес)',
-                'Плотник/метталург(лес)'
-            ];
+            select.innerHTML = "<?php echo $model->commonProfessionsOptions?>";
         }
         if (obj.value === 'kovcheg') {
-            var new_options = [
-                'vstup',
-                'reg_clan_souz',
-                'vstup_souz',
-                'lavochnik',
-                'naim',
-                'lekar',
-                'drovosek',
-                'org_turnirov',
-                'ogranshik',
-                'kuznec',
-                'hudozhnik',
-                'mast_prognozov',
-                'alhimik',
-                'torgovec_snad',
-                'zaklinatel'
-            ];
-            var new_options_names = [
-                'Вступление в клан',
-                'Регистрация клана/союза',
-                'Вступление в союз',
-                'Лавочник/торговец',
-                'Наёмник/Оф.найм',
-                'Лекарь',
-                'Дровосек/рудокоп',
-                'Организатор турниров',
-                'Огранщик',
-                'Кузнец',
-                'Художник',
-                'Мастер прогнозов',
-                'Алхимик',
-                'Торговец снадобьями',
-                'Заклинатель'
-            ];
+            select.innerHTML = "<?php echo $model->kovchegProfessionsOptions?>";
         }
         if (obj.value === 'smorye') {
-            var new_options = [
-                'vstup',
-                'lavochnik',
-                'naim',
-                'lekar',
-                'ribolov',
-                'org_turnirov',
-                'ogranshik',
-                'kuznec',
-                'hudozhnik',
-                'mast_prognozov',
-                'korabl_master',
-                'alhimik',
-                'torgovec_snad',
-                'zaklinatel'
-            ];
-            var new_options_names = [
-                'Вступление в клан',
-                'Лавочник/торговец',
-                'Наёмник/Оф.найм',
-                'Лекарь',
-                'Дровосек/рыболов',
-                'Организатор турниров',
-                'Огранщик',
-                'Кузнец',
-                'Художник',
-                'Мастер прогнозов',
-                'Корабельный мастер',
-                'Алхимик',
-                'Торговец снадобьями',
-                'Заклинатель'
-            ];
+            select.innerHTML = "<?php echo $model->smoryeProfessionsOptions?>";
         }
         if (obj.value === 'utes') {
-            var new_options = [
-                'vstup',
-                'lavochnik',
-                'naim',
-                'lekar',
-                'kamenotes',
-                'org_turnirov',
-                'ogranshik',
-                'kuznec',
-                'hudozhnik',
-                'mast_prognozov',
-                'alhimik',
-                'torgovec_snad',
-                'zaklinatel'
-            ];
-            var new_options_names = [
-                'Вступление в клан',
-                'Лавочник/торговец',
-                'Наёмник/Оф.найм',
-                'Лекарь',
-                'Дровосек/каменотес',
-                'Организатор турниров',
-                'Огранщик',
-                'Кузнец',
-                'Художник',
-                'Мастер прогнозов',
-                'Алхимик',
-                'Торговец снадобьями',
-                'Заклинатель'
-            ];
+            select.innerHTML = "<?php echo $model->utesProfessionsOptions?>";
         }
-        select.innerHTML = "";
-        for (i = 0; i < new_options.length; i++) {
-            html = html + '<option value="' + new_options[i] + '">' + new_options_names[i] + '</option>'
-        }
-        select.innerHTML = html;
-
     }
 </script>
