@@ -366,15 +366,15 @@ $this->params['breadcrumbs'][] = $this->title;
             case 'common':
                 $result = "";
                 break;
+            default:
+                return $result;
         }
         return $result;
     }
-    public function switchType($type)
+
+    function switchType($professions, $type)
     {
-        if (is_null($this->allProfessions)) {
-            $this->allProfessions = Professions::getAllProfessions();
-        }
-        foreach ($this->allProfessions as $pr) {
+        foreach ($professions as $pr) {
             if ($pr->system_name == $type) {
                 return $pr->view_name;
             }
