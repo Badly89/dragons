@@ -40,10 +40,6 @@ if (is_array($model->utesProfessions) || is_object($model->utesProfessions)) {
 }
 getNewProfessionForm($model, "utes");
 
-echo "Number of professions is: " . count($model->allProfessions);
-echo "Actions is: " . $model->action;
-echo "user group is: " . Users::findGroupById(Yii::$app->user->getId());
-
 function listExistingItems($professions, $model)
 {
     foreach ($professions as $pr) {
