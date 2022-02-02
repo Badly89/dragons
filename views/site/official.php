@@ -9,7 +9,7 @@ use yii\bootstrap\ActiveForm;
 use app\models\Users;
 use yii\helpers\Url;
 
-$tagsAllowed = "<a><p><span><img><br><tr><table></tr><td></td></table><h1><h2><h3><h4><ul><li><ol><blockquote><span><sup></h1></h2></h3></h4></ul></li></ol></blockquote></span></sup><sub></sub><iframe></iframe>";
+$tagsAllowed = "<dl></dl><dt></dt><dd></dd><div></div><a><p><span><img><br><tr><table></tr><td></td></table><h1><h2><h3><h4><ul><li><ol><blockquote><span><sup></h1></h2></h3></h4></ul></li></ol></blockquote></span></sup><sub></sub><iframe></iframe>";
 ?>
 
     <style>
