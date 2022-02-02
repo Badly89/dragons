@@ -1,0 +1,19 @@
+#!/bin/sh
+service nginx stop
+service php-fpm stop
+service mysql stop
+service mysql start
+service php-fpm start
+service nginx start
+
+#/usr/bin/php /srv/www/htdocs/dragons/dbbackup/backup.php
+mysqldump -uroot dragons > /srv/www/htdocs/dragons/dbbackup/dragons.sql
+date=$(date +"%Y-%m-%d_%H-%M-%S")
+echo $date
+zip -r /srv/www/htdocs/dragons/dbbackup/backup-"$date".zip /srv/www/htdocs/dragons/dbbackup/*.sql
+rm -rd /srv/www/htdocs/dragons/dbbackup/*.sql
+echo "$date Dragons database backup" | mutt -a "/srv/www/htdocs/dragons/dbbackup/backup-"$date".zip" -s "Database backup" -- diamondiusis@gmail.com
+echo "$date Dragons database backup" | mutt -a "/srv/www/htdocs/dragons/dbbackup/backup-"$date".zip" -s "Database backup" -- iconkdr@gmail.com
+/sbin/service mysql restart
+
+exit 0
