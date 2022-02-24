@@ -65,6 +65,11 @@ $config = [
                     'suffix' => '/'
                 ],
                 [
+                    'pattern' => 'sad/<action:\w+>/<id:\w+>',
+                    'route' => 'site/sad',
+                    'suffix' => '/'
+                ],
+                [
                     'pattern' => 'official/<action:\w+>/<id:\w+>',
                     'route' => 'site/official',
                     'suffix' => '/'
@@ -108,7 +113,7 @@ $config = [
                     'pattern' => 'zlist/<action:\w+>/<zayavka:\d+>',
                     'route' => 'site/zlist',
                     'suffix' => '/'
-                ],                
+                ],
                 [
                     'pattern' => 'zlist/<page:\w+>',
                     'route' => 'site/zlist',
@@ -124,7 +129,6 @@ $config = [
                     'route' => 'site/zlist',
                     'suffix' => '/'
                 ],
-               
                 [
                     'pattern' => 'sitem/<id:\w+>',
                     'route' => 'site/sitem',
@@ -137,52 +141,52 @@ $config = [
                 ],
             ],
         ],
-    /* 'urlManager' => [
-      'enablePrettyUrl' => true,
-      'showScriptName' => false,
-      'enableStrictParsing' => false,
-      //'suffix' => '.html',
-      'rules' => [
-      ['class' => 'app\components\SefRule'],
-      [
-      'pattern' => 'login',
-      'route' => 'site/login',
-      'suffix' => '/',
-      'normalizer' => false, // disable normalizer for this rule
-      ],
-      [
-      'pattern' => 'zayavka',
-      'route' => 'site/zayavka',
-      'suffix' => '/',
-      'normalizer' => false, // disable normalizer for this rule
-      ],
-      [
-      'pattern' => 'superadmin',
-      'route' => 'site/superadmin',
-      'suffix' => '/',
-      'normalizer' => false, // disable normalizer for this rule
-      ],
-      [
-      'pattern' => 'settings',
-      'route' => 'site/settings',
-      'suffix' => '/',
-      'normalizer' => false, // disable normalizer for this rule
-      ],
-      [
-      'pattern' => 'cleaning',
-      'route' => 'site/cleaning',
-      'suffix' => '/',
-      'normalizer' => false, // disable normalizer for this rule
-      ],
-      [
-      'pattern' => 'zlist',
-      'route' => 'site/zlist',
-      'suffix' => '/',
-      'normalizer' => false, // disable normalizer for this rule
-      ],
+        /* 'urlManager' => [
+          'enablePrettyUrl' => true,
+          'showScriptName' => false,
+          'enableStrictParsing' => false,
+          //'suffix' => '.html',
+          'rules' => [
+          ['class' => 'app\components\SefRule'],
+          [
+          'pattern' => 'login',
+          'route' => 'site/login',
+          'suffix' => '/',
+          'normalizer' => false, // disable normalizer for this rule
+          ],
+          [
+          'pattern' => 'zayavka',
+          'route' => 'site/zayavka',
+          'suffix' => '/',
+          'normalizer' => false, // disable normalizer for this rule
+          ],
+          [
+          'pattern' => 'superadmin',
+          'route' => 'site/superadmin',
+          'suffix' => '/',
+          'normalizer' => false, // disable normalizer for this rule
+          ],
+          [
+          'pattern' => 'settings',
+          'route' => 'site/settings',
+          'suffix' => '/',
+          'normalizer' => false, // disable normalizer for this rule
+          ],
+          [
+          'pattern' => 'cleaning',
+          'route' => 'site/cleaning',
+          'suffix' => '/',
+          'normalizer' => false, // disable normalizer for this rule
+          ],
+          [
+          'pattern' => 'zlist',
+          'route' => 'site/zlist',
+          'suffix' => '/',
+          'normalizer' => false, // disable normalizer for this rule
+          ],
 
-      ],
-      ], */
+          ],
+          ], */
     ],
     'params' => $params,
 ];
@@ -192,15 +196,15 @@ if (YII_ENV_DEV) {
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
-            // uncomment the following to add your IP if you are not connecting from localhost.
-            'allowedIPs' => ['82.209.214.222', '127.0.0.1', '::1'],
+        // uncomment the following to add your IP if you are not connecting from localhost.
+        'allowedIPs' => ['82.209.214.222', '127.0.0.1', '::1'],
     ];
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
-            // uncomment the following to add your IP if you are not connecting from localhost.
-            'allowedIPs' => ['127.0.0.1', '::1'],
+        // uncomment the following to add your IP if you are not connecting from localhost.
+        'allowedIPs' => ['127.0.0.1', '::1'],
     ];
 }
 

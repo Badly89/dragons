@@ -380,6 +380,15 @@ class SiteController extends Controller
         }
     }
 
+    public function actionSad()
+    {
+        if (Yii::$app->user->isGuest) {
+            $this->redirect(array('site/login'));
+        } else {
+            return $this->render('sad', []);
+        }
+    }
+
     public function actionNevid()
     {
         if (Yii::$app->user->isGuest) {
