@@ -156,7 +156,7 @@ $settings->loadSettings();
     array_push($menuItems, ['label' => 'Официально', 'url' => ['/site/official']]);
     array_push($menuItems, ['label' => 'Библиотека', 'url' => ['/site/library']]);
     array_push($menuItems, ['label' => 'Суд', 'url' => ['/site/sud']]);
-    array_push($menuItems, ['label' => 'Сад', 'url' => ['/site/sad']]);
+//    array_push($menuItems, ['label' => 'Сад', 'url' => ['/site/sad']]);
     array_push($menuItems, [
         'label' => 'Форум',
         'url' => 'https://' . Yii::$app->getRequest()->serverName . '/forum',
