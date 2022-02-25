@@ -715,7 +715,7 @@ class SiteController extends Controller
         if ($model->failedTries < $settings->login_attempts) {
             if ($model->load(Yii::$app->request->post()) && $model->login()) {
                 $u = Users::find()->where(['id' => Yii::$app->user->id])->one();
-                $u->authKey = Yii::$app->security->generateRandomString();
+                //$u->authKey = Yii::$app->security->generateRandomString();
                 $u->save(false);
 
                 return $this->goBack();
