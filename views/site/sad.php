@@ -1,7 +1,7 @@
 <?php
 
 use kartik\datetime\DateTimePicker;
-use yii\bootstrap\Modal;
+use yii\bootstrap\Html;
 
 $this->title = 'Садовод';
 $this->params['breadcrumbs'][] = $this->title;
@@ -32,7 +32,9 @@ $fruits = array(
 ?>
 
     <style>
-        td {padding:5px}
+        td {
+            padding: 5px
+        }
     </style>
 
     <script>
@@ -53,7 +55,13 @@ $fruits = array(
                     if (result < new Date) {
                         resTime.innerText = "Уже никак не успеть :(";
                     } else {
-                        var options = { weekday: 'long', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+                        var options = {
+                            weekday: 'long',
+                            month: 'long',
+                            day: 'numeric',
+                            hour: 'numeric',
+                            minute: 'numeric'
+                        };
                         resTime.innerText = result.toLocaleDateString("ru-RU", options);
                     }
 
@@ -65,31 +73,22 @@ $fruits = array(
     <div class="row">
         <div class="col-sm-4">
             <div align="center" style="margin-top: 20px; width: 100%">
-                <?php
-                Modal::begin([
-                    'toggleButton' => ['label' => 'Выбрать время созревания', 'class' => 'btn btn-primary'],
-                    'header' => "Выбор времени созревания",
-                    'closeButton' => [
-                        'tag' => 'buttonss',
-                        'label' => '<span aria-hidden="true">×</span>',
-                        'onClick' => 'calc()'
-                    ]
-
-                ]);
-                ?>
                 <div class="row" style="margin-bottom: 8px">
-                    <div class="col-sm-6">
+                    <div class="col-sm-10">
                         <?=
                         DateTimePicker::widget([
                             'id' => 'picker',
                             'readonly' => 'true',
                             'name' => 'date_in_modal_1',
-                            'options' => ['placeholder' => 'Время созревания...'],
-                            'pluginOptions' => ['autoclose' => true]
+                            'options' => ['placeholder' => 'Время созревания...', 'onChange' => 'calc()'],
+                            'pluginOptions' => ['autoclose' => true],
+
                         ]); ?>
                     </div>
+                    <?php
+                    Html::submitButton('Submit', ['class' => 'btn btn-primary', 'name' => 'contact-button']);
+                    ?>
                 </div>
-                <?php Modal::end(); ?>
             </div>
         </div>
     </div>
