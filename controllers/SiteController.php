@@ -42,7 +42,7 @@ class SiteController extends Controller
 
     public function beforeAction($action)
     {
-        if (Yii::$app->user->id) {
+        if (Yii::$app->user->id && $action->id != "login") {
             if (Yii::$app->session->getId() != Yii::$app->user->identity->last_session_id) {
                 Yii::$app->session->destroy();
                 $this->redirect(array('site/login'));
@@ -60,7 +60,6 @@ class SiteController extends Controller
             $user->last_session_id = Yii::$app->session->id;
             $user->save(false);
         }
-
         return parent::afterAction($action, $result);
     }
 
