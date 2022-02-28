@@ -154,6 +154,7 @@ class Changepass extends \yii\base\Model {
                 $this->user = Users::findById(Yii::$app->user->getId());
                 if ($this->user->active == 1) {
                     $this->user->password = md5(trim($this->newPassword));
+                    $this->user->authKey = Yii::$app->getSecurity()->generateRandomString(12);
                     $this->user->save();
                     $forumUser = Forum::findOne(['username' => $this->user->username]);
                     $forumUser->user_password = md5(trim($this->newPassword));

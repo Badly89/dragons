@@ -30,6 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ?>
             <h1><?= Html::encode($this->title) ?></h1>
             <h3>Смена пароля прошла успешно</h3>
+            <h2>Пожалуйста, войдите заново с использованием нового пароля</h2>
             <?php
         } else {
             if ($model->action == "retry") {
