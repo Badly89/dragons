@@ -32,6 +32,7 @@ class ZlistLinkPager extends LinkPager {
         return Html::tag('li', Html::a($label, $this->generateCustomUrl($page), $linkOptions), $options);
     }
 
+
     public function generateCustomUrl($page) {
         $params = [
             'city' => $this->city,
