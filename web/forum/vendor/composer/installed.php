@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '986bdde1e10ac2715701397baa46add0b5ce1b59',
+        'reference' => 'ab2146773e8b23ef367a9104511f5128eea93196',
         'name' => 'phpbb/phpbb',
         'dev' => true,
     ),
@@ -178,7 +178,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '986bdde1e10ac2715701397baa46add0b5ce1b59',
+            'reference' => 'ab2146773e8b23ef367a9104511f5128eea93196',
             'dev_requirement' => false,
         ),
         'phpbb/phpbb-core' => array(

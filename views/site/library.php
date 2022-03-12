@@ -751,8 +751,7 @@ if ($model->mode == "editItem" && $isAdminLogged) {
 if ($model->mode == "viewSeparate") {
     $this->title = strip_tags(stripslashes($model->aloneItem->title));
     $this->params['breadcrumbs'][] = ['label' => 'Библиотека', 'url' => ['library']];
-    $this->params['breadcrumbs'][] = ['label' => $model->separate_view_section->title, 'url' => [Yii::$app->request->baseUrl . '/library/s/' . $model->separate_view_section->id . '/'], 'originalLink' => true];
-
+    $this->params['breadcrumbs'][] = ['label' => $model->separate_view_section->title, 'url' => [Yii::$app->request->baseUrl , 's' , $model->separate_view_section->id], 'originalLink' => true];
     ?>
     <br><br>
 
