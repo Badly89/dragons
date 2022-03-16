@@ -62,10 +62,10 @@ $settings->loadSettings();
                 if ($approvalCount > 0) {
                     array_push($menuItems, ['label' => 'Модерация (' . $approvalCount . ')', 'url' => ['/site/approval']]);
                 }
-            }
+             }
             //finish approver
-            // array_push($menuItems, ['label' => 'Админка', 'url' => ['/site/superadmin']]
-            // );
+            //  array_push($menuItems, ['label' => 'Админка', 'url' => ['/site/superadmin']]
+            //  );
         }
         array_push($menuItems, ['label' => 'Моя чистота', 'items' => [
                 ['label' => 'Мои заявки', 'url' => ['/site/index']],
@@ -172,9 +172,10 @@ $settings->loadSettings();
     if (Yii::$app->user->isGuest) {
         array_push($menuItems, ['label' => 'Войти', 'url' => ['/site/login']]);
     } else {
-        if (isset($dragonRights) && ($dragonRights->nevid == 1 || $dragonRights->boss == 1)) {
+        if (isset($dragonRights) && ($dragonRights->nevid == 1 || $dragonRights->boss == 1 )&&($user->groupId > 9 && $user->active == 1)) {
             array_push($menuItems, ['label' => Yii::$app->user->identity->username, 'items' => [
                     ['label' => 'Блокнот', 'url' => ['/site/notepad']],
+                    
                     ['label' => 'Админка', 'url' => ['/site/superadmin']],
                     ['label' => 'Смена пароля', 'url' => ['/site/changepass']],
                     [
