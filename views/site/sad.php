@@ -37,17 +37,21 @@ Date.prototype.addHours = function(h) {
     return this;
 }
 
-function calc() {
+function calc($id) {
     let el = document.getElementById('picker');
     if (el.value != null && el.value !== '') {
         let totalItems = document.getElementById('total_items').innerText;
         for (let i = 0; i < totalItems; i++) {
+            var cardFruit = document.getElementById('cardFruit_' + i);
             let readyTime = document.getElementById('readyTime_' + i).innerText;
             let result = new Date(el.value);
             result.addHours(-1 * readyTime)
             let resTime = document.getElementById('resTime_' + i);
+
             if (result < new Date) {
                 resTime.innerText = "Уже никак не успеть :(";
+                cardFruit.classList.add('border-danger');
+                cardFruit.classList.add('card-fruit-none');
             } else {
                 var options = {
                     weekday: 'long',
@@ -57,7 +61,19 @@ function calc() {
                     minute: 'numeric'
                 };
                 resTime.innerText = result.toLocaleDateString("ru-RU", options);
+                cardFruit.classList.add('border-success');
+                cardFruit.style.border = "2px solid";
             }
+
+        }
+    } else {
+        let totalItems = document.getElementById('total_items').innerText;
+        for (let i = 0; i < totalItems; i++) {
+            let cardFruit = document.getElementById('cardFruit_' + i);
+            cardFruit.classList.remove('card-fruit-none');
+            cardFruit.classList.remove('border-success');
+            cardFruit.classList.remove('border-danger');
+
 
         }
     }
@@ -65,7 +81,7 @@ function calc() {
 </script>
 
 <div class="row">
-    <div class="col-sm-4">
+    <div class="col-xl-4 col-md-6 col-sm-12">
         <div align="center" style="margin-top: 20px; width: 100%">
             <div class="row" style="margin-bottom: 8px">
                 <div class="col-sm-10">
@@ -106,28 +122,37 @@ function calc() {
                     $objDateTimeTrash = new DateTime('NOW');
                     $objDateTimeTrash->modify('+' . ($arr[2] + $arr[3]) . ' hours');
                     $trash_time = $objDateTimeTrash->format('D d h:i');
+                    
                    
 
-                    
-                    echo '<div class="col-xs-4 col-md-4">';
-                    echo '<div class="thumbnail">';
-                    echo '<div class="caption">';
-                    echo "<h4>$arr[0]</h4>";
-                    echo "<ul class='list-unstyled'><li><b>Бонус:</b> $arr[1]</li>";
-                    echo "<li><b>Время до роста/порчи:</b> $arr[2]ч / $arr[3]ч </li>";
-                    echo "<li><b>Посадим сейчас вырастет/испортится:</b>";
-                    echo weekDaysReplace($ready_time) . " / " . weekDaysReplace($trash_time) ;
-                    echo "</li>";
-                                       
-                    echo "<p id='resTime_$i'>выберите время кнопкой выше</p>";
-                    echo "<span style='display: none' id='readyTime_$i'>$arr[2]</span>";
-                    echo '</div>';
-                    echo '</div>';
-                    echo '</div>';
-                    $i++;
-                }
-                echo "<span style='display: none' id='total_items'>$i</span>";
-                ?>
+            echo"<div class=\"col-xl-4 col-md-6 col-sm-12 mb-3\">";
+            echo"<div class=\"card card-fruit\" id=\"cardFruit_$i\">";
+            echo"<div class=\"card-header\">";
+            echo"<h5 class=\"card-title\">$arr[0]</h5>";
+            echo"</div>";
+            echo"<div class=\"card-body\">";
+            echo"<ul class=\"list-group\">";
+            echo"<li class=\"list-group-item\">Бонус: $arr[1]</li>";
+            echo"<li class=\"list-group-item\">Время до роста/порчи: $arr[2] ч / $arr[3] ч";
+            echo"</li>";
+            echo"<li class=\"list-group-item\">Посадим сейчас вырастет/испортится:";
+            echo weekDaysReplace($ready_time). " / " . weekDaysReplace($trash_time);
+            echo"</li>";
+            echo"</div>";
+            echo"<div class=\"card-footer\">";
+            echo"<p id='resTime_$i'>выберите время кнопкой выше</p>";
+            echo"<span style='display: none' id='readyTime_$i'>$arr[2]</span>";
+            echo"</div>";
+            echo"</div>";
+            echo"</div>";
+
+            $i++;
+            
+        }
+            echo" <span style='display: none' id='total_items'>$i</span>";
+        ?>
+
+
 
     </div>
 
