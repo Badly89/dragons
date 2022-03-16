@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
+use yii\bootstrap4\ActiveForm;
 use kartik\color\ColorInput;
 
 $this->title = 'Настройки системы';
@@ -60,23 +60,23 @@ echo "</div>";
 ?>
 <div class="form-group">
     <div class="col-lg-offset-1 col-lg-11">
-<?= Html::submitButton('Сохранить настройки', ['class' => 'btn btn-primary', 'name' => 'login-button', 'onclick' => 'return validateSettings()'], ['id' => 'submit']) ?>
-    </div>    
+        <?= Html::submitButton('Сохранить настройки', ['class' => 'btn btn-primary', 'name' => 'login-button', 'onclick' => 'return validateSettings()'], ['id' => 'submit']) ?>
+    </div>
 </div>
 <?php
 ActiveForm::end();
 ?>
 
 <script>
-    function validateSettings() {
-        $k = document.getElementById("params-loadkovcheg");
-        $s = document.getElementById("params-loadsmorye");
-        $u = document.getElementById("params-loadutes");
-        if ((parseInt($k.value) + parseInt($s.value) + parseInt($u.value)) !== 100) {
-            alert('Сумма процентов по городам должна равняться 100');
-            return false;
-        } else {
-            return confirm('Сохраняем эти настройки?');
-        }
+function validateSettings() {
+    $k = document.getElementById("params-loadkovcheg");
+    $s = document.getElementById("params-loadsmorye");
+    $u = document.getElementById("params-loadutes");
+    if ((parseInt($k.value) + parseInt($s.value) + parseInt($u.value)) !== 100) {
+        alert('Сумма процентов по городам должна равняться 100');
+        return false;
+    } else {
+        return confirm('Сохраняем эти настройки?');
     }
+}
 </script>

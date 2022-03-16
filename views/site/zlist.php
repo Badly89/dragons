@@ -10,6 +10,8 @@ use app\models\Settings;
 use app\models\Params;
 use yii\helpers\Url;
 use app\models\ActionsUserView;
+use rmrevin\yii\fontawesome\FAR;
+use rmrevin\yii\fontawesome\FAS;
 
 $this->title = 'Заявки на чистоту';
 $this->params['breadcrumbs'][] = $this->title;
@@ -24,45 +26,46 @@ $dragonR = $dragonRights;
 
 ?>
 <style>
-    .name {
-        font-size: 14px;
-        color: <?= $settings->sign_color ?>;
-    }
+.name {
+    font-size: 14px;
+    color: <?=$settings->sign_color ?>;
+}
 
-    .text_italic {
-        font-size: 13px;
-        color: <?= $settings->comment_color ?>;
-        font-style: italic;
-    }
+.text_italic {
+    font-size: 13px;
+    color: <?=$settings->comment_color ?>;
+    font-style: italic;
+}
 
-    .text {
-        font-size: 14px;
-        color: <?= $settings->comment_color ?>;
-    }
+.text {
+    font-size: 14px;
+    color: <?=$settings->comment_color ?>;
+}
 
-    .text_otkaz {
-        font-size: 14px;
-        color: <?= $settings->otkaz_color ?>;
-    }
-
-
+.text_otkaz {
+    font-size: 14px;
+    color: <?=$settings->otkaz_color ?>;
+}
 </style>
 <script src="<?= Yii::$app->request->baseUrl ?>/js/clipboard.min.js"></script>
+<script src="<?= Yii::$app->request->baseUrl ?>/js/jquery-3.6.0.min.js"></script>
+<script src="<?= Yii::$app->request->baseUrl ?>/js/readmore.min.js"></script>
 <center>
+
+
     <table style="width:600px; height: 34px;">
         <tr>
-            <td style="border:1px solid; <?php
-            if ($city == 'kovcheg') {
+            <td style="border:1px solid; 
+            <?php
+                 if ($city == 'kovcheg') {
                 echo "box-shadow: 0 0 34px $active_shadow";
-            }
-            ?>" align="center" width="33%"
-                <?php
+              }
+            ?>" align="center" width="33%" <?php
                 if ($city == 'kovcheg') {
                     echo "bgcolor=\"$active_bg\"";
                 } else {
                     echo "bgcolor=\"$td_bg_color\"";
-                }
-                ?>>
+                }?>>
                 <?php
                 if ($city == "kovcheg") {
                     echo "Ковчег";
@@ -79,8 +82,7 @@ $dragonR = $dragonRights;
             if ($city == 'smorye') {
                 echo "box-shadow: 0 0 34px $active_shadow";
             }
-            ?>" align="center" width="34%"
-                <?php
+            ?>" align="center" width="34%" <?php
                 if ($city == 'smorye') {
                     echo "bgcolor=\"$active_bg\"";
                 } else {
@@ -103,8 +105,7 @@ $dragonR = $dragonRights;
             if ($city == 'utes') {
                 echo "box-shadow: 0 0 30px $active_shadow";
             }
-            ?>" align="center" width="33%"
-                <?php
+            ?>" align="center" width="33%" <?php
                 if ($city == 'utes') {
                     echo "bgcolor=\"$active_bg\"";
                 } else {
@@ -131,8 +132,7 @@ $dragonR = $dragonRights;
             if ($type == 'klan') {
                 echo "box-shadow: 0 0 30px $active_shadow";
             }
-            ?>" align="center" width="25%"
-                <?php
+            ?>" align="center" width="25%" <?php
                 if ($type == 'klan') {
                     echo "bgcolor=\"$active_bg\"";
                 } else {
@@ -156,8 +156,7 @@ $dragonR = $dragonRights;
             if ($type == 'naim') {
                 echo "box-shadow: 0 0 30px $active_shadow";
             }
-            ?>" align="center" width="25%"
-                <?php
+            ?>" align="center" width="25%" <?php
                 if ($type == 'naim') {
                     echo "bgcolor=\"$active_bg\"";
                 } else {
@@ -180,8 +179,7 @@ $dragonR = $dragonRights;
             if ($type == 'trav') {
                 echo "box-shadow: 0 0 30px $active_shadow";
             }
-            ?>" align="center" width="25%"
-                <?php
+            ?>" align="center" width="25%" <?php
                 if ($type == 'trav') {
                     echo "bgcolor=\"$active_bg\"";
                 } else {
@@ -204,8 +202,7 @@ $dragonR = $dragonRights;
             if ($type == 'common') {
                 echo "box-shadow: 0 0 30px $active_shadow";
             }
-            ?>" align="center" width="25%"
-                <?php
+            ?>" align="center" width="25%" <?php
                 if ($type == 'common') {
                     echo "bgcolor=\"$active_bg\"";
                 } else {
@@ -228,9 +225,9 @@ $dragonR = $dragonRights;
         </tr>
     </table>
 </center>
-<br/>
+<br />
 <?php
-echo "<center>";
+echo "<nav aria-label='navigation' class='nav justify-content-center mb-3' ";
 echo ZlistLinkPager::widget([
     'pagination' => $pagination,
     'firstPageLabel' => '<<',
@@ -239,10 +236,11 @@ echo ZlistLinkPager::widget([
     'nextPageLabel' => '>',
     'city' => $city,
     'type' => $type,
+    
 ]);
-echo "</center>";
+echo "</nav>";
+echo"<div class=\"row mb-3\">";
 foreach ($zayavki as $zayavka) {
-    echo "<center>";
     //if (sizeof($dragonRights) > 0) {
     if ($dragonRights != null) {
         $actions = ActionsUserView::findActionsByZid($zayavka->zId);
@@ -252,195 +250,152 @@ foreach ($zayavki as $zayavka) {
     ?>
 
 
-    <table style="width:800px; border: 0px none; padding: 5px; background-color:
-    <?php
-    if ($zayavka->user_id == Yii::$app->user->getId()) {
-        echo $settings->own_z_color;
-    } else {
-        echo $settings->color_background;
-    }
-    echo ";";
-    ?>
-
-    <?php
-    if ($zayavka->status == "new") {
-        echo "box-shadow: 0 0 20px  grey";
-    }
-    if ($zayavka->status == "cancelled") {
-        echo "box-shadow: 0 0 20px  " . $settings->color_cancelled;
-    }
-    if ($zayavka->status == "inprogress") {
-        echo "box-shadow: 0 0 20px  " . $settings->color_inprogress;
-    }
-    if ($zayavka->status == "otkaz") {
-        echo "box-shadow: 0 0 20px  " . $settings->color_otkaz;
-    }
-    if ($zayavka->status == "chist") {
-        echo "box-shadow: 0 0 20px  " . $settings->color_chist;
-    }
-    if ($zayavka->status == "katorga") {
-        echo "box-shadow: 0 0 20px  " . $settings->color_killed;
-    }
-    if ($zayavka->status == "prokli") {
-        echo "box-shadow: 0 0 20px  " . $settings->color_killed;
-    }
-    if ($zayavka->status == "block") {
-        echo "box-shadow: 0 0 20px  " . $settings->color_killed;
-    }
-    ?>
-            ">
-        <tr style="height: 40px">
-            <td width="10%" style="padding: 5px;"><?php
-                if (!Yii::$app->user->isGuest) {
-                    if ($model->user_group > 9) {
-                        ?>
-                        <script>
-                            function updateSpecText(type, id) {
-                                buttonDiv = document.getElementById('spec_button_' + id + '_div');
-                                div = document.getElementById('spectext_' + id);
-                                profText = div.innerHTML;
-                                buttonDiv.style.display = "block";
-                                if (type === "bp") {
-                                    div.innerHTML = "Б/П - чисто. " + profText + " http://<?= Yii::$app->getRequest()->serverName ?><?= Yii::$app->getHomeUrl() ?>sitem/<?= $zayavka->zId ?>/";
-                                }
-                                if (type === "p") {
-                                    div.innerHTML = "П - чисто. " + profText + " http://<?= Yii::$app->getRequest()->serverName ?><?= Yii::$app->getHomeUrl() ?>sitem/<?= $zayavka->zId ?>/";
-                                }
-                                if (type === "b") {
-                                    div.innerHTML = "";
-                                }
-
-                            }
-                        </script>
-                        <table>
-                            <tr>
-                                <td>
-                                    <?php
-                                    echo Html::a(
-                                        '#' . $zayavka->zId, Url::to([
-                                        '/site/sitem', 'id' => $zayavka->zId
-                                    ])
-                                    );
-                                    ?>
-                                </td>
-                                <td>
-                                    <button class="btn_<?= $zayavka->zId ?>" style="
-                                            position: relative;
-                                            display: inline-block;
-                                            padding: 2px 4px;
-                                            font-size: 13px;
-                                            font-weight: bold;
-                                            line-height: 20px;
-                                            color: #333;
-                                            white-space: nowrap;
-                                            vertical-align: middle;
-                                            cursor: pointer;
-                                            background-color: #eee;
-                                            background-image: linear-gradient(#fcfcfc,#eee);
-                                            border: 1px solid #d5d5d5;
-                                            border-radius: 3px;
-                                            -webkit-user-select: none;
-                                            -moz-user-select: none;
-                                            -ms-user-select: none;
-                                            user-select: none;
-                                            -webkit-appearance: none;
-                                            ">
-                                        <img width="14px" src="<?= Yii::$app->request->baseUrl ?>/img/clippy.svg"
-                                             alt="Copy to clipboard">
-                                    </button>
-                                    <script>
-                                        var clipboard = new Clipboard('.btn_<?= $zayavka->zId ?>', {
-                                            text: function () {
-                                                return 'http://<?= Yii::$app->getRequest()->serverName ?><?= Yii::$app->getHomeUrl() ?>sitem/<?= $zayavka->zId ?>/';
-                                            }
-                                        });
-
-                                        clipboard.on('success', function (e) {
-                                            console.log(e);
-                                        });
-
-                                        clipboard.on('error', function (e) {
-                                            console.log(e);
-                                        });
-                                    </script>
-                                <td>
-                                    <?php
-                                    if ($zayavka->status == "inprogress") {
-                                    ?>
-                                <td>
-                                    <div id="spec_button_<?= $zayavka->zId ?>_div" style="display: none;">
-                                        <button class="ext_btn_<?= $zayavka->zId ?>" style="
-                                                    position: relative;
-                                                    display: inline-block;
-                                                    padding: 2px 4px;
-                                                    font-size: 13px;
-                                                    font-weight: bold;
-                                                    line-height: 20px;
-                                                    color: #333;
-                                                    white-space: nowrap;
-                                                    vertical-align: middle;
-                                                    cursor: pointer;
-                                                    background-color: #eee;
-                                                    background-image: linear-gradient(#fcfcfc,#eee);
-                                                    border: 1px solid #d5d5d5;
-                                                    border-radius: 3px;
-                                                    -webkit-user-select: none;
-                                                    -moz-user-select: none;
-                                                    -ms-user-select: none;
-                                                    user-select: none;
-                                                    -webkit-appearance: none;
-                                                    ">
-                                            <img width="14px"
-                                                 src="<?= Yii::$app->request->baseUrl ?>/img/clippy_red.png"
-                                                 alt="Copy to clipboard">
-                                        </button>
-                                        <div id="spectext_<?= $zayavka->zId ?>"
-                                             style="display: none"><?= switchType($professions, $zayavka->type) ?> <?= switchCity($zayavka->city) ?></div>
-                                        <script>
-                                            var clipboard = new Clipboard('.ext_btn_<?= $zayavka->zId ?>', {
-                                                text: function () {
-                                                    text = document.getElementById('spectext_<?= $zayavka->zId ?>').innerHTML;
-                                                    return text;
-                                                }
-                                            });
-
-                                            clipboard.on('success', function (e) {
-                                                console.log(e);
-                                            });
-
-                                            clipboard.on('error', function (e) {
-                                                console.log(e);
-                                            });
-                                        </script>
-                                    </div>
-                                </td>
-                                <?php } ?>
-                            </tr>
-                        </table>
-                        <?php
-                    } else {
-                        echo "#" . $zayavka->zId;
-                    }
+<!-- начало списка заявок -->
+<div class="col-xl-4 col-sm-12 col-md-6 mb-3">
+    <div class="card h-100 application" style=" background-color:
+           /* выставляем цвета */
+           <?php
+                if ($zayavka->user_id == Yii::$app->user->getId()) {
+                echo $settings->own_z_color;
                 } else {
-                    echo "#" . $zayavka->zId;
+                echo $settings->color_background;
                 }
+                echo ";";
                 ?>
-            </td>
-            <td width="25%" style="padding: 5px;"><a
-                        href="http://newforest.apeha.ru/info.html?nick=<?= urlencode(iconv("UTF-8", "CP1251", $zayavka->username)) ?>"
-                        target="_blank"><?= $zayavka->username ?></a></td>
-            <td width="35%" style="padding: 5px;">Статус: <?= getStatus($zayavka->status) ?></td>
-            <td align="right" width="30%" style="padding: 5px;">Подана: <?= $zayavka->date_added ?></td>
-        </tr>
-        <tr>
-            <td colspan="2" style="padding: 5px;">
-                <?= switchType($professions, $zayavka->type) ?>
-            </td>
-            <td colspan="2" style="padding: 5px;">
-                <?= switchCity($zayavka->city) ?>
-            </td>
-        </tr>
-        <?php
+
+            <?php
+            if ($zayavka->status == "new") {
+                echo "box-shadow: 0 0 20px  grey";
+            }
+            if ($zayavka->status == "cancelled") {
+            echo "box-shadow: 0 0 20px  " . $settings->color_cancelled;
+            }
+            if ($zayavka->status == "inprogress") {
+            echo "box-shadow: 0 0 20px  " . $settings->color_inprogress;
+            }
+            if ($zayavka->status == "otkaz") {
+            echo "box-shadow: 0 0 20px  " . $settings->color_otkaz;
+            }
+            if ($zayavka->status == "chist") {
+            echo "box-shadow: 0 0 20px  " . $settings->color_chist;
+            }
+            if ($zayavka->status == "katorga") {
+            echo "box-shadow: 0 0 20px  " . $settings->color_killed;
+            }
+            if ($zayavka->status == "prokli") {
+            echo "box-shadow: 0 0 20px  " . $settings->color_killed;
+            }
+            if ($zayavka->status == "block") {
+            echo "box-shadow: 0 0 20px  " . $settings->color_killed;
+            }
+            ?>
+            ">
+
+
+        <div class="card-header">
+
+            <div class="buttons-nick-time">
+                <?php
+             if (!Yii::$app->user->isGuest) {
+                     if ($model->user_group > 9) { 
+                         ?>
+                <script>
+                function updateSpecText(type, id) {
+                    buttonDiv = document.getElementById('spec_button_' + id + '_div');
+                    div = document.getElementById('spectext_' + id);
+                    profText = div.innerHTML;
+                    buttonDiv.style.display = "block";
+                    if (type === "bp") {
+                        div.innerHTML = "Б/П - чисто. " + profText +
+                            " http://<?= Yii::$app->getRequest()->serverName ?><?= Yii::$app->getHomeUrl() ?>sitem/<?= $zayavka->zId ?>/";
+                    }
+                    if (type === "p") {
+                        div.innerHTML = "П - чисто. " + profText +
+                            " http://<?= Yii::$app->getRequest()->serverName ?><?= Yii::$app->getHomeUrl() ?>sitem/<?= $zayavka->zId ?>/";
+                    }
+                    if (type === "b") {
+                        div.innerHTML = "Б - чисто. " + profText +
+                            " http://<?= Yii::$app->getRequest()->serverName ?><?= Yii::$app->getHomeUrl() ?>sitem/<?= $zayavka->zId ?>/";
+                    }
+
+                }
+                </script>
+                <div class="zlist-head-buttons">
+                    <button class="btn_<?= $zayavka->zId ?> btn-outline-info btn btm-sm btn-zlist mr-1" style="">
+                        <?php echo FAS::icon('clipboard')?>
+                    </button>
+                    <script>
+                    var clipboard = new Clipboard('.btn_<?= $zayavka->zId ?>', {
+                        text: function() {
+                            return 'http://<?= Yii::$app->getRequest()->serverName ?><?= Yii::$app->getHomeUrl() ?>sitem/<?= $zayavka->zId ?>/';
+                        }
+                    });
+
+                    clipboard.on('success', function(e) {
+                        console.log(e);
+                    });
+
+                    clipboard.on('error', function(e) {
+                        console.log(e);
+                    });
+                    </script>
+                    <?php
+                     if ($zayavka->status == "inprogress") {
+                                    ?>
+                    <div id="spec_button_<?= $zayavka->zId ?>_div" style="display: none;">
+                        <button class="ext_btn_<?= $zayavka->zId ?> btn btn-outline-danger btn-sm btn-zlist">
+                            <?php echo FAS::icon('clipboard')?>
+                            <!-- <img width="14px" src="<?= Yii::$app->request->baseUrl ?>/img/clippy_red.png"
+                        alt="Copy to clipboard"> -->
+                        </button>
+                        <div id="spectext_<?= $zayavka->zId ?>" style="display: none">
+                            <?= switchType($professions, $zayavka->type) ?>
+                            <?= switchCity($zayavka->city) ?>
+                        </div>
+                        <script>
+                        var clipboard = new Clipboard('.ext_btn_<?= $zayavka->zId ?>', {
+                            text: function() {
+                                text = document.getElementById(
+                                        'spectext_<?= $zayavka->zId ?>')
+                                    .innerHTML;
+                                return text;
+                            }
+                        });
+
+                        clipboard.on('success', function(e) {
+                            console.log(e);
+                        });
+
+                        clipboard.on('error', function(e) {
+                            console.log(e);
+                        });
+                        </script>
+                    </div>
+                    <?php } 
+                    echo"</div>";
+                       }
+                    }?>
+                    <a href="http://kovcheg1.apeha.ru/info.html?nick=<?= urlencode(iconv("UTF-8", "CP1251", $zayavka->username)) ?>"
+                        target="_blank" class="zlistNick text-decoration-none"
+                        title="Открыть инфу персонажа"><?= $zayavka->username ?></a>
+                    <p class="text-muted zayavka-time pr-1">
+                        <?php  echo FAR::icon('clock',['title'=>'Время подачи заявки']); ?>
+                        <?= $zayavka->date_added ?></p>
+
+                </div>
+            </div>
+
+
+            <div class="card-body application-body">
+                <div class="zlist-sub p-2">
+                    <h5 class="card-title zayavka-title"> <?= switchType($professions, $zayavka->type) ?></h5>
+                    <div class="card-subtitle zayavka-subtitle  ">
+                        <?= switchCity($zayavka->city) ?>
+
+                    </div>
+                </div>
+
+                <?php
         //      if (is_array($dragonRights) && sizeof($dragonRights) > 0) {
         if ($dragonRights != null) {
             //DRAGON
@@ -515,26 +470,25 @@ foreach ($zayavki as $zayavka) {
                     if ($otkaz) {
                         $model->zzz = 1;
                         ?>
-                        <tr>
-                            <td colspan="4">
-                                <?php
+                <div class="card-text otmetka">
+                    <?php
                                 foreach ($actions as $action) {
                                     if ($action->action == "otkaz") {
                                         echo returnComment($action->notes);
                                     }
                                 }
                                 ?>
-                                Отказано.. причина бла бла бла
-                            </td>
-                        </tr>
-                        <?php
+                    Отказано.. причина бла бла бла
+                </div>
+
+
+                <?php
                     }
                     if ($dopproverka) {
                         //------------------------=====================  НЕВИД  =======================-----------------------
                         ?>
-                        <tr>
-                            <td colspan="4" style="padding:15px">
-                                <?php
+
+                <?php
                                 $stager_text = "";
                                 $stager_comment = "";
                                 if ($stagerId != "") {
@@ -558,12 +512,16 @@ foreach ($zayavki as $zayavka) {
                                 }
                                 if (strlen($stager_text) > 1) {
                                     ?>
-                                    <span style="font-size:13px; color: green"><b><?= $stager_text ?></b><br></span>
-                                    <?php
+                <div class="card-text otmetka ">
+                    <span style="font-size:13px; color: green"><b><?= $stager_text ?></b><br></span>
+                </div>
+                <?php
                                     if (strlen($stager_comment) > 1) {
                                         ?>
-                                        <span style="font-size:13px; color: red"><b><?php echoComment($stager_comment) ?></b><br></span>
-                                        <?php
+                <div class="card-text otmetka hide">
+                    <span style="font-size:13px; color: red"><b><?php echoComment($stager_comment) ?></b><br></span>
+                </div>
+                <?php
                                     }
                                 }
                                 $dragon_text = "";
@@ -587,61 +545,62 @@ foreach ($zayavki as $zayavka) {
                                     }
                                 }
                                 ?>
-                                <span style="font-size:13px; color: green"><b><?= $dragon_text ?></b><br></span>
-                                <?php
+                <span style="font-size:13px; color: green"><b><?= $dragon_text ?></b><br></span>
+                <?php
                                 if (strlen($dragon_notes) > 1) {
                                     ?>
-                                    <span style="font-size:13px; color: red"><b><?= returnComment($dragon_notes) ?></b><br></span>
-                                    <?php
+                <span style="font-size:13px; color: red"><b><?= returnComment($dragon_notes) ?></b><br></span>
+                <?php
                                 }
                                 echo "<br><span style=\"font-size:13px; color: black\"><b>Доппроверка</b><br></span>";
                                 //END DISPLAYING PROVERKA INFO
                                 //CHECK IF DRAGON HAS RIGHTS TO PERFORM NEVID ACITON
                                 if ($dragonRights->nevid == 1) {
                                     ?>
-                                    <span style="font-size:13px; text-decoration: underline; cursor: pointer"
-                                          onclick="toggleView('finish_recheck_<?= $zayavka->zId ?>')">Закончить ДОППРОВЕРКУ</span>
-                                    <br>
-                                    <div style="padding:15px; display:none" id="finish_recheck_<?= $zayavka->zId ?>">
 
-                                        <?php
-                                        echo Html::beginForm(['/site/zlist'], 'post');
-                                        echo Html::hiddenInput('Zlist[city]', $city);
-                                        echo Html::hiddenInput('Zlist[type]', $type);
-                                        echo Html::dropDownList('Zlist[action]', null, [
-                                            'nevid_done_chist' => 'Чист',
+                <div class="dropdown align-self-end">
+                    <button class="btn btn-outline-info btn-sm btn-finish dropdown-toggle" type="button"
+                        id="dropdownNevid" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Закончить доппроверку
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right " aria-labelledby="dropdownNevid">
+                        <?php
+                            echo Html::beginForm(['/site/zlist'], 'post',['class' => 'px-4 py-3 d-flex flex-column ']);
+                            echo Html::hiddenInput('Zlist[city]', $city);
+                            echo Html::hiddenInput('Zlist[type]', $type);
+                            echo Html::dropDownList('Zlist[action]', null, [
                                             'nevid_done_chist' => 'Чист',
                                             'nevid_done_katorga' => 'Каторга',
                                             'nevid_done_prokli' => 'Прокли',
                                             'nevid_done_block' => 'Блок',
                                             'nevid_done_otkaz' => 'Отказ',
-                                        ]);
-                                        echo "<br><br>";
-                                        echo Html::hiddenInput('Zlist[z_id]', $zayavka->zId);
-                                        echo Html::hiddenInput('Zlist[boi]', true);
-                                        echo Html::hiddenInput('Zlist[peredachi]', true);
-                                        echo Html::hiddenInput('Zlist[active_page]', $active_page);
-                                        echo Html::textarea('Zlist[comment]', '', ['cols' => '105']);
-                                        echo "<br><br>";
-                                        echo Html::submitButton(
-                                            'Закончить доппроверку', ['class' => 'button', 'onclick' => 'return confirm("Продолжаем?")']
-                                        );
-                                        echo Html::endForm();
-                                        ?>
-                                    </div>
-                                    <?php
+                                        ],['class' => 'mb-2 ']);
+                            echo Html::hiddenInput('Zlist[z_id]', $zayavka->zId);
+                            echo Html::hiddenInput('Zlist[boi]', true);
+                            echo Html::hiddenInput('Zlist[peredachi]', true);
+                            echo Html::hiddenInput('Zlist[active_page]', $active_page);
+                            echo Html::textarea('Zlist[comment]', '', ['cols' => '25'],['class'=>'form-control mb-2']);
+                            echo Html::submitButton(
+                            'Закончить доппроверку', ['class' => 'btn btn-outline-danger btn-sm mt-2', 'onclick' => 'return confirm("Продолжаем?")']
+                        );
+                        echo Html::endForm();                   
+                    ?>
+
+                    </div>
+                </div>
+
+
+                <?php
                                 }
                                 ?>
-                            </td>
-                        </tr>
-                        <?php
+                </p>
+                <?php
                     }
                     if ($boiDone && $perDone) {
                         //------------------------=====================  Б/П ПРОВЕРЕНО  =======================-----------------------                        
                         ?>
-                        <tr>
-                            <td colspan="4" style="padding:15px">
-                                <?php
+                <div class="card-text otmetka ">
+                    <?php
                                 $stager_text = "";
                                 $stager_comment = "";
                                 if ($stagerId != "") {
@@ -664,12 +623,12 @@ foreach ($zayavki as $zayavka) {
                                 }
                                 if (strlen($stager_text) > 1) {
                                     ?>
-                                    <span style="font-size:13px; color: green"><b><?= $stager_text ?></b><br></span>
-                                    <?php
+                    <span style="font-size:13px; color: green"><b><?= $stager_text ?></b><br></span>
+                    <?php
                                     if (strlen($stager_comment) > 1) {
                                         ?>
-                                        <span style="font-size:13px; color: red"><b><?= returnComment($stager_comment) ?></b><br></span>
-                                        <?php
+                    <span style="font-size:13px; color: red"><b><?= returnComment($stager_comment) ?></b><br></span>
+                    <?php
                                     }
                                 }
                                 $dragon_text = "";
@@ -686,12 +645,12 @@ foreach ($zayavki as $zayavka) {
                                     }
                                 }
                                 ?>
-                                <span style="font-size:13px; color: green"><b><?= $dragon_text ?></b><br></span>
-                                <?php
+                    <span style="font-size:13px; color: green"><b><?= $dragon_text ?></b><br></span>
+                    <?php
                                 if (strlen($dragon_notes) > 1) {
                                     ?>
-                                    <span style="font-size:13px; color: red"><b><?= returnComment($dragon_notes) ?></b><br></span>
-                                    <?php
+                    <span style="font-size:13px; color: red"><b><?= returnComment($dragon_notes) ?></b><br></span>
+                    <?php
                                 }
                                 // УПРАВЛЕНИЕ ДЛЯ ЗАКРЫВАЮЩЕГО ЗАЯВКУ
                                 if ($dragonRights->chistota == 1) {
@@ -723,71 +682,79 @@ foreach ($zayavki as $zayavka) {
                                 }
                                 if (isset($items)) {
                                     ?>
-                                    <span style="font-size:13px; text-decoration: underline; cursor: pointer"
-                                          onclick="toggleView('finish_recheck_<?= $zayavka->zId ?>')">Закрыть заявку</span>
-                                    <br>
-                                    <div style="padding:15px; display:none" id="finish_recheck_<?= $zayavka->zId ?>">
+                    <div class="dropdown align-self-end">
+                        <a class="btn btn-outline-info btn-sm btn-finish btn-sm dropdown-toggle" type="button"
+                            id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Закрыть заявку
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right border-action ">
 
-                                        <?php
-                                        echo Html::beginForm(['/site/zlist'], 'post');
+                            <?php
+                                        echo Html::beginForm(['/site/zlist'], 'post',['class' => 'px-4 py-3 d-flex flex-column ']);
                                         echo Html::hiddenInput('Zlist[city]', $city);
                                         echo Html::hiddenInput('Zlist[type]', $type);
-                                        echo Html::dropDownList('Zlist[action]', null, $items);
-                                        echo "<br><br>";
-                                        echo Html::hiddenInput('Zlist[z_id]', $zayavka->zId);
+                                        echo Html::dropDownList('Zlist[action]', null, $items,['class'=>'form-control mb-2']);
+                                        echo Html::hiddenInput('Zlist[z_id]', $zayavka->zId,['class'=>'form-control']);
                                         echo Html::hiddenInput('Zlist[boi]', true);
                                         echo Html::hiddenInput('Zlist[peredachi]', true);
                                         echo Html::hiddenInput('Zlist[active_page]', $active_page);
-                                        echo Html::textarea('Zlist[comment]', '', ['cols' => '105']);
-                                        echo "<br><br>";
+                                        echo Html::textarea('Zlist[comment]', '', ['cols' => '25'],['class'=>'form-control mb-2']);
                                         echo Html::submitButton(
-                                            'Закрыть заявку', ['class' => 'button', 'onclick' => 'return confirm("Продолжаем?")']
+                                            'Закрыть заявку', ['class' => 'btn btn-outline-danger btn-sm mt-2', 'onclick' => 'return confirm("Продолжаем?")']
                                         );
                                         echo Html::endForm();
                                         ?>
-                                    </div>
-                                    <?php
+
+
+                        </div>
+                    </div>
+
+
+                    <?php
                                 }
                                 ?>
-                            </td>
-                        </tr>
-                        <?php
+                </div>
+                <?php
                     }
                     $allowToTake = false;
                 } else {
                     //HERE WE ARE IF ZAYAVKA NOT PROVERENA AND NOT OTKAZANA
                     if ($dragonRights->boi_prov == 1 || $dragonRights->per_prov == 1 || $dragonRights->boi == 1 || $dragonRights->peredachi == 1 || $dragonRights->fullbp == 1) {
                         ?>
-                        <tr>
-                            <td colspan="4" style="padding: 5px;">
-                                <hr style="padding:0; margin-top: 0; margin-bottom: 8px; border-top: 1px solid #00a">
-                                <?php
+                <div class="card-text otmetka ">
+                    <!-- <hr style="padding:0; margin-top: 0; margin-bottom: 8px; border-top: 1px solid #00a"> -->
+                    <?php
                                 foreach ($actions as $action) {
                                     if (strpos($action->action, "sm") !== false && $action->active == 1) {
                                         if ($action->dragon_id == $dragonRights->dragonid) {
                                             $allowToFinish = true;
                                             echo "<span style=\"font-size:14px; color: red\">Заявка рассматривается <b>Вами</b><br></span>";
                                             ?>
-                                            <span style="font-size:13px; text-decoration: underline; cursor: pointer"
-                                                  onclick="toggleView('finish_check_<?= $zayavka->zId ?>')">Закончить проверку</span>
-                                            <br>
-                                            <div style="padding:15px; display:none"
-                                                 id="finish_check_<?= $zayavka->zId ?>">
 
-                                                <?php
-                                                echo Html::beginForm(['/site/zlist'], 'post');
+                    <div class="dropdown align-self-end">
+                        <a class="btn btn-outline-info btn-sm btn-finish btn-sm dropdown-toggle" type="button"
+                            id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Закончить проверку
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <?php
+                                                echo Html::beginForm(['/site/zlist'], 'post',['class' => 'px-4 py-3 d-flex flex-column ']);
                                                 echo Html::hiddenInput('Zlist[city]', $city);
                                                 echo Html::hiddenInput('Zlist[type]', $type);
                                                 if ($dragonRights->fullbp == 1) {
-                                                    ?>
-                                                    <script>updateSpecText("bp", "<?= $zayavka->zId ?>");</script>
-                                                <?php
+                                            ?>
+                            <script>
+                            updateSpecText("bp", "<?= $zayavka->zId ?>");
+                            </script>
+                            <?php
                                                 $items = ['select_action' => '--==выберите==--', 'bp_done' => 'Б/П проверено', 'dopproverka_bp' => 'Б/П+Доппроверка', 'otkaz' => 'Отказ'];
                                                 } else {
                                                 if ($dragonRights->boi_prov == 1 && $dragonRights->per_prov == 1 & $dragonRights->boi == 1 & $dragonRights->peredachi == 1) {
                                                 ?>
-                                                    <script>updateSpecText("bp", "<?= $zayavka->zId ?>");</script>
-                                                    <?php
+                            <script>
+                            updateSpecText("bp", "<?= $zayavka->zId ?>");
+                            </script>
+                            <?php
                                                     $items = [
                                                         'select_action' => '--==выберите==--',
                                                         'b_recheck' => 'Б на перепроверку',
@@ -832,35 +799,33 @@ foreach ($zayavki as $zayavka) {
                                                             'otkaz' => 'Отказ'];
                                                     }
                                                 }
-                                                echo Html::dropDownList('Zlist[action]', null, $items);
-                                                echo "<br><br>";
+                                                echo Html::dropDownList('Zlist[action]', null, $items,['class' => 'mb-2 ']);
                                                 echo Html::hiddenInput('Zlist[z_id]', $zayavka->zId);
                                                 echo Html::hiddenInput('Zlist[boi]', true);
                                                 echo Html::hiddenInput('Zlist[peredachi]', true);
                                                 echo Html::hiddenInput('Zlist[active_page]', $active_page);
-                                                echo Html::textarea('Zlist[comment]', '', ['cols' => '105']);
-                                                echo "<br><br>";
+                                                echo Html::textarea('Zlist[comment]', '', ['cols' => '25'],['class'=>'form-control mb-2']);
                                                 echo Html::submitButton(
-                                                    'Отметить проверку законченной', ['class' => 'button', 'onclick' => 'return confirm("Помечаем Б/П. Продолжаем?")']
+                                                    'Отметить проверку законченной', ['class' => 'btn btn-outline-danger btn-sm mt-2', 'onclick' => 'return confirm("Помечаем Б/П. Продолжаем?")']
                                                 );
                                                 echo Html::endForm();
                                                 ?>
-                                            </div>
-                                            <?php
+                        </div>
+                        <?php
                                         } else {
                                             echo "<span style=\"font-size:13px; color: green\">Заявка рассматривается драконом <b><span style=\"color:red\">Dr. " . Users::findById($action->dragon_id)->username . "</span></b><br></span>";
                                             $allowToTake = false;
                                             if ($dragonRights->fullbp == 1) {
-                                                echo Html::beginForm(['/site/zlist'], 'post');
+                                                echo Html::beginForm(['/site/zlist'], 'post',['class' => 'px-4 py-3 d-flex flex-column ']);
                                                 echo Html::hiddenInput('Zlist[city]', $city);
                                                 echo Html::hiddenInput('Zlist[type]', $type);
                                                 echo Html::hiddenInput('Zlist[action]', 'takeItemWithOverride');
-                                                echo Html::hiddenInput('Zlist[z_id]', $zayavka->zId);
+                                                echo Html::hiddenInput('Zlist[z_id]', $zayavka->zId,['class'=>'form-control']);
                                                 echo Html::hiddenInput('Zlist[boi]', true);
                                                 echo Html::hiddenInput('Zlist[peredachi]', true);
                                                 echo Html::hiddenInput('Zlist[active_page]', $active_page);
                                                 echo Html::submitButton(
-                                                    'Забрать на Б/П проверку, отменив предыдущую проверку', ['class' => 'btn btn-link logout', 'onclick' => 'return confirm("Забираем заявку себе. Продолжаем?")']
+                                                    'Забрать на Б/П проверку, отменив предыдущую проверку', ['class' => 'btn btn-outline-danger btn-sm mt-2 logout', 'onclick' => 'return confirm("Забираем заявку себе. Продолжаем?")']
                                                 );
                                                 echo Html::endForm();
                                             }
@@ -869,10 +834,8 @@ foreach ($zayavki as $zayavka) {
                                     if (strpos($action->action, "recheck_") !== false) {
                                         $allowToTake = false;
                                         ?>
-                                        <table>
-                                            <tr>
-                                                <td colspan="4">
-                                                    <?php
+
+                        <?php
                                                     if (!$boiDone && !$perDone && $boiRecheck && $perRecheck) {
                                                         echo "<span style=\"font-size:12px\">Б/П *" . $stagerName . " - Нужна перепроверка<br></span>";
                                                         $items = ['select_action' => '--==выберите==--', 'bp_done_recheck' => 'Б/П проверено', 'dopproverka_bp' => 'Б/П+Доппроверка', 'otkaz' => 'Отказ'];
@@ -899,48 +862,59 @@ foreach ($zayavki as $zayavka) {
                                                     if ($action->dragon_id == $dragonRights->dragonid) {
                                                     if ($boiDone) {
                                                         ?>
-                                                        <script>updateSpecText("p", "<?= $zayavka->zId ?>");</script>
-                                                    <?php
+                        <script>
+                        updateSpecText("p", "<?= $zayavka->zId ?>");
+                        </script>
+                        <?php
                                                     } else {
                                                     ?>
-                                                        <script>updateSpecText("bp", "<?= $zayavka->zId ?>");</script>
-                                                    <?php
+                        <script>
+                        updateSpecText("bp", "<?= $zayavka->zId ?>");
+                        </script>
+                        <?php
                                                     }
                                                     echo "<span style=\"font-size:14px; color: red\">Заявка перепроверяется <b>Вами</b><br></span>";
                                                     ?>
-                                                        <span style="font-size:13px; text-decoration: underline; cursor: pointer"
-                                                              onclick="toggleView('finish_recheck_<?= $zayavka->zId ?>')">Закончить перепроверку</span>
-                                                        <br>
-                                                        <div style="padding:15px; display:none"
-                                                             id="finish_recheck_<?= $zayavka->zId ?>">
+                    </div>
+                </div>
+                <span style="font-size:13px; text-decoration: underline; cursor: pointer"
+                    onclick="toggleView('finish_check_<?= $zayavka->zId ?>')">Закончить проверку</span>
+                <br>
+                <div style="padding:15px; display:none" id="finish_check_<?= $zayavka->zId ?>">
 
-                                                            <?php
-                                                            echo Html::beginForm(['/site/zlist'], 'post');
+
+                    <span style="font-size:13px; text-decoration: underline; cursor: pointer"
+                        onclick="toggleView('finish_recheck_<?= $zayavka->zId ?>')">Закончить
+                        перепроверку</span>
+                    <br>
+                    <div style="padding:15px; display:none" id="finish_recheck_<?= $zayavka->zId ?>">
+
+                        <?php
+                                                            echo Html::beginForm(['/site/zlist'], 'post',['class' => 'px-4 py-3 d-flex flex-column ']);
                                                             echo Html::hiddenInput('Zlist[city]', $city);
                                                             echo Html::hiddenInput('Zlist[type]', $type);
-                                                            echo Html::dropDownList('Zlist[action]', null, $items);
+                                                            echo Html::dropDownList('Zlist[action]', null, $items,['class' => 'mb-2 ']);
                                                             echo "<br><br>";
                                                             echo Html::hiddenInput('Zlist[z_id]', $zayavka->zId);
                                                             echo Html::hiddenInput('Zlist[boi]', true);
                                                             echo Html::hiddenInput('Zlist[peredachi]', true);
                                                             echo Html::hiddenInput('Zlist[active_page]', $active_page);
-                                                            echo Html::textarea('Zlist[comment]', '', ['cols' => '105']);
+                                                            echo Html::textarea('Zlist[comment]', '', ['cols' => '25'],['class'=>'form-control mb-2']);
                                                             echo "<br><br>";
                                                             echo Html::submitButton(
-                                                                'Отметить перепроверку законченной', ['class' => 'button', 'onclick' => 'return confirm("Продолжаем?")']
+                                                                'Отметить перепроверку законченной', ['class' => 'btn btn-outline-danger btn-sm mt-2 ', 'onclick' => 'return confirm("Продолжаем?")']
                                                             );
                                                             echo Html::endForm();
                                                             ?>
-                                                        </div>
-                                                        <?php
+                    </div>
+                    <?php
                                                     } else {
                                                         echo "<span style=\"font-size:13px; color: green\">Заявка перепроверяется драконом <b><span style=\"color:red\">Dr. " . $action->username . "</span></b><br></span>";
                                                     }
                                                     ?>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <?php
+                </div>
+                <div class="card-text otmetka ">
+                    <?php
                                     }
                                 }
                                 if ($allowToTake && !$allowToFinish) {
@@ -949,7 +923,7 @@ foreach ($zayavki as $zayavka) {
                                     if (!$boiDone && !$perDone && !$boiRecheck && !$perRecheck) {
                                         //CHECK NOT STARTED AT ALL
                                         echo "<span style=\"font-size:11px\">Новая заявка. Вы можете взять её на проверку<br></span>";
-                                        echo Html::beginForm(['/site/zlist'], 'post');
+                                        echo Html::beginForm(['/site/zlist'], 'post',['class'=>'d-flex justify-content-end']);
                                         echo Html::hiddenInput('Zlist[city]', $city);
                                         echo Html::hiddenInput('Zlist[type]', $type);
                                         echo Html::hiddenInput('Zlist[action]', 'takeItem');
@@ -958,7 +932,7 @@ foreach ($zayavki as $zayavka) {
                                         echo Html::hiddenInput('Zlist[peredachi]', true);
                                         echo Html::hiddenInput('Zlist[active_page]', $active_page);
                                         echo Html::submitButton(
-                                            'Взять на проверку', ['class' => 'btn btn-link logout', 'onclick' => 'return confirm("Берём заявку на проверку. Продолжаем?")']
+                                            'Взять на проверку', ['class' => 'btn btn-outline-info btn-start  logout', 'onclick' => 'return confirm("Берём заявку на проверку. Продолжаем?")']
                                         );
                                         echo Html::endForm();
                                     } else {
@@ -968,7 +942,7 @@ foreach ($zayavki as $zayavka) {
                                                 echo "<span style=\"font-size:13px; color:red\">" . $st_note . "<br></span>";
                                             }
                                             if ($dragonRights->fullbp == 1 || ($dragonRights->boi == 1 && $dragonRights->peredachi == 1)) {
-                                                echo Html::beginForm(['/site/zlist'], 'post');
+                                                echo Html::beginForm(['/site/zlist'], 'post',['class'=>'align-self-end']);
                                                 echo Html::hiddenInput('Zlist[city]', $city);
                                                 echo Html::hiddenInput('Zlist[type]', $type);
                                                 echo Html::hiddenInput('Zlist[action]', 'takeRecheck');
@@ -977,7 +951,7 @@ foreach ($zayavki as $zayavka) {
                                                 echo Html::hiddenInput('Zlist[peredachi]', true);
                                                 echo Html::hiddenInput('Zlist[active_page]', $active_page);
                                                 echo Html::submitButton(
-                                                    'Взять на перепроверку', ['class' => 'btn btn-link logout', 'onclick' => 'return confirm("Берём заявку на перепроверку. Продолжаем?")']
+                                                    'Взять на перепроверку', ['class' => 'btn btn-outline-info logout', 'onclick' => 'return confirm("Берём заявку на перепроверку. Продолжаем?")']
                                                 );
                                                 echo Html::endForm();
                                             }
@@ -988,7 +962,7 @@ foreach ($zayavki as $zayavka) {
                                                 echo "<span style=\"font-size:13px; color:red\">" . $st_note . "<br></span>";
                                             }
                                             if ($dragonRights->fullbp == 1 || ($dragonRights->boi == 1 && $dragonRights->peredachi == 1)) {
-                                                echo Html::beginForm(['/site/zlist'], 'post');
+                                                echo Html::beginForm(['/site/zlist'], 'post',['class'=>'align-self-end']);
                                                 echo Html::hiddenInput('Zlist[city]', $city);
                                                 echo Html::hiddenInput('Zlist[type]', $type);
                                                 echo Html::hiddenInput('Zlist[action]', 'takeRecheck');
@@ -997,7 +971,7 @@ foreach ($zayavki as $zayavka) {
                                                 echo Html::hiddenInput('Zlist[peredachi]', true);
                                                 echo Html::hiddenInput('Zlist[active_page]', $active_page);
                                                 echo Html::submitButton(
-                                                    'Взять на перепроверку', ['class' => 'btn btn-link logout', 'onclick' => 'return confirm("Берём заявку на перепроверку. Продолжаем?")']
+                                                    'Взять на перепроверку', ['class' => 'btn btn-outline-info logout', 'onclick' => 'return confirm("Берём заявку на перепроверку. Продолжаем?")']
                                                 );
                                                 echo Html::endForm();
                                             }
@@ -1008,7 +982,7 @@ foreach ($zayavki as $zayavka) {
                                                 echo "<span style=\"font-size:13px; color:red\">" . returnComment($st_note) . "<br></span>";
                                             }
                                             if ($dragonRights->fullbp == 1 || ($dragonRights->boi == 1 && $dragonRights->peredachi == 1)) {
-                                                echo Html::beginForm(['/site/zlist'], 'post');
+                                                echo Html::beginForm(['/site/zlist'], 'post',['class'=>'align-self-end']);
                                                 echo Html::hiddenInput('Zlist[city]', $city);
                                                 echo Html::hiddenInput('Zlist[type]', $type);
                                                 echo Html::hiddenInput('Zlist[action]', 'takeRecheck');
@@ -1017,7 +991,7 @@ foreach ($zayavki as $zayavka) {
                                                 echo Html::hiddenInput('Zlist[peredachi]', true);
                                                 echo Html::hiddenInput('Zlist[active_page]', $active_page);
                                                 echo Html::submitButton(
-                                                    'Взять на перепроверку', ['class' => 'btn btn-link logout', 'onclick' => 'return confirm("Берём заявку на перепроверку. Продолжаем?")']
+                                                    'Взять на перепроверку', ['class' => 'btn btn-outline-info logout', 'onclick' => 'return confirm("Берём заявку на перепроверку. Продолжаем?")']
                                                 );
                                                 echo Html::endForm();
                                             }
@@ -1028,7 +1002,7 @@ foreach ($zayavki as $zayavka) {
                                                 echo "<span style=\"font-size:13px; color:red\">" . returnComment($st_note) . "<br></span>";
                                             }
                                             if ($dragonRights->fullbp == 1 || ($dragonRights->boi == 1 && $dragonRights->peredachi == 1)) {
-                                                echo Html::beginForm(['/site/zlist'], 'post');
+                                                echo Html::beginForm(['/site/zlist'], 'post',['class'=>'align-self-end']);
                                                 echo Html::hiddenInput('Zlist[city]', $city);
                                                 echo Html::hiddenInput('Zlist[type]', $type);
                                                 echo Html::hiddenInput('Zlist[action]', 'takeRecheck');
@@ -1037,7 +1011,7 @@ foreach ($zayavki as $zayavka) {
                                                 echo Html::hiddenInput('Zlist[peredachi]', true);
                                                 echo Html::hiddenInput('Zlist[active_page]', $active_page);
                                                 echo Html::submitButton(
-                                                    'Взять на перепроверку', ['class' => 'btn btn-link logout', 'onclick' => 'return confirm("Берём заявку на перепроверку. Продолжаем?")']
+                                                    'Взять на перепроверку', ['class' => 'btn btn-outline-info logout', 'onclick' => 'return confirm("Берём заявку на перепроверку. Продолжаем?")']
                                                 );
                                                 echo Html::endForm();
                                             }
@@ -1048,7 +1022,7 @@ foreach ($zayavki as $zayavka) {
                                                 echo "<span style=\"font-size:13px; color:red\">" . returnComment($st_note) . "<br></span>";
                                             }
                                             if ($dragonRights->fullbp == 1 || ($dragonRights->boi == 1 && $dragonRights->peredachi == 1)) {
-                                                echo Html::beginForm(['/site/zlist'], 'post');
+                                                echo Html::beginForm(['/site/zlist'], 'post',['class'=>'align-self-end']);
                                                 echo Html::hiddenInput('Zlist[city]', $city);
                                                 echo Html::hiddenInput('Zlist[type]', $type);
                                                 echo Html::hiddenInput('Zlist[action]', 'takeRecheck');
@@ -1057,7 +1031,7 @@ foreach ($zayavki as $zayavka) {
                                                 echo Html::hiddenInput('Zlist[peredachi]', true);
                                                 echo Html::hiddenInput('Zlist[active_page]', $active_page);
                                                 echo Html::submitButton(
-                                                    'Взять на перепроверку', ['class' => 'btn btn-link logout', 'onclick' => 'return confirm("Продолжаем?")']
+                                                    'Взять на перепроверку', ['class' => 'btn btn-outline-info logout', 'onclick' => 'return confirm("Продолжаем?")']
                                                 );
                                                 echo Html::endForm();
                                             }
@@ -1065,9 +1039,9 @@ foreach ($zayavki as $zayavka) {
                                     }
                                 }
                                 ?>
-                            </td>
-                        </tr>
-                        <?php
+                </div>
+
+                <?php
                     } else {
                         echo getReadOnlyActions($actions, $zayavka);
                     }
@@ -1075,30 +1049,96 @@ foreach ($zayavki as $zayavka) {
             } else {
                 //USER IS DRAGON BUT ZAYAVA IS CLOSED;
                 ?>
-                <tr>
-                    <td colspan="4" style="padding: 10px">
-                        <?= getReadOnlyActions($actions, $zayavka); ?>
+                <div class="card-text otmetka ">
+                    <?= getReadOnlyActions($actions, $zayavka); ?>
                     </td>
-                </tr>
+                </div>
+
                 <?php
             }
         } else {
             //USER NOT DRAGON AT ALL
             ?>
-            <tr>
-                <td colspan="4" style="padding: 10px">
+                <div class="card-text otmetka ">
                     <?= getReadOnlyActionsWithAliases($actions, $zayavka); ?>
-                </td>
-            </tr>
-            <?php
+                </div>
+
+                <?php
         }
         ?>
-    </table>
-    <br/>
+            </div>
+            <div class="card-footer zlist-footer">
+                <p class="text-muted text"> Статус:
+                    <!-- <?= getStatus($zayavka->status) ?> -->
+                    <?php
+                    if ($zayavka->status == "new") {
+                          
+                        echo FAS::icon('plus-circle',['title'=>'Новая заявка']);
+                         }
+                    if ($zayavka->status == "cancelled") {
+                        echo FAR::icon('times-circle');
+                         }
+                    if ($zayavka->status == "inprogress") {
+                        echo FAR::icon('hourglass',['class' => 'inprogress-zayavka','title'=>'проверяется'])->spin(20);  
+                           }
+                    if ($zayavka->status == "otkaz") {
+                        echo FAS::icon('ban',['class' => 'otkaz-zayavka','title'=>'Отказ']);  
+                        }
+                    if ($zayavka->status == "chist") {
+                        echo FAR::icon('check-circle',['class' => 'chist-zayavka', 'title'=>'чистота выдана']);  
+                     }
+                    if ($zayavka->status == "katorga") {
+                        echo FAS::icon('ban',['class' => 'otkaz-zayavka','title'=>'Наказан каторгой']);  
+                        }
+                    if ($zayavka->status == "block") {
+            
+                        echo FAS::icon('ban',['class' => 'otkaz-zayavka','title'=>'Наказан блоком'
+                            ]);  
+                     }
+            ?>
+                </p>
+                <?php
+             if (!Yii::$app->user->isGuest) {
+                     if ($model->user_group > 9) { 
+                         ?>
+                <?php
+                     if ($zayavka->status == "inprogress") {
+                                    ?>
+                <p class="text-muted zayavka-id">
+                    <?php
+                                    echo Html::a(
+                                        '#' . $zayavka->zId, Url::to([
+                                        '/site/sitem', 'id' => $zayavka->zId
+                                    ])
+                                    );
+                                    ?>
+                </p>
+                <?php }else{
+                echo" <p class=\"text-muted zayavka-id\">";
+                echo Html::a(
+                                        '#' . $zayavka->zId, Url::to([
+                                        '/site/sitem', 'id' => $zayavka->zId
+                                    ])
+                                    );
+                echo "</p>";
+            }
+                      } else {
+                        echo "  <p class=\"text-muted zayavka-id\">#" . $zayavka->zId."</p>";
+                    }
+                } else {
+                    echo "  <p class=\"text-muted zayavka-id\">#" . $zayavka->zId."</p>";
+                }
+                     
+            ?>
+            </div>
+        </div>
+    </div>
+    <br />
+
     <?php
-    echo "</center>";
 }
-echo "<center>";
+echo "</div>";
+echo "<nav aria-label='navigation' class='nav justify-content-center mb-3' ";
 echo ZlistLinkPager::widget([
     'pagination' => $pagination,
     'firstPageLabel' => '<<',
@@ -1108,7 +1148,7 @@ echo ZlistLinkPager::widget([
     'city' => $city,
     'type' => $type,
 ]);
-echo "</center>";
+echo "</nav>";
 
 function getReadOnlyActions($allActions, $zayava)
 {
@@ -1176,502 +1216,512 @@ function getReadOnlyActions($allActions, $zayava)
                 $result .= "Отказ *" . $action->username . "<br>";
                 $result .= "</span>";
                 if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_otkaz\">";
+                    $result .= "<div class=\"text_otkaz article\" id =\"comment_$action->id\">";
                     $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "b_done") {
-                $result .= "<span class=\"name\">";
-                $result .= "Б *" . $action->username . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_italic\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "p_done") {
-                $result .= "<span class=\"name\">";
-                $result .= "П *" . $action->username . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_italic\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "b_done_p_recheck") {
-                $result .= "<span class=\"name\">";
-                $result .= "Б/П *" . $action->username . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_italic\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "bp_done_recheck") {
-                $result .= "<span class=\"name\">";
-                $result .= "Б/П *" . $action->username . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_italic\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "p_done_recheck") {
-                $result .= "<span class=\"name\">";
-                $result .= "П *" . $action->username . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_italic\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "b_done_recheck") {
-                $result .= "<span class=\"name\">";
-                $result .= "Б *" . $action->username . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_italic\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "nevid_done_chist") {
-                $result .= "<span class=\"name\">";
-                $result .= "Доппроверка/Чист *" . $action->username . ". " . $action->date . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_italic\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "nevid_done_katorga") {
-                $result .= "<span class=\"name\">";
-                $result .= "Доппроверка/Отказ. Выявлены нарушения. Наказан каторгой *" . $action->username . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_otkaz\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "nevid_done_prokli") {
-                $result .= "<span class=\"name\">";
-                $result .= "Доппроверка/Отказ. Выявлены нарушения. Наказан комплектом проклятий *" . $action->username . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_otkaz\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "nevid_done_block") {
-                $result .= "<span class=\"name\">";
-                $result .= "Доппроверка/Отказ. Выявлены нарушения. Наказан блоком *" . $action->username . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_otkaz\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "nevid_done_otkaz") {
-                $result .= "<span class=\"name\">";
-                $result .= "Доппроверка/Отказ. *" . $action->username . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_otkaz\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "done_chist") {
-                $result .= "<span class=\"name\">";
-                $result .= "Чист *" . $action->username . ". " . $action->date . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_italic\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "done_katorga") {
-                $result .= "<span class=\"name\">";
-                $result .= "Отказ. Нарушения. Наказан каторгой *" . $action->username . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_otkaz\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "done_prokli") {
-                $result .= "<span class=\"name\">";
-                $result .= "Отказ. Нарушения. Наказан комплектом проклятий *" . $action->username . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_otkaz\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "done_block") {
-                $result .= "<span class=\"name\">";
-                $result .= "Отказ. Нарушения. Наказан блоком *" . $action->username . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_otkaz\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "done_otkaz") {
-                $result .= "<span class=\"name\">";
-                $result .= "Отказ. *" . $action->username . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_otkaz\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-        }
+                    $result .= "</div>";
+                    // $result.="<a class=\"text_otkaz-toggle\"  id =\"btn_$action->id\" href=\"javascript:toggleComment('$action->id')\">Подробнее</a>";
+                
+    }
+    }
+    if ($action->action == "b_done") {
+    $result .= "<span class=\"name\">";
+        $result .= "Б *" . $action->username . "<br>";
+        $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+    $result .= "<span class=\"text_italic\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</span>";
+    }
+    }
+    if ($action->action == "p_done") {
+    $result .= "<span class=\"name\">";
+        $result .= "П *" . $action->username . "<br>";
+        $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+    $result .= "<span class=\"text_italic\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</span>";
+    }
+    }
+    if ($action->action == "b_done_p_recheck") {
+    $result .= "<span class=\"name\">";
+        $result .= "Б/П *" . $action->username . "<br>";
+        $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+    $result .= "<span class=\"text_italic\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</span>";
+    }
+    }
+    if ($action->action == "bp_done_recheck") {
+    $result .= "<span class=\"name\">";
+        $result .= "Б/П *" . $action->username . "<br>";
+        $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+    $result .= "<span class=\"text_italic\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</span>";
+    }
+    }
+    if ($action->action == "p_done_recheck") {
+    $result .= "<span class=\"name\">";
+        $result .= "П *" . $action->username . "<br>";
+        $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+    $result .= "<span class=\"text_italic\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</span>";
+    }
+    }
+    if ($action->action == "b_done_recheck") {
+    $result .= "<span class=\"name\">";
+        $result .= "Б *" . $action->username . "<br>";
+        $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+    $result .= "<span class=\"text_italic\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</span>";
+    }
+    }
+    if ($action->action == "nevid_done_chist") {
+    $result .= "<span class=\"name\">";
+        $result .= "Доппроверка/Чист *" . $action->username . ". " . $action->date . "<br>";
+        $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+    $result .= "<span class=\"text_italic\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</span>";
+    }
+    }
+    if ($action->action == "nevid_done_katorga") {
+    $result .= "<span class=\"name\">";
+        $result .= "Доппроверка/Отказ. Выявлены нарушения. Наказан каторгой *" . $action->username . "<br>";
+        $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+        $result .= "<div class=\"text_otkaz article\" id =\"comment_$action->id\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</div>";
+        $result.="<a class=\"text_otkaz-toggle\" id =\"btn_$action->id\" href=\"javascript:toggleComment('$action->id')\">Подробнее</a>";
+    }
+    }
+    if ($action->action == "nevid_done_prokli") {
+    $result .= "<span class=\"name\">";
+        $result .= "Доппроверка/Отказ. Выявлены нарушения. Наказан комплектом проклятий *" . $action->username . "<br>";
+        $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+        $result .= "<div class=\"text_otkaz article\" id =\"comment_$action->id\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</div>";
+        $result.="<a class=\"text_otkaz-toggle\" id =\"btn_$action->id\" href=\"javascript:toggleComment('$action->id')\">Подробнее</a>";
+    }
+    }
+    if ($action->action == "nevid_done_block") {
+    $result .= "<span class=\"name\">";
+        $result .= "Доппроверка/Отказ. Выявлены нарушения. Наказан блоком *" . $action->username . "<br>";
+        $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+        $result .= "<div class=\"text_otkaz article\" id =\"comment_$action->id\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</div>";
+        $result.="<a class=\"text_otkaz-toggle\" id =\"btn_$action->id\" href=\"javascript:toggleComment('$action->id')\">Подробнее</a>";
+    }
+    }
+    if ($action->action == "nevid_done_otkaz") {
+    $result .= "<span class=\"name\">";
+        $result .= "Доппроверка/Отказ. *" . $action->username . "<br>";
+        $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+        $result .= "<div class=\"text_otkaz article\" id =\"comment_$action->id\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</div>";
+        $result.="<a class=\"text_otkaz-toggle\" id =\"btn_$action->id\" href=\"javascript:toggleComment('$action->id')\">Подробнее</a>";
+    }
+    }
+    if ($action->action == "done_chist") {
+    $result .= "<span class=\"name\">";
+        $result .= "Чист *" . $action->username . ". " . $action->date . "<br>";
+        $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+    $result .= "<span class=\"text_italic\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</span>";
+    }
+    }
+    if ($action->action == "done_katorga") {
+    $result .= "<span class=\"name\">";
+        $result .= "Отказ. Нарушения. Наказан каторгой *" . $action->username . "<br>";
+        $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+     $result .= "<div class=\"text_otkaz article\" id =\"comment_$action->id\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</div>";
+        $result.="<a class=\"text_otkaz-toggle\" id =\"btn_$action->id\" href=\"javascript:toggleComment('$action->id')\">Подробнее</a>";
+    }
+    }
+    if ($action->action == "done_prokli") {
+    $result .= "<span class=\"name\">";
+        $result .= "Отказ. Нарушения. Наказан комплектом проклятий *" . $action->username . "<br>";
+        $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+        $result .= "<div class=\"text_otkaz article\" id =\"comment_$action->id\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</div>";
+        $result.="<a class=\"text_otkaz-toggle\" id =\"$action->id\" href=\"javascript:toggleComment('$action->id')\">Подробнее</a>";
+    }
+    }
+    if ($action->action == "done_block") {
+    $result .= "<span class=\"name\">";
+        $result .= "Отказ. Нарушения. Наказан блоком *" . $action->username . "<br>";
+        $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+        $result .= "<div class=\"text_otkaz article\" id =\"comment_$action->id\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</div>";
+        $result.="<a class=\"text_otkaz-toggle\" id =\"btn_$action->id\" href=\"javascript:toggleComment('$action->id')\">Подробнее</a>";
+    }
+    }
+    if ($action->action == "done_otkaz") {
+    $result .= "<span class=\"name\">";
+        $result .= "Отказ. *" . $action->username . "<br>";
+        $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+        $result .= "<div class=\"text_otkaz article\" id =\"comment_$action->id\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</div>";
+        $result.="<a id =\"btn_$action->id\" class=\"text_otkaz-toggle\" href=\"javascript:toggleComment('$action->id')\">Подробнее</a>";
+    }
+    }
+    }
     }
     if ($zayava->status == "cancelled") {
-        $result .= "<i>Отменена персонажем " . $zayava->date_last_update . "</i>";
+    $result .= "<i>Отменена персонажем " . $zayava->date_last_update . "</i>";
     }
     return $result;
-}
+    }
 
-function getReadOnlyActionsWithAliases($allActions, $zayava)
-{
+    function getReadOnlyActionsWithAliases($allActions, $zayava)
+    {
     $result = "";
     $counter = 0;
     if (sizeof($allActions) > 0) {
-        foreach ($allActions as $action) {
-            $result .= "<span class=\"name\">";
-            $counter++;
-            if (strpos($action->action, "sm") !== false) {
-                if (sizeof($allActions) == $counter) {
-                    $result .= "См *" . $action->alias . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "p_done") {
-                $result .= "П *" . $action->alias . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_italic\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if (strpos($action->action, "recheck_") !== false) {
-                if (sizeof($allActions) == $counter) {
-                    $result .= "См *" . $action->alias . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "b_recheck") {
-                $result .= "Б *" . $action->alias . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_italic\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "bp_done") {
-                $result .= "Б/П *" . $action->alias . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_italic\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "dopproverka_bp") {
-                $result .= "Б/П *" . $action->alias . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_italic\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "dopproverka_p") {
-                $result .= "П *" . $action->alias . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_italic\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "otkaz") {
-                $result .= "Отказ *" . $action->alias . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_otkaz\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "b_done") {
-                $result .= "Б *" . $action->alias . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_italic\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "b_done_p_recheck") {
-                $result .= "Б/П *" . $action->alias . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_italic\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "bp_done_recheck") {
-                $result .= "Б/П *" . $action->alias . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_italic\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "p_done_recheck") {
-                $result .= "П *" . $action->alias . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_italic\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "b_done_recheck") {
-                $result .= "Б *" . $action->alias . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_italic\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "nevid_done_chist") {
-                $result .= "Доппроверка/Чист *" . $action->alias . ". " . $action->date . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_italic\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "nevid_done_katorga") {
-                $result .= "Доппроверка/Отказ. Выявлены нарушения. Наказан каторгой *" . $action->alias . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_otkaz\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "nevid_done_prokli") {
-                $result .= "Доппроверка/Отказ. Выявлены нарушения. Наказан комплектом проклятий *" . $action->alias . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_otkaz\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "nevid_done_block") {
-                $result .= "Доппроверка/Отказ. Выявлены нарушения. Наказан блоком *" . $action->alias . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_otkaz\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "nevid_done_otkaz") {
-                $result .= "Доппроверка/Отказ. *" . $action->alias . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_otkaz\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "done_chist") {
-                $result .= "Чист *" . $action->alias . ". " . $action->date . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_italic\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "done_katorga") {
-                $result .= "Отказ. Нарушения. Наказан каторгой *" . $action->alias . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_otkaz\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "done_prokli") {
-                $result .= "Отказ. Нарушения. Наказан комплектом проклятий *" . $action->alias . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_otkaz\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "done_block") {
-                $result .= "Отказ. Нарушения. Наказан блоком *" . $action->alias . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_otkaz\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "done_otkaz") {
-                $result .= "Отказ. *" . $action->alias . "<br>";
-                $result .= "</span>";
-                if (strlen($action->notes) > 1) {
-                    $result .= "<span class=\"text_otkaz\">";
-                    $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</span>";
-                }
-            }
-            if ($action->action == "dopproverka_p" || $action->action == "dopproverka_bp") {
-                $result .= "<span style=\"color: black; font-size: 13px\";><b>Доппроверка</b></span>";
-            }
-        }
+    foreach ($allActions as $action) {
+    $result .= "<span class=\"name\">";
+        $counter++;
+        if (strpos($action->action, "sm") !== false) {
+        if (sizeof($allActions) == $counter) {
+        $result .= "См *" . $action->alias . "<br>";
+        $result .= "</span>";
+    }
+    }
+    if ($action->action == "p_done") {
+    $result .= "П *" . $action->alias . "<br>";
+    $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+    $result .= "<span class=\"text_italic\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</span>";
+    }
+    }
+    if (strpos($action->action, "recheck_") !== false) {
+    if (sizeof($allActions) == $counter) {
+    $result .= "См *" . $action->alias . "<br>";
+    $result .= "</span>";
+    }
+    }
+    if ($action->action == "b_recheck") {
+    $result .= "Б *" . $action->alias . "<br>";
+    $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+    $result .= "<span class=\"text_italic\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</span>";
+    }
+    }
+    if ($action->action == "bp_done") {
+    $result .= "Б/П *" . $action->alias . "<br>";
+    $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+    $result .= "<span class=\"text_italic\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</span>";
+    }
+    }
+    if ($action->action == "dopproverka_bp") {
+    $result .= "Б/П *" . $action->alias . "<br>";
+    $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+    $result .= "<span class=\"text_italic\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</span>";
+    }
+    }
+    if ($action->action == "dopproverka_p") {
+    $result .= "П *" . $action->alias . "<br>";
+    $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+    $result .= "<span class=\"text_italic\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</span>";
+    }
+    }
+    if ($action->action == "otkaz") {
+    $result .= "Отказ *" . $action->alias . "<br>";
+    $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+    $result .= "<span class=\"text_otkaz hide\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</span>";
+    }
+    }
+    if ($action->action == "b_done") {
+    $result .= "Б *" . $action->alias . "<br>";
+    $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+    $result .= "<span class=\"text_italic\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</span>";
+    }
+    }
+    if ($action->action == "b_done_p_recheck") {
+    $result .= "Б/П *" . $action->alias . "<br>";
+    $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+    $result .= "<span class=\"text_italic\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</span>";
+    }
+    }
+    if ($action->action == "bp_done_recheck") {
+    $result .= "Б/П *" . $action->alias . "<br>";
+    $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+    $result .= "<span class=\"text_italic\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</span>";
+    }
+    }
+    if ($action->action == "p_done_recheck") {
+    $result .= "П *" . $action->alias . "<br>";
+    $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+    $result .= "<span class=\"text_italic\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</span>";
+    }
+    }
+    if ($action->action == "b_done_recheck") {
+    $result .= "Б *" . $action->alias . "<br>";
+    $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+    $result .= "<span class=\"text_italic\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</span>";
+    }
+    }
+    if ($action->action == "nevid_done_chist") {
+    $result .= "Доппроверка/Чист *" . $action->alias . ". " . $action->date . "<br>";
+    $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+    $result .= "<span class=\"text_italic\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</span>";
+    }
+    }
+    if ($action->action == "nevid_done_katorga") {
+    $result .= "Доппроверка/Отказ. Выявлены нарушения. Наказан каторгой *" . $action->alias . "<br>";
+    $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+    $result .= "<span class=\"text_otkaz hide\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</span>";
+    }
+    }
+    if ($action->action == "nevid_done_prokli") {
+    $result .= "Доппроверка/Отказ. Выявлены нарушения. Наказан комплектом проклятий *" . $action->alias . "<br>";
+    $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+    $result .= "<span class=\"text_otkaz hide\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</span>";
+    }
+    }
+    if ($action->action == "nevid_done_block") {
+    $result .= "Доппроверка/Отказ. Выявлены нарушения. Наказан блоком *" . $action->alias . "<br>";
+    $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+    $result .= "<span class=\"text_otkaz hide\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</span>";
+    }
+    }
+    if ($action->action == "nevid_done_otkaz") {
+    $result .= "Доппроверка/Отказ. *" . $action->alias . "<br>";
+    $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+    $result .= "<span class=\"text_otkaz hide\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</span>";
+    }
+    }
+    if ($action->action == "done_chist") {
+    $result .= "Чист *" . $action->alias . ". " . $action->date . "<br>";
+    $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+    $result .= "<span class=\"text_italic\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</span>";
+    }
+    }
+    if ($action->action == "done_katorga") {
+    $result .= "Отказ. Нарушения. Наказан каторгой *" . $action->alias . "<br>";
+    $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+    $result .= "<span class=\"text_otkaz hide\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</span>";
+    }
+    }
+    if ($action->action == "done_prokli") {
+    $result .= "Отказ. Нарушения. Наказан комплектом проклятий *" . $action->alias . "<br>";
+    $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+    $result .= "<span class=\"text_otkaz hide\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</span>";
+    }
+    }
+    if ($action->action == "done_block") {
+    $result .= "Отказ. Нарушения. Наказан блоком *" . $action->alias . "<br>";
+    $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+    $result .= "<span class=\"text_otkaz hide\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</span>";
+    }
+    }
+    if ($action->action == "done_otkaz") {
+    $result .= "Отказ. *" . $action->alias . "<br>";
+    $result .= "</span>";
+    if (strlen($action->notes) > 1) {
+    $result .= "<span class=\"text_otkaz hide\">";
+        $result .= returnComment($action->notes) . "<br>";
+        $result .= "</span>";
+    }
+    }
+    if ($action->action == "dopproverka_p" || $action->action == "dopproverka_bp") {
+    $result .= "<span style=\"color: black; font-size: 13px\";><b>Доппроверка</b></span>";
+    }
+    }
     }
     if ($zayava->status == "cancelled") {
-        $result .= "<i>Отменена персонажем " . $zayava->date_last_update . "</i>";
+    $result .= "<i>Отменена персонажем " . $zayava->date_last_update . "</i>";
     }
     return $result;
-}
+    }
 
-function getStatus($status)
-{
+    function getStatus($status)
+    {
     $result = "";
     switch ($status) {
-        case "cancelled":
-            $result = "Отменена";
-            break;
-        case "inprogress":
-            $result = "На проверке";
-            break;
-        case "closed":
-            $result = "Закрыта";
-            break;
-        case "new":
-            $result = "Новая";
-            break;
-        case "otkaz":
-            $result = "Отказано";
-            break;
-        case "chist":
-            $result = "Чистота выдана";
-            break;
-        case "katorga":
-            $result = "Нарушения. Наказан каторгой";
-            break;
-        case "prokli":
-            $result = "Нарушения. Наказан комплектом проклятий";
-            break;
-        case "block":
-            $result = "Нарушения. Наказан блоком";
-            break;
+    case "cancelled":
+    $result = "Отменена";
+    break;
+    case "inprogress":
+    $result = "На проверке";
+    break;
+    case "closed":
+    $result = "Закрыта";
+    break;
+    case "new":
+    $result = "Новая";
+    break;
+    case "otkaz":
+    $result = "Отказано";
+    break;
+    case "chist":
+    $result = "Чистота выдана";
+    break;
+    case "katorga":
+    $result = "Нарушения. Наказан каторгой";
+    break;
+    case "prokli":
+    $result = "Нарушения. Наказан комплектом проклятий";
+    break;
+    case "block":
+    $result = "Нарушения. Наказан блоком";
+    break;
     }
     return $result;
-}
+    }
 
-function switchCity($city)
-{
+    function switchCity($city)
+    {
     $result = "";
     switch ($city) {
-        case 'kovcheg':
-            $result = "Ковчег";
-            break;
-        case 'smorye':
-            $result = "Среднеморье";
-            break;
-        case 'utes':
-            $result = "Утёс дракона";
-            break;
-        case 'common':
-            $result = "";
-            break;
+    case 'kovcheg':
+    $result = "Ковчег";
+    break;
+    case 'smorye':
+    $result = "Среднеморье";
+    break;
+    case 'utes':
+    $result = "Утёс дракона";
+    break;
+    case 'common':
+    $result = "";
+    break;
     }
     return $result;
-}
+    }
 
-function switchType($professions, $type)
-{
+    function switchType($professions, $type)
+    {
     foreach ($professions as $pr) {
-        if ($pr->system_name == $type) {
-            return $pr->view_name;
-        }
+    if ($pr->system_name == $type) {
+    return $pr->view_name;
+    }
     }
     return $type;
-}
+    }
 
-function echoComment($comment)
-{
+    function echoComment($comment)
+    {
     $split = explode(' ', $comment);
     foreach ($split as $str) {
-        if (strpos($str, 'http://dragons.apeha.ru/forum') !== false) {
-            echo "<a href=\"" . $str . "\" target=\"_blank\">" . $str . "</a> ";
-        } else {
-            echo $str . " ";
-        }
+    if (strpos($str, 'http://dragons.apeha.ru/forum') !== false) {
+    echo "<a href=\"" . $str . "\" target=\"_blank\">" . $str . "</a> ";
+    } else {
+    echo $str . " ";
     }
-}
+    }
+    }
 
-function returnComment($comment)
-{
+    function returnComment($comment)
+    {
     $result = "";
     $split = explode(' ', $comment);
     if (sizeof($split) > 0) {
-        foreach ($split as $str) {
-            if (strpos($str, "http://dragons.apeha.ru/forum") !== false) {
-                $result .= "<a href=\"" . $str . "\" target=\"_blank\">" . $str . "</a> ";
-            } else {
-                $result .= $str . " ";
-            }
-        }
+    foreach ($split as $str) {
+    if (strpos($str, "http://dragons.apeha.ru/forum") !== false) {
+    $result .= "<a href=\"" . $str . "\" target=\"_blank\">" . $str . "</a> ";
     } else {
-        if (strpos($comment, "http://dragons.apeha.ru/forum") !== false) {
-            $result .= "<a href=\"" . $comment . "\" target=\"_blank\">" . $comment . "</a> ";
-        } else {
-            $result .= $comment;
-        }
+    $result .= $str . " ";
+    }
+    }
+    } else {
+    if (strpos($comment, "http://dragons.apeha.ru/forum") !== false) {
+    $result .= "<a href=\"" . $comment . "\" target=\"_blank\">" . $comment . "</a> ";
+    } else {
+    $result .= $comment;
+    }
     }
     return $result;
-}
+    }
 
-?>
+    ?>
 
 
-<script>
+    <script>
     function toggleView($id) {
         $element = document.getElementById($id);
         if ($element.style.display === 'none') {
@@ -1680,4 +1730,12 @@ function returnComment($comment)
             $element.style.display = 'none';
         }
     }
-</script>
+    </script>
+    <script>
+    $('.article').readmore({
+        speed: 5000, //Açılma Hızı
+        collapsedHeight: 50, // 100px sonra yazının kesileceğini belirtir.
+        moreLink: '<a class="text_otkaz-toggle" href="#">Подробнее</a>', // açma linki yazısı
+        lessLink: '<a class="text_otkaz-toggle" href="#">Скрыть</a>', // kapatma linki yazısı
+    });
+    </script>

@@ -1,14 +1,14 @@
 <?php
 
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
+use yii\bootstrap4\ActiveForm;
 use yii\helpers\Url;
 ?>
 <style>
-    td {
-        padding: 3px;
-        font-size: 15px;
-    }
+td {
+    padding: 3px;
+    font-size: 15px;
+}
 </style>
 
 
@@ -34,17 +34,17 @@ if ($model->allow_run && $model->action != "view") {
     ?>
 
 
-    <?= Html::hiddenInput('CleaningModel[action]', 'createReport'); ?>
+<?= Html::hiddenInput('CleaningModel[action]', 'createReport'); ?>
 
 
-    <div class="form-group">
-        <div class="col-lg-offset-0 col-lg-11">
-            <?= Html::submitButton('Сгенерировать отчёт', ['class' => 'btn btn-primary', 'name' => 'login-button', 'onclick' => 'return submitNewPost()']) ?>
-        </div>
-
+<div class="form-group">
+    <div class="col-lg-offset-0 col-lg-11">
+        <?= Html::submitButton('Сгенерировать отчёт', ['class' => 'btn btn-primary', 'name' => 'login-button', 'onclick' => 'return submitNewPost()']) ?>
     </div>
 
-    <?php
+</div>
+
+<?php
     ActiveForm::end();
 }
 if ($model->action == "index") {
@@ -59,16 +59,16 @@ if ($model->action == "index") {
                 );
                 ?>
 
-                                                <!--<a href="<?= Yii::$app->request->baseUrl ?>/index.php?r=site/cleaning&CleaningModel[action]=view&CleaningModel[id]=<?= $report->id ?>">Отчёт от <?= $report->date ?></a>-->
-                <br><br>
-                <?php
+<!--<a href="<?= Yii::$app->request->baseUrl ?>/index.php?r=site/cleaning&CleaningModel[action]=view&CleaningModel[id]=<?= $report->id ?>">Отчёт от <?= $report->date ?></a>-->
+<br><br>
+<?php
             }
         } else {
             ?>
-            <center>
-                <h1>Ещё не было сгенерировано ни одного отчёта</h1>
-            </center>
-            <?php
+<center>
+    <h1>Ещё не было сгенерировано ни одного отчёта</h1>
+</center>
+<?php
         }
     }
 }
@@ -133,403 +133,405 @@ if ($model->action == "view") {
         $this->params['breadcrumbs'][] = $this->title;
         if ($model->report) {
             ?>
-            <center> 
-                <h3>Отчёт чистоты от <?= $model->report->date ?></h3>
-            </center>
-            <hr>            
-            <h3>Ковчег:</h3>
-            <table>
-                <tr>
-                    <td>
-                        Всего заявок:
-                    </td>
-                    <td>
-                        <?= $model->report->k_total ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Отозваны:
-                    </td>
-                    <td>
-                        <?= $model->report->k_cancelled ?>
-                    </td>
+<center>
+    <h3>Отчёт чистоты от <?= $model->report->date ?></h3>
+</center>
+<hr>
+<h3>Ковчег:</h3>
+<table>
+    <tr>
+        <td>
+            Всего заявок:
+        </td>
+        <td>
+            <?= $model->report->k_total ?>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Отозваны:
+        </td>
+        <td>
+            <?= $model->report->k_cancelled ?>
+        </td>
 
-                </tr>
-                <tr>
-                    <td>
-                        Чисто:
-                    </td>
-                    <td>
-                        <?= $model->report->k_chist ?>
-                    </td>
+    </tr>
+    <tr>
+        <td>
+            Чисто:
+        </td>
+        <td>
+            <?= $model->report->k_chist ?>
+        </td>
 
-                </tr>
-                <tr>
-                    <td>
-                        Наказаны: 
-                    </td>
-                    <td>
-                        <?php echo (intval($model->report->k_banned) + intval($model->report->k_prokli) + intval($model->report->k_katorga)); ?> 
-                        (Прокли: <?= $model->report->k_prokli ?>, Каторга: <?= $model->report->k_katorga ?>, Блок: <?= $model->report->k_banned ?>)
-                    </td>
+    </tr>
+    <tr>
+        <td>
+            Наказаны:
+        </td>
+        <td>
+            <?php echo (intval($model->report->k_banned) + intval($model->report->k_prokli) + intval($model->report->k_katorga)); ?>
+            (Прокли: <?= $model->report->k_prokli ?>, Каторга: <?= $model->report->k_katorga ?>, Блок:
+            <?= $model->report->k_banned ?>)
+        </td>
 
-                </tr>
-                <tr>
-                    <td>
-                        Отказано:
-                    </td>
-                    <td>
-                        <?= $model->report->k_otkaz ?>
-                    </td>
+    </tr>
+    <tr>
+        <td>
+            Отказано:
+        </td>
+        <td>
+            <?= $model->report->k_otkaz ?>
+        </td>
 
-                </tr>                
-                <tr>
-                    <td>
-                        Доппроверок:
-                    </td>
-                    <td>
-                        <?= $model->report->k_nevid ?>
-                    </td>
+    </tr>
+    <tr>
+        <td>
+            Доппроверок:
+        </td>
+        <td>
+            <?= $model->report->k_nevid ?>
+        </td>
 
-                </tr>                                
-            </table>
-            <br>
-            <table style="border: 1px solid">
-                <tr style="border: 1px solid">
-                    <td style="border: 1px solid">
-                        Дракон
-                    </td>
-                    <td style="border: 1px solid">
-                        Бои
-                    </td>
-                    <td style="border: 1px solid">
-                        Передачи
-                    </td>  
-                    <td style="border: 1px solid">
-                        Отказы
-                    </td>                    
-                    <td style="border: 1px solid">
-                        Прокли
-                    </td>
-                    <td style="border: 1px solid">
-                        Каторги
-                    </td>      
-                    <td style="border: 1px solid">
-                        Блоки
-                    </td>      
-                    <td style="border: 1px solid">
-                        Чисто
-                    </td>    
-                    <td style="border: 1px solid">
-                        Доппроверки
-                    </td>                    
-                </tr>
-                <?php
+    </tr>
+</table>
+<br>
+<table style="border: 1px solid">
+    <tr style="border: 1px solid">
+        <td style="border: 1px solid">
+            Дракон
+        </td>
+        <td style="border: 1px solid">
+            Бои
+        </td>
+        <td style="border: 1px solid">
+            Передачи
+        </td>
+        <td style="border: 1px solid">
+            Отказы
+        </td>
+        <td style="border: 1px solid">
+            Прокли
+        </td>
+        <td style="border: 1px solid">
+            Каторги
+        </td>
+        <td style="border: 1px solid">
+            Блоки
+        </td>
+        <td style="border: 1px solid">
+            Чисто
+        </td>
+        <td style="border: 1px solid">
+            Доппроверки
+        </td>
+    </tr>
+    <?php
                 foreach ($model->k_drag as $dr) {
                     ?>
-                    <tr style="border: 1px solid">
-                        <td style="border: 1px solid" align="center">
-                            <?= $dr->dr_name ?>
-                        </td>
-                        <td style="border: 1px solid" align="center">
-                            <?= $dr->boi ?>
-                        </td>
-                        <td style="border: 1px solid" align="center">
-                            <?= $dr->peredachi ?>
-                        </td>  
-                        <td style="border: 1px solid" align="center">
-                            <?= $dr->otkaz ?>
-                        </td>                    
-                        <td style="border: 1px solid" align="center">
-                            <?= $dr->prokli ?>
-                        </td>
-                        <td style="border: 1px solid" align="center">
-                            <?= $dr->katorga ?>
-                        </td>      
-                        <td style="border: 1px solid" align="center">
-                            <?= $dr->ban ?>
-                        </td>      
-                        <td style="border: 1px solid" align="center">
-                            <?= $dr->chist ?>
-                        </td>    
-                        <td style="border: 1px solid" align="center">
-                            <?= $dr->nevid ?>
-                        </td>                    
-                    </tr>
-                    <?php
+    <tr style="border: 1px solid">
+        <td style="border: 1px solid" align="center">
+            <?= $dr->dr_name ?>
+        </td>
+        <td style="border: 1px solid" align="center">
+            <?= $dr->boi ?>
+        </td>
+        <td style="border: 1px solid" align="center">
+            <?= $dr->peredachi ?>
+        </td>
+        <td style="border: 1px solid" align="center">
+            <?= $dr->otkaz ?>
+        </td>
+        <td style="border: 1px solid" align="center">
+            <?= $dr->prokli ?>
+        </td>
+        <td style="border: 1px solid" align="center">
+            <?= $dr->katorga ?>
+        </td>
+        <td style="border: 1px solid" align="center">
+            <?= $dr->ban ?>
+        </td>
+        <td style="border: 1px solid" align="center">
+            <?= $dr->chist ?>
+        </td>
+        <td style="border: 1px solid" align="center">
+            <?= $dr->nevid ?>
+        </td>
+    </tr>
+    <?php
                 }
                 ?>
-            </table>
-            <!--SMORYE -->
-            <hr>            
-            <h3>Сморье:</h3>
-            <table>
-                <tr>
-                    <td>
-                        Всего заявок:
-                    </td>
-                    <td>
-                        <?= $model->report->s_total ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Отозваны:
-                    </td>
-                    <td>
-                        <?= $model->report->s_cancelled ?>
-                    </td>
+</table>
+<!--SMORYE -->
+<hr>
+<h3>Сморье:</h3>
+<table>
+    <tr>
+        <td>
+            Всего заявок:
+        </td>
+        <td>
+            <?= $model->report->s_total ?>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Отозваны:
+        </td>
+        <td>
+            <?= $model->report->s_cancelled ?>
+        </td>
 
-                </tr>
-                <tr>
-                    <td>
-                        Чисто:
-                    </td>
-                    <td>
-                        <?= $model->report->s_chist ?>
-                    </td>
+    </tr>
+    <tr>
+        <td>
+            Чисто:
+        </td>
+        <td>
+            <?= $model->report->s_chist ?>
+        </td>
 
-                </tr>
-                <tr>
-                    <td>
-                        Наказаны: 
-                    </td>
-                    <td>
-                        <?php echo (intval($model->report->s_banned) + intval($model->report->s_prokli) + intval($model->report->s_katorga)); ?> 
-                        (Прокли: <?= $model->report->s_prokli ?>, Каторга: <?= $model->report->s_katorga ?>, Блок: <?= $model->report->s_banned ?>)
-                    </td>
+    </tr>
+    <tr>
+        <td>
+            Наказаны:
+        </td>
+        <td>
+            <?php echo (intval($model->report->s_banned) + intval($model->report->s_prokli) + intval($model->report->s_katorga)); ?>
+            (Прокли: <?= $model->report->s_prokli ?>, Каторга: <?= $model->report->s_katorga ?>, Блок:
+            <?= $model->report->s_banned ?>)
+        </td>
 
-                </tr>
-                <tr>
-                    <td>
-                        Отказано:
-                    </td>
-                    <td>
-                        <?= $model->report->s_otkaz ?>
-                    </td>
+    </tr>
+    <tr>
+        <td>
+            Отказано:
+        </td>
+        <td>
+            <?= $model->report->s_otkaz ?>
+        </td>
 
-                </tr>                
-                <tr>
-                    <td>
-                        Доппроверок:
-                    </td>
-                    <td>
-                        <?= $model->report->s_nevid ?>
-                    </td>
+    </tr>
+    <tr>
+        <td>
+            Доппроверок:
+        </td>
+        <td>
+            <?= $model->report->s_nevid ?>
+        </td>
 
-                </tr>                                
-            </table>
-            <br>
-            <table style="border: 1px solid">
-                <tr style="border: 1px solid">
-                    <td style="border: 1px solid">
-                        Дракон
-                    </td>
-                    <td style="border: 1px solid">
-                        Бои
-                    </td>
-                    <td style="border: 1px solid">
-                        Передачи
-                    </td>  
-                    <td style="border: 1px solid">
-                        Отказы
-                    </td>                    
-                    <td style="border: 1px solid">
-                        Прокли
-                    </td>
-                    <td style="border: 1px solid">
-                        Каторги
-                    </td>      
-                    <td style="border: 1px solid">
-                        Блоки
-                    </td>      
-                    <td style="border: 1px solid">
-                        Чисто
-                    </td>    
-                    <td style="border: 1px solid">
-                        Доппроверки
-                    </td>                    
-                </tr>
-                <?php
+    </tr>
+</table>
+<br>
+<table style="border: 1px solid">
+    <tr style="border: 1px solid">
+        <td style="border: 1px solid">
+            Дракон
+        </td>
+        <td style="border: 1px solid">
+            Бои
+        </td>
+        <td style="border: 1px solid">
+            Передачи
+        </td>
+        <td style="border: 1px solid">
+            Отказы
+        </td>
+        <td style="border: 1px solid">
+            Прокли
+        </td>
+        <td style="border: 1px solid">
+            Каторги
+        </td>
+        <td style="border: 1px solid">
+            Блоки
+        </td>
+        <td style="border: 1px solid">
+            Чисто
+        </td>
+        <td style="border: 1px solid">
+            Доппроверки
+        </td>
+    </tr>
+    <?php
                 foreach ($model->s_drag as $dr) {
                     ?>
-                    <tr style="border: 1px solid">
-                        <td style="border: 1px solid" align="center">
-                            <?= $dr->dr_name ?>
-                        </td>
-                        <td style="border: 1px solid" align="center">
-                            <?= $dr->boi ?>
-                        </td>
-                        <td style="border: 1px solid" align="center">
-                            <?= $dr->peredachi ?>
-                        </td>  
-                        <td style="border: 1px solid" align="center">
-                            <?= $dr->otkaz ?>
-                        </td>                    
-                        <td style="border: 1px solid" align="center">
-                            <?= $dr->prokli ?>
-                        </td>
-                        <td style="border: 1px solid" align="center">
-                            <?= $dr->katorga ?>
-                        </td>      
-                        <td style="border: 1px solid" align="center">
-                            <?= $dr->ban ?>
-                        </td>      
-                        <td style="border: 1px solid" align="center">
-                            <?= $dr->chist ?>
-                        </td>    
-                        <td style="border: 1px solid" align="center">
-                            <?= $dr->nevid ?>
-                        </td>                    
-                    </tr>
-                    <?php
+    <tr style="border: 1px solid">
+        <td style="border: 1px solid" align="center">
+            <?= $dr->dr_name ?>
+        </td>
+        <td style="border: 1px solid" align="center">
+            <?= $dr->boi ?>
+        </td>
+        <td style="border: 1px solid" align="center">
+            <?= $dr->peredachi ?>
+        </td>
+        <td style="border: 1px solid" align="center">
+            <?= $dr->otkaz ?>
+        </td>
+        <td style="border: 1px solid" align="center">
+            <?= $dr->prokli ?>
+        </td>
+        <td style="border: 1px solid" align="center">
+            <?= $dr->katorga ?>
+        </td>
+        <td style="border: 1px solid" align="center">
+            <?= $dr->ban ?>
+        </td>
+        <td style="border: 1px solid" align="center">
+            <?= $dr->chist ?>
+        </td>
+        <td style="border: 1px solid" align="center">
+            <?= $dr->nevid ?>
+        </td>
+    </tr>
+    <?php
                 }
                 ?>
-            </table>
-            <!--UTES -->
-            <hr>            
-            <h3>Утёс:</h3>
-            <table>
-                <tr>
-                    <td>
-                        Всего заявок:
-                    </td>
-                    <td>
-                        <?= $model->report->u_total ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Отозваны:
-                    </td>
-                    <td>
-                        <?= $model->report->u_cancelled ?>
-                    </td>
+</table>
+<!--UTES -->
+<hr>
+<h3>Утёс:</h3>
+<table>
+    <tr>
+        <td>
+            Всего заявок:
+        </td>
+        <td>
+            <?= $model->report->u_total ?>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Отозваны:
+        </td>
+        <td>
+            <?= $model->report->u_cancelled ?>
+        </td>
 
-                </tr>
-                <tr>
-                    <td>
-                        Чисто:
-                    </td>
-                    <td>
-                        <?= $model->report->u_chist ?>
-                    </td>
+    </tr>
+    <tr>
+        <td>
+            Чисто:
+        </td>
+        <td>
+            <?= $model->report->u_chist ?>
+        </td>
 
-                </tr>
-                <tr>
-                    <td>
-                        Наказаны: 
-                    </td>
-                    <td>
-                        <?php echo (intval($model->report->u_banned) + intval($model->report->u_prokli) + intval($model->report->u_katorga)); ?> 
-                        (Прокли: <?= $model->report->u_prokli ?>, Каторга: <?= $model->report->u_katorga ?>, Блок: <?= $model->report->u_banned ?>)
-                    </td>
+    </tr>
+    <tr>
+        <td>
+            Наказаны:
+        </td>
+        <td>
+            <?php echo (intval($model->report->u_banned) + intval($model->report->u_prokli) + intval($model->report->u_katorga)); ?>
+            (Прокли: <?= $model->report->u_prokli ?>, Каторга: <?= $model->report->u_katorga ?>, Блок:
+            <?= $model->report->u_banned ?>)
+        </td>
 
-                </tr>
-                <tr>
-                    <td>
-                        Отказано:
-                    </td>
-                    <td>
-                        <?= $model->report->u_otkaz ?>
-                    </td>
+    </tr>
+    <tr>
+        <td>
+            Отказано:
+        </td>
+        <td>
+            <?= $model->report->u_otkaz ?>
+        </td>
 
-                </tr>                
-                <tr>
-                    <td>
-                        Доппроверок:
-                    </td>
-                    <td>
-                        <?= $model->report->u_nevid ?>
-                    </td>
+    </tr>
+    <tr>
+        <td>
+            Доппроверок:
+        </td>
+        <td>
+            <?= $model->report->u_nevid ?>
+        </td>
 
-                </tr>                                
-            </table>
-            <br>
-            <table style="border: 1px solid">
-                <tr style="border: 1px solid">
-                    <td style="border: 1px solid">
-                        Дракон
-                    </td>
-                    <td style="border: 1px solid">
-                        Бои
-                    </td>
-                    <td style="border: 1px solid">
-                        Передачи
-                    </td>  
-                    <td style="border: 1px solid">
-                        Отказы
-                    </td>                    
-                    <td style="border: 1px solid">
-                        Прокли
-                    </td>
-                    <td style="border: 1px solid">
-                        Каторги
-                    </td>      
-                    <td style="border: 1px solid">
-                        Блоки
-                    </td>      
-                    <td style="border: 1px solid">
-                        Чисто
-                    </td>    
-                    <td style="border: 1px solid">
-                        Доппроверки
-                    </td>                    
-                </tr>
-                <?php
+    </tr>
+</table>
+<br>
+<table style="border: 1px solid">
+    <tr style="border: 1px solid">
+        <td style="border: 1px solid">
+            Дракон
+        </td>
+        <td style="border: 1px solid">
+            Бои
+        </td>
+        <td style="border: 1px solid">
+            Передачи
+        </td>
+        <td style="border: 1px solid">
+            Отказы
+        </td>
+        <td style="border: 1px solid">
+            Прокли
+        </td>
+        <td style="border: 1px solid">
+            Каторги
+        </td>
+        <td style="border: 1px solid">
+            Блоки
+        </td>
+        <td style="border: 1px solid">
+            Чисто
+        </td>
+        <td style="border: 1px solid">
+            Доппроверки
+        </td>
+    </tr>
+    <?php
                 foreach ($model->u_drag as $dr) {
                     ?>
-                    <tr style="border: 1px solid">
-                        <td style="border: 1px solid" align="center">
-                            <?= $dr->dr_name ?>
-                        </td>
-                        <td style="border: 1px solid" align="center">
-                            <?= $dr->boi ?>
-                        </td>
-                        <td style="border: 1px solid" align="center">
-                            <?= $dr->peredachi ?>
-                        </td>  
-                        <td style="border: 1px solid" align="center">
-                            <?= $dr->otkaz ?>
-                        </td>                    
-                        <td style="border: 1px solid" align="center">
-                            <?= $dr->prokli ?>
-                        </td>
-                        <td style="border: 1px solid" align="center">
-                            <?= $dr->katorga ?>
-                        </td>      
-                        <td style="border: 1px solid" align="center">
-                            <?= $dr->ban ?>
-                        </td>      
-                        <td style="border: 1px solid" align="center">
-                            <?= $dr->chist ?>
-                        </td>    
-                        <td style="border: 1px solid" align="center">
-                            <?= $dr->nevid ?>
-                        </td>                    
-                    </tr>
-                    <?php
+    <tr style="border: 1px solid">
+        <td style="border: 1px solid" align="center">
+            <?= $dr->dr_name ?>
+        </td>
+        <td style="border: 1px solid" align="center">
+            <?= $dr->boi ?>
+        </td>
+        <td style="border: 1px solid" align="center">
+            <?= $dr->peredachi ?>
+        </td>
+        <td style="border: 1px solid" align="center">
+            <?= $dr->otkaz ?>
+        </td>
+        <td style="border: 1px solid" align="center">
+            <?= $dr->prokli ?>
+        </td>
+        <td style="border: 1px solid" align="center">
+            <?= $dr->katorga ?>
+        </td>
+        <td style="border: 1px solid" align="center">
+            <?= $dr->ban ?>
+        </td>
+        <td style="border: 1px solid" align="center">
+            <?= $dr->chist ?>
+        </td>
+        <td style="border: 1px solid" align="center">
+            <?= $dr->nevid ?>
+        </td>
+    </tr>
+    <?php
                 }
                 ?>
-            </table>
-            <br>
-            <fieldset>
-                <legend>Текстовая версия для форума</legend>
-                <textarea cols="80" rows="<?= $textAreaHeight+1 ?>" style="resize: none">
+</table>
+<br>
+<fieldset>
+    <legend>Текстовая версия для форума</legend>
+    <textarea cols="80" rows="<?= $textAreaHeight+1 ?>" style="resize: none">
                     <?= $textVariantKovcheg ?>
                     <?= $textVariantSmorye ?>
                     <?= $textVariantUtes ?>
                 </textarea>
-            </fieldset>
-            <?php
+</fieldset>
+<?php
         } else {
             ?>
-            <center>
-                <h1>Нет такого отчёта</h1>
-            </center>
-            <?php
+<center>
+    <h1>Нет такого отчёта</h1>
+</center>
+<?php
         }
     }
 }
-

@@ -2,7 +2,7 @@
 /* @var $this yii\web\View */
 
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
+use yii\bootstrap4\ActiveForm;
 use app\models\Params;
 use app\models\Users;
 use app\models\Zayavka;
@@ -11,6 +11,8 @@ use yii\helpers\Url;
 use app\models\ActionsUserView;
 use app\models\SingleZayavkaClass;
 use app\models\ZayavkaActionsClass;
+use rmrevin\yii\fontawesome\FAR;
+use rmrevin\yii\fontawesome\FAS;
 
 $this->title = 'Мои заявки';
 $this->params['breadcrumbs'][''] = $this->title;
@@ -19,30 +21,31 @@ $settings->loadSettings();
 $user_group = Users::findGroupById(Yii::$app->user->getId());
 ?>
 <style>
-    .name{
-        font-size: 14px;
-        color: <?= $settings->sign_color ?>;
-    }
-    .text_italic{
-        font-size: 13px;
-        color: <?= $settings->comment_color ?>;
-        font-style: italic;
-    }
-    .text{
-        font-size: 14px;
-        color: <?= $settings->comment_color ?>;
-    }    
-    .text_otkaz{
-        font-size: 14px;
-        color: <?= $settings->otkaz_color ?>;
-    }    
+.name {
+    font-size: 12px;
+    color: <?=$settings->sign_color ?>;
+}
 
+.text_italic {
+    font-size: 13px;
+    color: <?=$settings->comment_color ?>;
+    font-style: italic;
+}
 
+.text {
+    font-size: 14px;
+    color: <?=$settings->comment_color ?>;
+}
+
+.text_otkaz {
+    font-size: 14px;
+    color: <?=$settings->otkaz_color ?>;
+}
 </style>
 <?php
 if ($model->userActive) {
     echo "<h2>Ваши заявки на чистоту:</h2><br>";
-    echo "<center>";
+    echo "<div class='row  my-zayavki'>";
     if (sizeof($model->allZayavki) > 0) {
         //creating array of arrays
         $allZ = array();
@@ -95,8 +98,9 @@ if ($model->userActive) {
         foreach ($allZ as $zayavka) {
             ?>
 
-            <table style="width:800px; border: 0px none; padding: 5px; background-color: <?= $settings->own_z_color ?>; 
-            <?php
+<!-- col-sm-12 col-md-6  col-lg-4 -->
+<div class=" col-sm-12 col-md-6  col-xl-4 mb-4 ">
+    <div class="card application h-100 " style=" background-color: <?= $settings->own_z_color ?>; <?php
             if ($zayavka->status == "new") {
                 echo "box-shadow: 0 0 15px  grey";
             }
@@ -121,10 +125,11 @@ if ($model->userActive) {
             if ($zayavka->status == "block") {
                 echo "box-shadow: 0 0 15px  " . $settings->color_killed;
             }
-            ?>
-                   ">
-                <tr style="height: 40px">
-                    <td width="5%" style="padding: 5px;"><?php
+            ?> ">
+
+        <div class=" card-header zayavka-head">
+            <p class="text-muted zayavka-id">
+                <?php
                         if ($user_group > 1) {
                             echo Html::a(
                                     '#' . $zayavka->id, Url::to([
@@ -135,118 +140,159 @@ if ($model->userActive) {
                             echo "#" . $zayavka->id;
                         }
                         ?>
-                    </td>
-                    <td width="15%" style="padding: 5px;"></td>
-                    <td width="45%" style="padding: 5px;">Статус: <?= getStatus($zayavka->status) ?> </td>
-                    <td align="right" width="35%" style="padding: 5px;">Подана: <?= $zayavka->date_added ?></td>
-                </tr>
-                <tr>
-                    <td colspan="2" style="padding: 5px;">
-                        <?= $zayavka->type ?><br>
-                    </td>
-                    <td colspan = "2" style="padding: 5px;">
-                        <?php
+            </p>
+            <p class="text-muted zayavka-time">
+                <?php echo FAR::icon('clock');
+                      ?>
+                <?= $zayavka->date_added ?>
+            </p>
+        </div>
+        <div class="card-body application-body ">
+
+            <div>
+                <h5 class="card-title zayavka-title"> <?= $zayavka->type ?><br></h5>
+                <div class="card-subtitle zayavka-subtitle  ">
+                    <?php
                         if (strlen($zayavka->city) > 0) {
                             echo "Город: " . $zayavka->city;
                         }
                         ?>
-                        <span style="font-size: 12px; font-style: italic">(Рассматривается в: <?= $zayavka->proverka_city ?>)</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="4" style="padding: 10px">
-                        <?php
+                </div>
+            </div>
+            <p class="card-text otmetka">
+                <?php
                         if ($user_group > 1) {
                             echo getReadOnlyActions($zayavka);
                         } else {
                             echo getReadOnlyActionsWithAliases($zayavka);
                         }
                         ?>
-
-                    </td>
-                </tr>
-                <?php
-                if ($zayavka->active === 1) {
-                    ?>
-                    <tr>
-                        <td colspan="4">
+            </p>
 
 
-                            <?php
-                            $form = ActiveForm::begin([
-                                        'id' => 'login-form',
-                                        'layout' => 'horizontal',
-                                        'fieldConfig' => [
-                                            'template' => "{label}{input}",
-                                            'labelOptions' => ['class' => 'col-lg-1 control-label'],
-                                        ],
-                            ]);
-                            ?>
-                            <?php $model->action = 'cancelZayavka'; ?>
-                            <?php $model->z_id = $zayavka->id; ?>
-                            <?php $model->city = 0; ?>
-                            <?php $model->type = 0; ?>
-                            <?= $form->field($model, 'action')->hiddenInput()->label(false) ?>
-                            <?= $form->field($model, 'city')->hiddenInput()->label(false) ?>
-                            <?= $form->field($model, 'type')->hiddenInput()->label(false) ?>
-                            <?= $form->field($model, 'z_id')->hiddenInput()->label(false) ?>
-                            <div class="form-group">
-                                <div style="margin-left: 30px">
-                                    <?= Html::submitButton('Отменить проверку по данной заявке', ['class' => 'btn btn-primary', 'name' => 'login-button', 'onclick' => 'return confirm("Отмена заявки безвозвратна. Вы уверены?")',], ['id' => 'submit']) ?>
-                                </div>
-                            </div>
-                            <?php
-                            ActiveForm::end();
-                            ?>
-                        </td>
-                    </tr>
-                    <?php
-                }
-                ?>
-                <tr>
-                    <td colspan="4">
-                        <?php
+        </div>
+
+        <div class="card-footer my-zayvka-footer ">
+            <div class="subfooter">
+                <p class="text-muted text pr-5"> <?php
                         echo Html::a(
-                                "Показать в топе проверок", Url::to([
+                                FAR::icon('eye'), Url::to([
                                     '/site/zlist', 'action' => 'show', 'zayavka' => $zayavka->id
                                 ]), [
                             'style' => [
                                 'color' => '#666',
                                 'cursor' => 'pointer',
-                                'display' => 'block',
-                                'font-size' => '12px',
+                                // 'display' => 'block',
+                                 'font-size' => '12px',
                                 'font-weight' => 'bold',
                                 'line-height' => 'normal',
-                                'padding' => '10px',
-                                'margin-top' => '-10px',
                                 'text-decoration' => 'underline',
-                                'word-wrap' => 'break-word'
-                            ]
+                               
+                            ],
+                            'title' => 'Показать в топе проверок'
                                 ]
                         );
-                        ?>
-                    </td>
-                </tr>
-            </table>
+                        ?></p>
+                <p class="text-muted text">Статус:
+                    <!-- <?= getStatus($zayavka->status) ?> -->
+                    <?php
+                      if ($zayavka->status == "new") {
+                          
+                          echo FAS::icon('plus-circle',['title'=>'Новая заявка']);
+                         }
+                      if ($zayavka->status == "cancelled") {
+                          echo FAR::icon('times-circle');
+                         }
+            if ($zayavka->status == "inprogress") {
+                 echo FAR::icon('hourglass',['title'=>'проверяется'])->spin(20);  
+                           }
+            if ($zayavka->status == "otkaz") {
+                 echo FAS::icon('skull',['class' => 'skull-crossbones','title'=>'Отказ']);  
+            }
+            if ($zayavka->status == "chist") {
+                 echo FAR::icon('check-circle',['title'=>'чистота выдана']);  
+            }
+            if ($zayavka->status == "katorga") {
+                 echo FAS::icon('skull',['class' => 'skull-crossbones','title'=>'Наказан каторгой']);  
+            }
+            if ($zayavka->status == "block") {
+            
+                 echo FAS::icon('skull',['class' => 'skull-crossbones','title'=>'Наказан блоком'
+                ]);  
+            }
+            ?>
+                </p>
+            </div>
+            <div class="">
+                <?php
+               
+                if ($zayavka->active === 1) {
+                    ?>
+                <?php
+                            $form = ActiveForm::begin([
+                                        'id' => 'login-form',
+                                        // 'layout' => 'horizontal',
+                                        'fieldConfig' => [
+                                            'template' => "{label}{input}",
+                                            'options' => ['class' => 'form-label'],
+                                        ],
+                            ]);
+                            ?>
+                <?php $model->action = 'cancelZayavka'; ?>
+                <?php $model->z_id = $zayavka->id; ?>
+                <?php $model->city = 0; ?>
+                <?php $model->type = 0; ?>
+                <?= $form->field($model, 'action')->hiddenInput()->label(false) ?>
+                <?= $form->field($model, 'city')->hiddenInput()->label(false) ?>
+                <?= $form->field($model, 'type')->hiddenInput()->label(false) ?>
+                <?= $form->field($model, 'z_id')->hiddenInput()->label(false) ?>
+                <?= Html::submitButton(
+                      Yii::t('app', '{icon} Отмена', ['icon' => FAR::icon('window-close',['class' => ''])->fixedWidth()]),
 
-            <br>
-            <?php
+                      ['name' => 'login-button',
+                      'class' => 'btn btn-primary btn-sm cancel-button',
+                       'onclick' => 'return confirm("Отмена заявки безвозвратна. Вы уверены?")',], 
+                       ['id' => 'submit']) ?>
+
+
+
+                <?php
+                            ActiveForm::end();
+                            ?>
+                <?php
+                }
+                ?>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<?php
+
         }
-        echo "</center>";
+       
+      echo"</div>";
+        
+   
     } else {
         echo "<h2>У вас нет ни одной поданной заявки на чистоту</h2>";
     }
+    
 } else {
     echo "<center><br><h2>Ваш аккаунт ещё не был проверен и активирован. Подождите немного</h2></center>";
-    ?>
-            <br>
-            <p>Ваш код подтверждения: <span style="color: red"><?php echo $approveKey; ?></span></p>
-            <p>Не забудьте добавить код подтверждения в видимую всем часть инфы персонажа.</p>
-            <p>В случае отсутствия кода подтверждения в инфе персонажа Вам будет отказано в регистрации.</p>
-            <p>В случае отказа в регистрации Вам <b>НЕ</b> будет отправлено никаких уведомления.</p>
-            <p>Если при попытке входа на сайт под Вашим логином и выданным паролем Вы увидите ошибку входа на сайт - значит Вам отказано в регистрации. Внимательно изучите правила регистрации и попытайтесь заново.</p>
-            <p>Вы сможете <b>самостоятельно</b> изменить пароль для входа на сайт и форум <b>после активации Вашего аккаунта</b>.</p>
-    <?php
+   
+   ?>
+
+<p>Ваш код подтверждения: <span style="color: red"><?php echo $approveKey; ?></span></p>
+<p>Не забудьте добавить код подтверждения в видимую всем часть инфы персонажа.</p>
+<p>В случае отсутствия кода подтверждения в инфе персонажа Вам будет отказано в регистрации.</p>
+<p>В случае отказа в регистрации Вам <b>НЕ</b> будет отправлено никаких уведомления.</p>
+<p>Если при попытке входа на сайт под Вашим логином и выданным паролем Вы увидите ошибку входа на сайт - значит Вам
+    отказано в регистрации. Внимательно изучите правила регистрации и попытайтесь заново.</p>
+<p>Вы сможете <b>самостоятельно</b> изменить пароль для входа на сайт и форум <b>после активации Вашего аккаунта</b>.
+</p>
+<?php
 }
 
 //-------------------------------- F U N C T I O N S ----------------------------------
@@ -485,7 +531,7 @@ function getReadOnlyActions($zayava) {
         }
     }
     if ($zayava->status == "cancelled") {
-        $result .= "<i>Отменена персонажем " . $zayava->date_last_update . "</i>";
+        $result .= "<p class=\"card-text align-self-end\">Отменена персонажем " . $zayava->date_last_update . "</p>";
     }
     return $result;
 }
@@ -702,7 +748,7 @@ function getReadOnlyActionsWithAliases($zayava) {
         }
     }
     if ($zayava->status == "cancelled") {
-        $result .= "<i>Отменена персонажем " . $zayava->date_last_update . "</i>";
+        $result .= "<p class=\"card-text \">Отменена персонажем " . $zayava->date_last_update . "</p>";
     }
     return $result;
 }
@@ -740,4 +786,3 @@ function getStatus($status) {
     return $result;
 }
 ?>
-
