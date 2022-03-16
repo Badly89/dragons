@@ -172,11 +172,11 @@ $settings->loadSettings();
     if (Yii::$app->user->isGuest) {
         array_push($menuItems, ['label' => 'Войти', 'url' => ['/site/login']]);
     } else {
-        if (isset($dragonRights) && ($dragonRights->nevid == 1 || $dragonRights->boss == 1 )&&($user->groupId > 9 && $user->active == 1)) {
+        if (isset($dragonRights) && ($dragonRights->nevid == 1 || $dragonRights->boss == 1 )) {
             array_push($menuItems, ['label' => Yii::$app->user->identity->username, 'items' => [
                     ['label' => 'Блокнот', 'url' => ['/site/notepad']],
                     
-                    ['label' => 'Админка', 'url' => ['/site/superadmin']],
+                    // ['label' => 'Админка', 'url' => ['/site/superadmin']],
                     ['label' => 'Смена пароля', 'url' => ['/site/changepass']],
                     [
                         'label' => 'Выход' ,
@@ -188,6 +188,7 @@ $settings->loadSettings();
         } else {
             array_push($menuItems, ['label' => Yii::$app->user->identity->username, 'items' => [
                     ['label' => 'Смена пароля', 'url' => ['/site/changepass']],
+                    ['label' => 'Админка', 'url' => ['/site/superadmin']],
                     [
                         'label' => 'Выход ' ,
                         'url'=> ['/site/logout'],

@@ -8,7 +8,7 @@ use app\models\Params;
 use app\models\Users;
 use yii\helpers\Url;
 
-// $height = "260px";
+$height = "260px";
 $this->title = 'Подача заявки на чистоту.';
 $this->params['breadcrumbs'][] = $this->title;
 
