@@ -31,27 +31,41 @@ $fruits = array(
 );
 ?>
 
-<script>
-Date.prototype.addHours = function(h) {
-    this.setTime(this.getTime() + (h * 60 * 60 * 1000));
-    return this;
-}
+    <script>
+        Date.prototype.addHours = function (h) {
+            this.setTime(this.getTime() + (h * 60 * 60 * 1000));
+            return this;
+        }
 
-function calc($id) {
-    let el = document.getElementById('picker');
-    if (el.value != null && el.value !== '') {
-        let totalItems = document.getElementById('total_items').innerText;
-        for (let i = 0; i < totalItems; i++) {
-            var cardFruit = document.getElementById('cardFruit_' + i);
-            let readyTime = document.getElementById('readyTime_' + i).innerText;
-            let result = new Date(el.value);
-            result.addHours(-1 * readyTime)
-            let resTime = document.getElementById('resTime_' + i);
+        function calc($id) {
+            let el = document.getElementById('picker');
+            if (el.value != null && el.value !== '') {
+                let totalItems = document.getElementById('total_items').innerText;
+                for (let i = 0; i < totalItems; i++) {
+                    var cardFruit = document.getElementById('cardFruit_' + i);
+                    let readyTime = document.getElementById('readyTime_' + i).innerText;
+                    let result = new Date(el.value);
+                    result.addHours(-1 * readyTime)
+                    let resTime = document.getElementById('resTime_' + i);
 
-            if (result < new Date) {
-                resTime.innerText = "Уже никак не успеть :(";
-                cardFruit.classList.add('border-danger');
-                cardFruit.classList.add('card-fruit-none');
+                    if (result < new Date) {
+                        resTime.innerText = "Уже никак не успеть :(";
+                        cardFruit.classList.add('border-danger');
+                        cardFruit.classList.add('card-fruit-none');
+                    } else {
+                        var options = {
+                            weekday: 'long',
+                            month: 'long',
+                            day: 'numeric',
+                            hour: 'numeric',
+                            minute: 'numeric'
+                        };
+                        resTime.innerText = result.toLocaleDateString("ru-RU", options);
+                        cardFruit.classList.add('border-success');
+                        cardFruit.style.border = "2px solid";
+                    }
+
+                }
             } else {
                 var options = {
                     weekday: 'long',
@@ -76,17 +90,17 @@ function calc($id) {
             cardFruit.classList.remove('border-danger');
 
 
+                }
+            }
         }
-    }
-}
-</script>
+    </script>
 
-<div class="row">
-    <div class="col-xl-4 col-md-6 col-sm-12">
-        <div align="center" style="margin-top: 20px; width: 100%">
-            <div class="row" style="margin-bottom: 8px">
-                <div class="col-sm-10">
-                    <?=
+    <div class="row">
+        <div class="col-xl-4 col-md-6 col-sm-12">
+            <div align="center" style="margin-top: 20px; width: 100%">
+                <div class="row" style="margin-bottom: 8px">
+                    <div class="col-sm-10">
+                        <?=
                         DateTimePicker::widget([
                             'id' => 'picker',
                             'readonly' => 'true',
@@ -95,10 +109,11 @@ function calc($id) {
                             'pluginOptions' => ['autoclose' => true],
 
                         ]); ?>
-                </div>
-                <?php
+                    </div>
+                    <?php
                     Html::submitButton('Submit', ['class' => 'btn btn-primary', 'name' => 'contact-button']);
                     ?>
+                </div>
             </div>
         </div>
     </div>
@@ -152,17 +167,20 @@ function calc($id) {
             echo" <span style='display: none' id='total_items'>$i</span>";
         ?>
 
+            }
+            echo " <span style='display: none' id='total_items'>$i</span>";
+            ?>
 
 
-    </div>
+        </div>
 
 
-    <?php
+<?php
 
 function weekDaysReplace($input)
 {
-    $ru_weekdays = array('Пн', 'Вт', 'Ср', 'Чn', 'Пт', 'Ср', 'Вc');
-    $en_weekdays = array('Mon', 'Tue', 'Wed', 'Thursday', 'Fri', 'Sat', 'Sun');
+    $ru_weekdays = array('Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Ср', 'Вc');
+    $en_weekdays = array('Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun');
     return str_replace($en_weekdays, $ru_weekdays, $input);
 }
 
