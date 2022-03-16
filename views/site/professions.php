@@ -2,7 +2,7 @@
 
 use app\models\Users;
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
+use yii\bootstrap4\ActiveForm;
 
 $this->title = 'Редактирование профессий';
 
@@ -47,35 +47,31 @@ function listExistingItems($professions, $model)
         $actionCurr = $pr->active == 1 ? "hide" : "show";
         $color = $pr->active == 1 ? "#00ff00" : "#500000";
         ?>
-        <table>
-            <tr style="vertical-align: top; height: 2px">
-                <td style="padding: 3px">
-                    <div class="form-group field-professionsmodel-view_name">
-                        <input type="text" class="form-control" value="<?php echo $pr->view_name ?>"
-                               disabled="disabled"
-                               style="background-color: #f5f5f6; box-shadow: 0 0 20px  <?php echo $color ?>">
+<table>
+    <tr style="vertical-align: top; height: 2px">
+        <td style="padding: 3px">
+            <div class="form-group field-professionsmodel-view_name">
+                <input type="text" class="form-control" value="<?php echo $pr->view_name ?>" disabled="disabled"
+                    style="background-color: #f5f5f6; box-shadow: 0 0 20px  <?php echo $color ?>">
 
-                        <p class="help-block help-block-error"></p>
-                    </div>
-                </td>
-                <td style="padding: 3px">
-                    <div class="form-group field-professionsmodel-system_name">
-                        <input type="text" class="form-control" value="<?php echo $pr->system_name ?>"
-                               disabled="disabled"
-                               style="background-color: #f5f5f6; box-shadow: 0 0 20px  <?php echo $color ?>">
-                        <p class="help-block help-block-error"></p>
-                    </div>
-                </td>
-                <td style="padding: 3px">
-                    <div class="form-group field-professionsmodel-category_name">
-                        <input type="text" class="form-control"
-                               value="<?php echo getBeautyCategoryName($pr->category) ?>"
-                               disabled="disabled"
-                               style="background-color: #f5f5f6; box-shadow: 0 0 20px  <?php echo $color ?>">
-                        <p class="help-block help-block-error"></p>
-                    </div>
-                </td>
-                <?php
+                <p class="help-block help-block-error"></p>
+            </div>
+        </td>
+        <td style="padding: 3px">
+            <div class="form-group field-professionsmodel-system_name">
+                <input type="text" class="form-control" value="<?php echo $pr->system_name ?>" disabled="disabled"
+                    style="background-color: #f5f5f6; box-shadow: 0 0 20px  <?php echo $color ?>">
+                <p class="help-block help-block-error"></p>
+            </div>
+        </td>
+        <td style="padding: 3px">
+            <div class="form-group field-professionsmodel-category_name">
+                <input type="text" class="form-control" value="<?php echo getBeautyCategoryName($pr->category) ?>"
+                    disabled="disabled" style="background-color: #f5f5f6; box-shadow: 0 0 20px  <?php echo $color ?>">
+                <p class="help-block help-block-error"></p>
+            </div>
+        </td>
+        <?php
                 //start delete form
                 $form = ActiveForm::begin([
                     'id' => 'login-form',
@@ -84,12 +80,12 @@ function listExistingItems($professions, $model)
                 echo $form->field($model, 'action')->hiddenInput(['value' => 'delete'])->label(false);
                 echo $form->field($model, 'id')->hiddenInput(['value' => $pr->id])->label(false);
                 ?>
-                <td style="padding: 3px">
-                    <button type="submit" class="btn btn-primary" name="login-button" onclick="return confirmDelete()">
-                        Удалить
-                    </button>
-                </td>
-                <?php ActiveForm::end();
+        <td style="padding: 3px">
+            <button type="submit" class="btn btn-primary" name="login-button" onclick="return confirmDelete()">
+                Удалить
+            </button>
+        </td>
+        <?php ActiveForm::end();
                 // end delete form
                 // start show/hide form
 
@@ -100,17 +96,17 @@ function listExistingItems($professions, $model)
                 echo $form->field($model, 'action')->hiddenInput(['value' => $actionCurr])->label(false);
                 echo $form->field($model, 'id')->hiddenInput(['value' => $pr->id])->label(false);
                 ?>
-                <td style="padding: 3px">
-                    <button type="submit" class="btn btn-primary" name="login-button"><?php echo $btnText; ?></button>
-                </td>
-                <?php ActiveForm::end();
+        <td style="padding: 3px">
+            <button type="submit" class="btn btn-primary" name="login-button"><?php echo $btnText; ?></button>
+        </td>
+        <?php ActiveForm::end();
 
                 //end show/hide form
                 ?>
 
-            </tr>
-        </table>
-        <?php
+    </tr>
+</table>
+<?php
     }
 }
 
@@ -139,36 +135,35 @@ function getNewProfessionForm($model, $city)
     echo $form->field($model, 'action')->hiddenInput(['value' => 'add'])->label(false);
     echo $form->field($model, 'city')->hiddenInput(['value' => $city])->label(false);
     ?>
-    <table>
-        <tr>
-            <td style="padding: 10px">
-                <?php echo $form->field($model, 'view_name')->label('Название'); ?>
-            </td>
-            <td style="padding: 10px">
-                <?php echo $form->field($model, 'system_name')->label('Транскрипция'); ?>
-            </td>
-            <td style="padding: 10px">
-                <?php echo $form->field($model, 'category')->dropDownList([
+<table>
+    <tr>
+        <td style="padding: 10px">
+            <?php echo $form->field($model, 'view_name')->label('Название'); ?>
+        </td>
+        <td style="padding: 10px">
+            <?php echo $form->field($model, 'system_name')->label('Транскрипция'); ?>
+        </td>
+        <td style="padding: 10px">
+            <?php echo $form->field($model, 'category')->dropDownList([
                     'klan' => 'Клан',
                     'naim' => 'Наймы',
                     'trav' => 'Травники',
                     'common' => 'Общие'
                 ])->label('Категория'); ?>
-            </td>
-            <td style="padding-top: 11px">
-                <?php echo Html::submitButton('Добавить профессию', ['class' => 'btn btn-primary', 'name' => 'login-button'], ['id' => 'submit']) ?>
-            </td>
-        </tr>
-    </table>
-    <?php
+        </td>
+        <td style="padding-top: 11px">
+            <?php echo Html::submitButton('Добавить профессию', ['class' => 'btn btn-primary', 'name' => 'login-button'], ['id' => 'submit']) ?>
+        </td>
+    </tr>
+</table>
+<?php
     ActiveForm::end();
 }
 
 ?>
 
 <script>
-    function confirmDelete() {
-        return confirm('Удалить? Действие необратимо!');
-    }
+function confirmDelete() {
+    return confirm('Удалить? Действие необратимо!');
+}
 </script>
-

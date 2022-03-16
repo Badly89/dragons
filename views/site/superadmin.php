@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
+use yii\bootstrap4\ActiveForm;
 use app\models\Users;
 use yii\data\Pagination;
 use yii\widgets\LinkPager;
@@ -40,21 +40,22 @@ if ($model->action == "index" || $model->action == "deleteUser") {
     //$model->action = 'userSearch';
     echo Html::hiddenInput('action', 'userSearch');
     ?>
-    <div class="form-group field-superadmin-username">
-        <?= Html::label('Ник', 'searchField', ['class' => 'col-lg-1 control-label']) ?>
-        <div class="col-lg-3"><?= Html::textInput('username', null, ['class' => 'form-control', 'id' => 'searchField']) ?></div>
-        <div class="col-lg-8">
-            <div class="help-block help-block-error "></div>
-        </div>
+<div class="form-group field-superadmin-username">
+    <?= Html::label('Ник', 'searchField', ['class' => 'col-lg-1 control-label']) ?>
+    <div class="col-lg-3"><?= Html::textInput('username', null, ['class' => 'form-control', 'id' => 'searchField']) ?>
     </div>
-    <div class="form-group">
-        <div class="col-lg-offset-1 col-lg-11">
-            <?= Html::submitButton('Найти юзера', ['class' => 'btn btn-primary'], ['id' => 'submit']) ?>
-        </div>
+    <div class="col-lg-8">
+        <div class="help-block help-block-error "></div>
     </div>
-    <?php ActiveForm::end(); ?>
-    <hr>
-    <?php
+</div>
+<div class="form-group">
+    <div class="col-lg-offset-1 col-lg-11">
+        <?= Html::submitButton('Найти юзера', ['class' => 'btn btn-primary'], ['id' => 'submit']) ?>
+    </div>
+</div>
+<?php ActiveForm::end(); ?>
+<hr>
+<?php
     echo "<br><div class=\"col-lg-offset-0 col-lg-11\"  style=\"padding: 0\">";
     if (Users::findGroupById(Yii::$app->user->getId()) == 99) {
         echo Html::beginForm(['/site/settings'], 'post');
@@ -67,15 +68,15 @@ if ($model->action == "index" || $model->action == "deleteUser") {
     if (accessToCleanStat()) {
         //Showing clean button
         ?>
-        <br>
-        <div class="col-lg-offset-0 col-lg-11" style="padding: 0">
-            <a class="btn btn-primary" href="<?= Yii::$app->request->baseUrl ?>/logs/">Логи системы</a>
-        </div>
-        <br><br><br><br><br><br>
-        <div class="col-lg-offset-0 col-lg-11" style="padding: 0">
-            <a class="btn btn-primary" href="<?= Yii::$app->request->baseUrl ?>/cleaning/">Подсчёт проверок</a>
-        </div>
-        <?php
+<br>
+<div class="col-lg-offset-0 col-lg-11" style="padding: 0">
+    <a class="btn btn-primary" href="<?= Yii::$app->request->baseUrl ?>/logs/">Логи системы</a>
+</div>
+<br><br><br><br><br><br>
+<div class="col-lg-offset-0 col-lg-11" style="padding: 0">
+    <a class="btn btn-primary" href="<?= Yii::$app->request->baseUrl ?>/cleaning/">Подсчёт проверок</a>
+</div>
+<?php
     }
     echo "<br><br><br>";
     echo "</div><hr>";
@@ -165,19 +166,20 @@ if ($model->action == 'userSearch') {
     //$model->action = 'userSearch';
     echo Html::hiddenInput('action', 'userSearch');
     ?>
-    <div class="form-group field-superadmin-username">
-        <?= Html::label('Ник', 'searchField', ['class' => 'col-lg-1 control-label']) ?>
-        <div class="col-lg-3"><?= Html::textInput('username', null, ['class' => 'form-control', 'id' => 'searchField']) ?></div>
-        <div class="col-lg-8">
-            <div class="help-block help-block-error "></div>
-        </div>
+<div class="form-group field-superadmin-username">
+    <?= Html::label('Ник', 'searchField', ['class' => 'col-lg-1 control-label']) ?>
+    <div class="col-lg-3"><?= Html::textInput('username', null, ['class' => 'form-control', 'id' => 'searchField']) ?>
     </div>
-    <div class="form-group">
-        <div class="col-lg-offset-1 col-lg-11">
-            <?= Html::submitButton('Найти юзера', ['class' => 'btn btn-primary'], ['id' => 'submit']) ?>
-        </div>
+    <div class="col-lg-8">
+        <div class="help-block help-block-error "></div>
     </div>
-    <?php
+</div>
+<div class="form-group">
+    <div class="col-lg-offset-1 col-lg-11">
+        <?= Html::submitButton('Найти юзера', ['class' => 'btn btn-primary'], ['id' => 'submit']) ?>
+    </div>
+</div>
+<?php
     ActiveForm::end();
 }
 

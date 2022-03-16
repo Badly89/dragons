@@ -1,14 +1,14 @@
 <?php
 
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
+use yii\bootstrap4\ActiveForm;
 use app\models\Zayavka;
 use app\models\Actions;
 use app\models\Params;
 use app\models\Users;
 use yii\helpers\Url;
 
-$height = "260px";
+// $height = "260px";
 $this->title = 'Подача заявки на чистоту.';
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -16,17 +16,17 @@ $settings = new Params();
 $settings->loadSettings();
 if ($model->userActive) {
     ?>
-    <center>
+<center>
     <div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
+        <h1><?= Html::encode($this->title) ?></h1>
 
-    <!--<p>Пожалуйста, заполните все поля для входа:</p>-->
-    <?php
+        <!--<p>Пожалуйста, заполните все поля для входа:</p>-->
+        <?php
     if ($model->allowNewZayavka) {
         if (getUserZayavkiToday() < $settings->max_z_per_day) {
             $form = ActiveForm::begin([
                 'id' => 'login-form',
-                'layout' => 'horizontal',
+                // 'layout' => 'horizontal',
                 'fieldConfig' => [
                     'template' => "<table><tr><td nowrap>{label}</td></tr><tr><td>{input}</td></tr></table>",
                     'labelOptions' => ['class' => 'col-lg-1 control-label'],
@@ -34,14 +34,15 @@ if ($model->userActive) {
             ]);
             ?>
 
-            <?php $model->action = 'saveZayavka'; ?>
-            <?php $model->z_id = -1; ?>
-            <?= $form->field($model, 'action')->hiddenInput()->label(false) ?>
-            <?= $form->field($model, 'z_id')->hiddenInput()->label(false) ?>
-            <table width="40%">
-                <tr width="100%">
-                    <td valign="top" width="50%">
-                        <?=
+        <?php $model->action = 'saveZayavka'; ?>
+        <?php $model->z_id = -1; ?>
+        <?= $form->field($model, 'action')->hiddenInput()->label(false) ?>
+        <?= $form->field($model, 'z_id')->hiddenInput()->label(false) ?>
+
+        <table width="40%">
+            <tr width="100%">
+                <td valign="top" width="50%">
+                    <?=
                         $form->field($model, 'city')->listBox([
                             'kovcheg' => 'Ковчег',
                             'smorye' => 'Среднеморье',
@@ -55,44 +56,49 @@ if ($model->userActive) {
                             'unselect' => false,
                         ])
                         ?>
-                    </td>
-                    <td valign="top" width="50%">
-                        <?=
+                </td>
+                <td valign="top" width="50%">
+                    <?=
                         $form->field($model, 'type')->listBox([], [
                             'id' => 'type',
                             'style' => 'height:' . $height . '; width:250px',
                         ])
                         ?>
-                    </td>
-                </tr>
-            </table>
+                </td>
+            </tr>
+        </table>
 
-            <div class="form-group">
-                <div class="col-lg-offset-1 col-lg-11">
-                    <?= Html::submitButton('Подать заявку', ['class' => 'btn btn-primary', 'name' => 'login-button', 'onclick' => 'return validateForm()',], ['id' => 'submit']) ?>
-                </div>
-
+        <div class="form-group">
+            <div class="col-lg-offset-1 col-lg-11">
+                <?= Html::submitButton('Подать заявку', ['class' => 'btn btn-primary', 'name' => 'login-button', 'onclick' => 'return validateForm()',], ['id' => 'submit']) ?>
             </div>
 
-            <?php ActiveForm::end(); ?>
-            </div>
-            <?php
+        </div>
+
+        <?php ActiveForm::end(); ?>
+    </div>
+    <?php
         } else {
             ?>
-            </div>
-            <h3>Вы достигли лимита подачи заявок в сутки (<?= $settings->max_z_per_day ?>). Приходите завтра.</h3>
-            <?php
+    </div>
+    <h3>Вы достигли лимита подачи заявок в сутки (<?= $settings->max_z_per_day ?>). Приходите завтра.</h3>
+    <?php
         }
     } else {
-        ?></center>
-        Уже есть поданная Вами заявка на чистоту. Согласно правил подачи заявки на чистоту, игрок не может подать более одной заявки на чистоту.
-        <br>
-        Вы можете использовать полученную по заявке чистоту как угодно, после того, как используете её по назначению.
-        Т.е., подав заявку на вступление в клан, Вы можете после вступления в клан по этой же чистоте купить профессию.
-        <br><br>
-        <span style="font-size:18px"><b>Ваша заявка на рассмотрении:</b></span><br><br>
-        <center>
-            <table style="width:800px; border: 0px none; padding: 5px; background-color: <?= $settings->own_z_color ?>;
+        ?>
+</center>
+Уже есть поданная Вами заявка на чистоту. Согласно правил подачи заявки на чистоту, игрок не может подать более одной
+заявки на чистоту.
+<br>
+Вы можете использовать полученную по заявке чистоту как угодно, после того, как используете её по назначению.
+Т.е., подав заявку на вступление в клан, Вы можете после вступления в клан по этой же чистоте купить профессию.
+<br><br>
+<span style="font-size:18px"><b>Ваша заявка на рассмотрении:</b></span><br><br>
+<div class="">
+
+</div>
+<center>
+    <table style="width:800px; border: 0px none; padding: 5px; background-color: <?= $settings->own_z_color ?>;
             <?php
             if ($model->activeZayavka->status == "new") {
                 echo "box-shadow: 0 0 15px  grey";
@@ -120,8 +126,8 @@ if ($model->userActive) {
             }
             ?>
                     ">
-                <tr style="height: 40px">
-                    <td width="5%" style="padding: 5px;"><?php
+        <tr style="height: 40px">
+            <td width="5%" style="padding: 5px;"><?php
                         if (Users::findGroupById(Yii::$app->user->getId()) > 1) {
                             echo Html::a(
                                 '#' . $model->activeZayavka->id, Url::to([
@@ -132,28 +138,29 @@ if ($model->userActive) {
                             echo "#" . $model->activeZayavka->id;
                         }
                         ?>
-                    </td>
-                    <td width="25%" style="padding: 5px;"></td>
-                    <td width="35%" style="padding: 5px;">Статус: <?= getStatus($model->activeZayavka->status) ?> </td>
-                    <td align="right" width="35%" style="padding: 5px;">
-                        Подана: <?= $model->activeZayavka->date_added ?></td>
-                </tr>
-                <tr>
-                    <td colspan="2" style="padding: 5px;">
-                        <?= $model->activeZayavka->type ?><br>
-                    </td>
-                    <td colspan="2" style="padding: 5px;">
-                        <?php
+            </td>
+            <td width="25%" style="padding: 5px;"></td>
+            <td width="35%" style="padding: 5px;">Статус: <?= getStatus($model->activeZayavka->status) ?> </td>
+            <td align="right" width="35%" style="padding: 5px;">
+                Подана: <?= $model->activeZayavka->date_added ?></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="padding: 5px;">
+                <?= $model->activeZayavka->type ?><br>
+            </td>
+            <td colspan="2" style="padding: 5px;">
+                <?php
                         if (strlen($model->activeZayavka->city) > 0) {
                             echo "Город: " . $model->activeZayavka->city;
                         }
                         ?>
-                        <span style="font-size: 12px; font-style: italic">(Рассматривается в: <?= $model->activeZayavka->proverka_city ?>)</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="4" style="padding: 10px">
-                        <?php
+                <!-- <span style="font-size: 12px; font-style: italic">(Рассматривается в:
+                    <?= $model->activeZayavka->proverka_city ?>)</span> -->
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4" style="padding: 10px">
+                <?php
                         if (Users::findGroupById(Yii::$app->user->getId()) > 1) {
                             echo getReadOnlyActions($model->activeZayavka->id);
                         } else {
@@ -161,16 +168,16 @@ if ($model->userActive) {
                         }
                         ?>
 
-                    </td>
-                </tr>
-                <?php
+            </td>
+        </tr>
+        <?php
                 if ($model->activeZayavka->active === 1) {
                     ?>
-                    <tr>
-                        <td colspan="4">
+        <tr>
+            <td colspan="4">
 
 
-                            <?php
+                <?php
                             $form = ActiveForm::begin([
                                 'id' => 'login-form',
                                 'layout' => 'horizontal',
@@ -180,30 +187,30 @@ if ($model->userActive) {
                                 ],
                             ]);
                             ?>
-                            <?php $model->action = 'cancelZayavka'; ?>
-                            <?php $model->z_id = $model->activeZayavka->id; ?>
-                            <?php $model->city = 0; ?>
-                            <?php $model->type = 0; ?>
-                            <?= $form->field($model, 'action')->hiddenInput()->label(false) ?>
-                            <?= $form->field($model, 'city')->hiddenInput()->label(false) ?>
-                            <?= $form->field($model, 'type')->hiddenInput()->label(false) ?>
-                            <?= $form->field($model, 'z_id')->hiddenInput()->label(false) ?>
-                            <div class="form-group">
-                                <div style="margin-left: 30px">
-                                    <?= Html::submitButton('Отменить проверку по данной заявке', ['class' => 'btn btn-primary', 'name' => 'login-button', 'onclick' => 'return confirm("Отмена заявки безвозвратна. Вы уверены?")',], ['id' => 'submit']) ?>
-                                </div>
-                            </div>
-                            <?php
+                <?php $model->action = 'cancelZayavka'; ?>
+                <?php $model->z_id = $model->activeZayavka->id; ?>
+                <?php $model->city = 0; ?>
+                <?php $model->type = 0; ?>
+                <?= $form->field($model, 'action')->hiddenInput()->label(false) ?>
+                <?= $form->field($model, 'city')->hiddenInput()->label(false) ?>
+                <?= $form->field($model, 'type')->hiddenInput()->label(false) ?>
+                <?= $form->field($model, 'z_id')->hiddenInput()->label(false) ?>
+                <div class="form-group">
+                    <div style="margin-left: 30px">
+                        <?= Html::submitButton('Отменить проверку по данной заявке', ['class' => 'btn btn-primary', 'name' => 'login-button', 'onclick' => 'return confirm("Отмена заявки безвозвратна. Вы уверены?")',], ['id' => 'submit']) ?>
+                    </div>
+                </div>
+                <?php
                             ActiveForm::end();
                             ?>
-                        </td>
-                    </tr>
-                    <?php
+            </td>
+        </tr>
+        <?php
                 }
                 ?>
-                <tr>
-                    <td colspan="4">
-                        <?php
+        <tr>
+            <td colspan="4">
+                <?php
                         echo Html::a(
                             "Показать в топе проверок", Url::to([
                             '/site/zlist', 'action' => 'show', 'zayavka' => $model->activeZayavka->id
@@ -223,12 +230,12 @@ if ($model->userActive) {
                             ]
                         );
                         ?>
-                    </td>
-                </tr>
-            </table>
-        </center>
+            </td>
+        </tr>
+    </table>
+</center>
 
-        <?php
+<?php
     }
 } else {
     echo "<center><br><h2>Ваш аккаунт ещё не был проверен и активирован. Подождите немного</h2></center>";
@@ -571,31 +578,31 @@ function getStatus($status)
 
 
 <script>
-    function validateForm() {
-        result = false;
-        cityField = document.getElementById('city');
-        typeField = document.getElementById('type');
-        if (cityField.value !== '' && typeField.value !== '') {
-            return confirm('Вы уверены, что хотите подать заявку на чистоту?');
-        } else {
-            alert('Что-то не выбрано. Проверьте свой выбор.');
-            return false;
-        }
+function validateForm() {
+    result = false;
+    cityField = document.getElementById('city');
+    typeField = document.getElementById('type');
+    if (cityField.value !== '' && typeField.value !== '') {
+        return confirm('Вы уверены, что хотите подать заявку на чистоту?');
+    } else {
+        alert('Что-то не выбрано. Проверьте свой выбор.');
+        return false;
     }
+}
 
-    function changeValue(obj) {
-        select = document.getElementById('type');
-        if (obj.value === 'common') {
-            select.innerHTML = "<?php echo $model->commonProfessionsOptions?>";
-        }
-        if (obj.value === 'kovcheg') {
-            select.innerHTML = "<?php echo $model->kovchegProfessionsOptions?>";
-        }
-        if (obj.value === 'smorye') {
-            select.innerHTML = "<?php echo $model->smoryeProfessionsOptions?>";
-        }
-        if (obj.value === 'utes') {
-            select.innerHTML = "<?php echo $model->utesProfessionsOptions?>";
-        }
+function changeValue(obj) {
+    select = document.getElementById('type');
+    if (obj.value === 'common') {
+        select.innerHTML = "<?php echo $model->commonProfessionsOptions?>";
     }
+    if (obj.value === 'kovcheg') {
+        select.innerHTML = "<?php echo $model->kovchegProfessionsOptions?>";
+    }
+    if (obj.value === 'smorye') {
+        select.innerHTML = "<?php echo $model->smoryeProfessionsOptions?>";
+    }
+    if (obj.value === 'utes') {
+        select.innerHTML = "<?php echo $model->utesProfessionsOptions?>";
+    }
+}
 </script>

@@ -21,5 +21,5 @@ class BootstrapIconsAsset extends YiiAssetBundle
     /**
      * @inheritDoc
      */
-    public $css = ['https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.min.css'];
+    public $css = ['https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css'];
 }

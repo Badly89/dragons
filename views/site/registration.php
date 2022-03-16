@@ -4,7 +4,7 @@
 /* @var $model app\models\LoginForm */
 
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
+use yii\bootstrap4\ActiveForm;
 use app\models\Params;
 
 $settings = new Params();
@@ -22,16 +22,19 @@ $this->params['breadcrumbs'][] = $this->title;
     if ($model->registration_tries < $settings->register_attempts) {
         if (!$model->success) {
             ?>
-            <h1><?= Html::encode($this->title) ?></h1>
-            <p>Для регистрации в системе, в обязательном порядке поместите строку </br><span style="color:red;"><b>!.<?= $model->secretkey ?>.!</b></span></br>в любое место профиля персонажа, после чего введите свой <b>игровой ник</b> в поле ниже.    </p>
-            <p><b>Не удаляйте кодовую строку до подтверждения вашего аккаунта, иначе регистрация будет аннулирована.</b></p>
-            <p><a style="color:red; font-weight: bold" href="http://dragons.apeha.ru/forum/-f34/-t60.html" target="_blank">ИНСТРУКЦИЯ ПО РЕГИСТРАЦИИ НА САЙТЕ ОД</a></p>
-            <?php
+    <h1><?= Html::encode($this->title) ?></h1>
+    <p>Для регистрации в системе, в обязательном порядке поместите строку </br><span
+            style="color:red;"><b>!.<?= $model->secretkey ?>.!</b></span></br>в любое место профиля персонажа, после
+        чего введите свой <b>игровой ник</b> в поле ниже. </p>
+    <p><b>Не удаляйте кодовую строку до подтверждения вашего аккаунта, иначе регистрация будет аннулирована.</b></p>
+    <p><a style="color:red; font-weight: bold" href="http://dragons.apeha.ru/forum/-f34/-t60.html"
+            target="_blank">ИНСТРУКЦИЯ ПО РЕГИСТРАЦИИ НА САЙТЕ ОД</a></p>
+    <?php
             $form = ActiveForm::begin([
                         'id' => 'registration-form',
-                        'layout' => 'horizontal',
+                        // 'layout' => 'horizontal',
                         'fieldConfig' => [
-                            'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
+                            'template' => "{label}\n<div class=\"\">{input}</div>\n<div class=\"\">{error}</div>",
                             'labelOptions' => ['class' => 'col-lg-1 control-label', 'style' => [
                                     'white-space' => 'nowrap'
                                 ]],
@@ -39,56 +42,61 @@ $this->params['breadcrumbs'][] = $this->title;
             ]);
             ?>
 
-            <?php $model->_afr = base64_encode($model->secretkey) ?>
-            <?= $form->field($model, 'username')->textInput(['autofocus' => true])->label('Ник') ?>
-            <?= $form->field($model, 'apeha_id')->textInput(['type' => 'number', 'min' => 1, 'data-toggle'=>'tooltip', 'data-placement' => 'bottom', 
+    <?php $model->_afr = base64_encode($model->secretkey) ?>
+    <?= $form->field($model, 'username',['enableLabel' => false])->textInput(array('placeholder' => 'Ник', 'class'=>'form-control')) ?>
+    <?= $form->field($model, 'apeha_id',['enableLabel' => false])->textInput(array('placeholder' => 'ID персонажа', 'class'=>'form-control'),['type' => 'number', 'min' => 1, 'data-toggle'=>'tooltip', 'data-placement' => 'bottom', 
                 'title' => 'Цифры в ссылке на Вашего персонажа info.html?user=#########  либо  info_user_#########.html'
-                ])->label('ID персонажа') ?>
-            <?= $form->field($model, '_afr')->hiddenInput()->label(false) ?>
+                ]) ?>
+    <?= $form->field($model, '_afr')->hiddenInput()->label(false) ?>
 
-            <div class="form-group">
-                <div class="col-lg-offset-1 col-lg-11">
-                    <?= Html::submitButton('Регистрация', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-                </div>
-            </div>
+    <div class="form-group">
+        <div class="d-flex flex-column">
+            <?= Html::submitButton('Регистрация', ['class' => 'btn btn-primary btn-reg mb-2', 'name' => 'login-button']) ?>
+            <?= Html::a('Восстановление пароля', Yii::$app->request->baseUrl . '/lostpassword/'/* , ['class' => 'btn btn-primary'] */) ?>
+        </div>
 
-            <?php ActiveForm::end(); ?>
-        <?php } else { ?>
-            <?php if (strlen($model->error) > 0) { ?> 
-                <h4><?= $model->error ?></h4>
-            <?php } else { ?>
-                Вы успешно зарегистрировались под ником <b><?= $model->username ?></b><br>
-                <b>Вы сможете воспользоваться всеми возможностями сайта и форума после активации Вашей учётной записи администрацией.</b><br>
-                Ваш пароль для входа в систему: <b><?= $model->generatedpassword ?></b><br><br>
-                <span style="color:red;">Запишите пароль и не говорите никому. В противном случае Вы можете быть наказаны за неиспользованную чистоту при подаче ложной заявки от Вашего имени.</span>
+    </div>
+
+    <?php ActiveForm::end(); ?>
+    <?php } else { ?>
+    <?php if (strlen($model->error) > 0) { ?>
+    <h4><?= $model->error ?></h4>
+    <?php } else { ?>
+    Вы успешно зарегистрировались под ником <b><?= $model->username ?></b><br>
+    <b>Вы сможете воспользоваться всеми возможностями сайта и форума после активации Вашей учётной записи
+        администрацией.</b><br>
+    Ваш пароль для входа в систему: <b><?= $model->generatedpassword ?></b><br><br>
+    <span style="color:red;">Запишите пароль и не говорите никому. В противном случае Вы можете быть наказаны за
+        неиспользованную чистоту при подаче ложной заявки от Вашего имени.</span>
 
 
 
 
 
-                <?php
+    <?php
             }
         }
     } else {
         ?>
-        <br><br>
-        <center>
-            <h3><span style="color:#ac2925">Вы очень часто регистрируетесь. <br><br>Пожалуйста, подождите немного перед новой попыткой</span></h3>
-        </center>
+    <br><br>
+    <center>
+        <h3><span style="color:#ac2925">Вы очень часто регистрируетесь. <br><br>Пожалуйста, подождите немного перед
+                новой попыткой</span></h3>
+    </center>
     <?php }
     ?>
 
 
 </div>
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip()
+$(function() {
+    $('[data-toggle="tooltip"]').tooltip()
 })
 </script>
 <style>
 .tooltip-inner {
-    white-space:pre-wrap;
+    white-space: pre-wrap;
 }
 </style>

@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use app\models\Zayavka;
 use app\models\Users;
 use app\models\Actions;
-use yii\bootstrap\ActiveForm;
+use yii\bootstrap4\ActiveForm;
 use app\models\Params;
 use yii\helpers\Url;
 
@@ -19,33 +19,34 @@ if ($model->id) {
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style>
-    .name{
-        font-size: 14px;
-        color: <?= $settings->sign_color ?>;
-    }
-    .text_italic{
-        font-size: 13px;
-        color: <?= $settings->comment_color ?>;
-        font-style: italic;
-    }
-    .text{
-        font-size: 14px;
-        color: <?= $settings->comment_color ?>;
-    }    
-    .text_otkaz{
-        font-size: 14px;
-        color: <?= $settings->otkaz_color ?>;
-    }    
+.name {
+    font-size: 14px;
+    color: <?=$settings->sign_color ?>;
+}
 
+.text_italic {
+    font-size: 13px;
+    color: <?=$settings->comment_color ?>;
+    font-style: italic;
+}
 
+.text {
+    font-size: 14px;
+    color: <?=$settings->comment_color ?>;
+}
+
+.text_otkaz {
+    font-size: 14px;
+    color: <?=$settings->otkaz_color ?>;
+}
 </style>
 <?php
 if (Zayavka::findZayavkaById($model->id)) {
     $zayavka = Zayavka::findZayavkaById($model->id);
     $user = Users::findById($zayavka->user_id);
     ?>
-    <center>
-        <table style="width:800px; border: 0px none; padding: 5px; background-color: <?= $settings->color_background ?>; 
+<center>
+    <table style="width:800px; border: 0px none; padding: 5px; background-color: <?= $settings->color_background ?>; 
         <?php
         if ($zayavka->status == "new") {
             echo "box-shadow: 0 0 15px  grey";
@@ -73,8 +74,8 @@ if (Zayavka::findZayavkaById($model->id)) {
         }
         ?>
                ">
-            <tr style="height: 40px">
-                <td width="5%" style="padding: 5px;"><?php
+        <tr style="height: 40px">
+            <td width="5%" style="padding: 5px;"><?php
                     if (Users::findGroupById(Yii::$app->user->getId()) > 1) {
                         echo Html::a(
                                 '#' . $zayavka->id, Url::to([
@@ -85,27 +86,28 @@ if (Zayavka::findZayavkaById($model->id)) {
                         echo "#" . $zayavka->id;
                     }
                     ?>
-                </td>
-                <td width="25%" style="padding: 5px;"><a href="http://apeha.ru/info.html?user=<?= $user->apeha_id ?>" target="_blank"><?= $user->username ?></a></td>
-                <td width="35%" style="padding: 5px;">Статус: <?= getStatus($zayavka->status) ?></td>
-                <td align="right" width="35%" style="padding: 5px;">Подана: <?= $zayavka->date_added ?></td>
-            </tr>
-            <tr>
-                <td colspan="2" style="padding: 5px;">
-                    <?= switchType($professions, $zayavka->type) ?>
-                </td>
-                <td colspan = "2" style="padding: 5px;">
-                    <?= switchCity($zayavka->city) ?>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="4" style="padding:10px">
-                    <?= getAllActions($zayavka) ?>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="4">
-                    <?php
+            </td>
+            <td width="25%" style="padding: 5px;"><a href="http://apeha.ru/info.html?user=<?= $user->apeha_id ?>"
+                    target="_blank"><?= $user->username ?></a></td>
+            <td width="35%" style="padding: 5px;">Статус: <?= getStatus($zayavka->status) ?></td>
+            <td align="right" width="35%" style="padding: 5px;">Подана: <?= $zayavka->date_added ?></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="padding: 5px;">
+                <?= switchType($professions, $zayavka->type) ?>
+            </td>
+            <td colspan="2" style="padding: 5px;">
+                <?= switchCity($zayavka->city) ?>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4" style="padding:10px">
+                <?= getAllActions($zayavka) ?>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <?php
                     echo Html::a(
                             "Показать в топе проверок", Url::to([
                                 '/site/zlist', 'action' => 'show', 'zayavka' => $zayavka->id
@@ -125,11 +127,11 @@ if (Zayavka::findZayavkaById($model->id)) {
                             ]
                     );
                     ?>
-                </td>
-            </tr>
-        </table>
-    </center>
-    <?php
+            </td>
+        </tr>
+    </table>
+</center>
+<?php
     if (Users::findGroupById(Yii::$app->user->getId()) == 99) {
         $form = ActiveForm::begin([
                     'method' => 'post',
@@ -144,16 +146,16 @@ if (Zayavka::findZayavkaById($model->id)) {
         echo $form->field($model, 'action')->hiddenInput()->label(false);
         echo $form->field($model, 'id')->hiddenInput()->label(false);
         ?>
-        <center>
-            <div class="form-group">
-                <div class="col-lg-offset-1 col-lg-11">
-                    <?= Html::submitButton('Удалить все данные по проверке и обнулить статус заявки', ['class' => 'btn btn-primary', 'name' => 'login-button', 'onclick' => 'return confirm("ДЕЙСТВИЕ НЕОБРАТИМО. ПРОДОЛЖАЕМ?")'], ['id' => 'submit']) ?>
-                </div>    
-            </div>
-            <?php ActiveForm::end(); ?>  
-            <hr>
-        </center>
-        <?php
+<center>
+    <div class="form-group">
+        <div class="col-lg-offset-1 col-lg-11">
+            <?= Html::submitButton('Удалить все данные по проверке и обнулить статус заявки', ['class' => 'btn btn-primary', 'name' => 'login-button', 'onclick' => 'return confirm("ДЕЙСТВИЕ НЕОБРАТИМО. ПРОДОЛЖАЕМ?")'], ['id' => 'submit']) ?>
+        </div>
+    </div>
+    <?php ActiveForm::end(); ?>
+    <hr>
+</center>
+<?php
     }
 } else {
     //search item

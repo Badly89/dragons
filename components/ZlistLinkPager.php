@@ -19,19 +19,27 @@ class ZlistLinkPager extends LinkPager {
         $options = ['class' => empty($class) ? $this->pageCssClass : $class];
         if ($active) {
             Html::addCssClass($options, $this->activePageCssClass);
+            $options['class']='active page-item';
+            $linkOptions['aria-current']=$page;
         }
+       
         if ($disabled) {
+            $options['class'] ='page-item';
             Html::addCssClass($options, $this->disabledPageCssClass);
-            $tag = ArrayHelper::remove($this->disabledListItemSubTagOptions, 'tag', 'span');
-
-            return Html::tag('li', Html::tag($tag, $label, $this->disabledListItemSubTagOptions), $options);
+            $tag = ArrayHelper::remove($this->disabledListItemSubTagOptions, 'tag','span');
+             $linkOptions['aria-disabled']='true';
+             $options['class']='page-item disabled';
+             $linkOptions['tabindex']='-1';
+             $linkOptions['class']='page-link';
+            return Html::tag('li', Html::a($label, $this->generateCustomUrl($page), $linkOptions), $options);   
+            //  return Html::tag('li', Html::tag($tag, $label, $this->disabledListItemSubTagOptions), $options);
         }
         $linkOptions = $this->linkOptions;
         $linkOptions['data-page'] = $page;
+        $linkOptions['class']='page-link';
 
         return Html::tag('li', Html::a($label, $this->generateCustomUrl($page), $linkOptions), $options);
     }
-
 
     public function generateCustomUrl($page) {
         $params = [

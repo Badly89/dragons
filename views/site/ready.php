@@ -10,6 +10,9 @@ use app\models\Users;
 use app\models\Actions;
 use yii\helpers\Url;
 
+use rmrevin\yii\fontawesome\FAR;
+use rmrevin\yii\fontawesome\FAS;
+
 $settings = new Params();
 $settings->loadSettings();
 $td_bg_color = "#FEFFFA";
@@ -20,141 +23,109 @@ $this->params['breadcrumbs'][] = ['label' => 'Заявки на чистоту',
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style>
-    .name {
-        font-size: 14px;
-        color: <?= $settings->sign_color ?>;
-    }
+.name {
+    font-size: 14px;
+    color: <?=$settings->sign_color ?>;
+}
 
-    .text_italic {
-        font-size: 13px;
-        color: <?= $settings->comment_color ?>;
-        font-style: italic;
-    }
+.text_italic {
+    font-size: 13px;
+    color: <?=$settings->comment_color ?>;
+    font-style: italic;
+}
 
-    .text {
-        font-size: 14px;
-        color: <?= $settings->comment_color ?>;
-    }
+.text {
+    font-size: 14px;
+    color: <?=$settings->comment_color ?>;
+}
 
-    .text_otkaz {
-        font-size: 14px;
-        color: <?= $settings->otkaz_color ?>;
-    }
-
-
+.text_otkaz {
+    font-size: 14px;
+    color: <?=$settings->otkaz_color ?>;
+}
 </style>
 <script src="<?= Yii::$app->request->baseUrl ?>/js/clipboard.min.js"></script>
-<div class="site-about">
-    <br/>
+<div class=" row">
+    <br />
     <?php
     if (sizeof($model->zayavkiArray) > 0) {
     //MAIN WORK HERE
     foreach ($model->zayavkiArray as $zayavka) {
-    echo "<center>";
     $actions = ActionsUserView::findActionsByZid($zayavka->zId);
     ?>
-    <table style="width:800px; border: 0px none; padding: 5px; background-color: <?= $settings->color_background ?>;
-    <?php
-    if ($zayavka->status == "new") {
-        echo "box-shadow: 0 0 20px  grey";
-    }
-    if ($zayavka->status == "cancelled") {
-        echo "box-shadow: 0 0 20px  " . $settings->color_cancelled;
-    }
-    if ($zayavka->status == "inprogress") {
-        echo "box-shadow: 0 0 20px  " . $settings->color_inprogress;
-    }
-    if ($zayavka->status == "otkaz") {
-        echo "box-shadow: 0 0 20px  " . $settings->color_otkaz;
-    }
-    if ($zayavka->status == "chist") {
-        echo "box-shadow: 0 0 20px  " . $settings->color_chist;
-    }
-    if ($zayavka->status == "katorga") {
-        echo "box-shadow: 0 0 20px  " . $settings->color_killed;
-    }
-    if ($zayavka->status == "prokli") {
-        echo "box-shadow: 0 0 20px  " . $settings->color_killed;
-    }
-    if ($zayavka->status == "block") {
-        echo "box-shadow: 0 0 20px  " . $settings->color_killed;
-    }
-    ?>
-            ">
-        <tr style="height: 40px">
-            <td width="10%" style="padding: 5px;"><?php
+    <div class="col-xl-4 col-md-6 col-sm-12 mb-4 ">
+        <div class="card application h-100" style=" background-color: <?= $settings->color_background ?>;
+       <?php
+                 if ($zayavka->status == "new") {
+                     echo "box-shadow: 0 0 15px  grey";
+                 }
+                 if ($zayavka->status == "cancelled") {
+                     echo "box-shadow: 0 0 15px  " . $settings->color_cancelled;
+                 }
+                 if ($zayavka->status == "inprogress") {
+                     echo "box-shadow: 0 0 15px  " . $settings->color_inprogress;
+                    }
+                 if ($zayavka->status == "otkaz") {
+                     echo "box-shadow: 0 0 15px  " . $settings->color_otkaz;
+                 }
+                  if ($zayavka->status == "chist") {
+                     echo "box-shadow: 0 0 15px  " . $settings->color_chist;
+                 }
+                  if ($zayavka->status == "katorga") {
+                     echo "box-shadow: 0 0 15px  " . $settings->color_killed;
+                 }
+                  if ($zayavka->status == "prokli") {
+                     echo "box-shadow: 0 0 15px  " . $settings->color_killed;
+                 }
+                  if ($zayavka->status == "block") {
+                      echo "box-shadow: 0 0 20px  " . $settings->color_killed;
+                  }
+            ?>
+        ">
+            <div class="card-header">
+                <div class="buttons-nick-time">
+                    <?php
                 if (!Yii::$app->user->isGuest) {
                     if (true) {
-                        echo Html::a(
-                            '#' . $zayavka->zId, Url::to([
-                            '/site/sitem', 'id' => $zayavka->zId
-                        ])
-                        );
+                       
                         ?>
-                        <button class="btn_<?= $zayavka->zId ?>" style="
-                                        position: relative;
-                                        display: inline-block;
-                                        padding: 2px 4px;
-                                        font-size: 13px;
-                                        font-weight: bold;
-                                        line-height: 20px;
-                                        color: #333;
-                                        white-space: nowrap;
-                                        vertical-align: middle;
-                                        cursor: pointer;
-                                        background-color: #eee;
-                                        background-image: linear-gradient(#fcfcfc,#eee);
-                                        border: 1px solid #d5d5d5;
-                                        border-radius: 3px;
-                                        -webkit-user-select: none;
-                                        -moz-user-select: none;
-                                        -ms-user-select: none;
-                                        user-select: none;
-                                        -webkit-appearance: none;
-                                        ">
-                            <img width="14px" src="<?= Yii::$app->request->baseUrl ?>/img/clippy.svg"
-                                 alt="Copy to clipboard">
-                        </button>
-                        <script>
-                            var clipboard = new Clipboard('.btn_<?= $zayavka->zId ?>', {
-                                text: function () {
-                                    return 'http://<?= Yii::$app->getRequest()->serverName ?><?= Yii::$app->getHomeUrl() ?>sitem/<?= $zayavka->zId ?>/';
-                                }
-                            });
+                    <button class="btn_<?= $zayavka->zId ?> btn-outline-info btn btm-sm btn-zlist mr-1">
+                        <?php echo FAS::icon('clipboard')?>
+                    </button>
+                    <script>
+                    var clipboard = new Clipboard('.btn_<?= $zayavka->zId ?>', {
+                        text: function() {
+                            return 'http://<?= Yii::$app->getRequest()->serverName ?><?= Yii::$app->getHomeUrl() ?>sitem/<?= $zayavka->zId ?>/';
+                        }
+                    });
 
-                            clipboard.on('success', function (e) {
-                                console.log(e);
-                            });
+                    clipboard.on('success', function(e) {
+                        console.log(e);
+                    });
 
-                            clipboard.on('error', function (e) {
-                                console.log(e);
-                            });
-                        </script>
-                        <?php
-                    } else {
-                        echo "#" . $zayavka->zId;
-                    }
-                } else {
-                    echo "#" . $zayavka->zId;
-                }
+                    clipboard.on('error', function(e) {
+                        console.log(e);
+                    });
+                    </script>
+                    <?php
+                    } 
+                } 
                 ?>
-            </td>
-            <td width="25%" style="padding: 5px;"><a
-                        href="http://newforest.apeha.ru/info.html?nick=<?= urlencode(iconv("UTF-8", "CP1251", $zayavka->username)) ?>"
-                        target="_blank"><?= $zayavka->username ?></a></td>
-            <td width="35%" style="padding: 5px;">Статус: <?= getStatus($zayavka->status) ?></td>
-            <td align="right" width="30%" style="padding: 5px;">Подана: <?= $zayavka->date_added ?></td>
-        </tr>
-        <tr>
-            <td colspan="2" style="padding: 5px;">
-                <?= switchType($professions, $zayavka->type) ?>
-            </td>
-            <td colspan="2" style="padding: 5px;">
-                <?= switchCity($zayavka->city) ?>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="4" style="padding:15px">
+
+                    <p><a href="http://newforest.apeha.ru/info.html?nick=<?= urlencode(iconv("UTF-8", "CP1251", $zayavka->username)) ?>"
+                            class="zlistNick text-decoration-none" target="_blank"><?= $zayavka->username ?></a></p>
+
+                    <p class="text-muted zayavka-time pr-1">
+                        <?php  echo FAR::icon('clock',['title'=>'Время подачи заявки']); ?>
+                        <?= $zayavka->date_added ?></p>
+                </div>
+            </div>
+            <div class="card-body application-body">
+                <div class="zlist-sub p-2">
+                    <h5 class="card-title zayavka-title"> <?= switchType($professions, $zayavka->type) ?> </h5>
+                    <div class="card-subtitle zayavka-subtitle  "><?= switchCity($zayavka->city) ?>
+                    </div>
+                </div>
                 <?php
                 $boiDone = false;
                 $perDone = false;
@@ -173,6 +144,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 $katorga = false;
                 $prokli = false;
                 if (sizeof($actions) > 0) {
+                    ?>
+                <p class="card-text otmetka">
+                    <?php
                     //START FOREACH
                     foreach ($actions as $action) {
                         if ($action->action == "b_done") {
@@ -214,7 +188,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             $nevid_action = "bp";
                         }
                     }
-                }
+                } ?>
+                    <?php
                 $stager_text = "";
                 $stager_comment = "";
                 if ($stagerId != "") {
@@ -236,14 +211,17 @@ $this->params['breadcrumbs'][] = $this->title;
                         }
                     }
                 }
+                
                 if (strlen($stager_text) > 1) {
                     ?>
+
                     <span style="font-size:13px; color: green"><b><?= $stager_text ?></b><br></span>
                     <?php
                     if (strlen($stager_comment) > 1) {
                         ?>
-                        <span style="font-size:13px; color: red"><b><?= returnComment($stager_comment) ?></b><br></span>
-                        <?php
+                    <span style="font-size:13px; color: red"><b><?= returnComment($stager_comment) ?></b><br></span>
+
+                    <?php
                     }
                 }
                 $dragon_text = "";
@@ -267,22 +245,28 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                 }
                 ?>
-                <span style="font-size:13px; color: green"><b><?= $dragon_text ?></b><br></span>
-                <?php
+                    <span style="font-size:13px; color: green"><b><?= $dragon_text ?></b><br></span>
+
+                    <?php
                 if (strlen($dragon_notes) > 1) {
                     ?>
                     <span style="font-size:13px; color: red"><b><?= returnComment($dragon_notes) ?></b><br></span>
+
                     <?php
                 }
                 //END DISPLAYING PROVERKA INFO
                 //CHECK IF DRAGON HAS RIGHTS TO PERFORM NEVID ACITON
                 if ($dragonRights->chistota == 1) {
                 ?>
-                <span style="font-size:13px; text-decoration: underline; cursor: pointer"
-                      onclick="toggleView('finish_recheck_<?= $zayavka->zId ?>')">Закрыть заявку</span><br>
-                <div style="padding:15px; display:none" id="finish_recheck_<?= $zayavka->zId ?>">
 
-                    <?php
+
+                <div class="dropdown align-self-end">
+                    <a class="btn btn-outline-info btn-sm btn-finish btn-sm dropdown-toggle" type="button"
+                        id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Закрыть заявку
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <?php
                     $items = [
                         'done_chist' => 'Чист',
                         'done_katorga' => 'Каторга',
@@ -291,31 +275,76 @@ $this->params['breadcrumbs'][] = $this->title;
                         'done_otkaz' => 'Отказ',
                     ];
 
-                    echo Html::beginForm(['/site/ready'], 'post');
-                    echo Html::dropDownList('Ready[action]', null, $items);
-                    echo "<br><br>";
-                    echo Html::hiddenInput('Ready[z_id]', $zayavka->zId);
-                    echo Html::textarea('Ready[comment]', '', ['cols' => '105']);
-                    echo "<br><br>";
+                    echo Html::beginForm(['/site/ready'], 'post',['class' => 'px-4 py-3 d-flex flex-column ']);
+                    echo Html::dropDownList('Ready[action]', null, $items,['class' => 'mb-2 ']);
+                    echo Html::hiddenInput('Ready[z_id]', $zayavka->zId,['class'=>'form-control']);
+                    echo Html::textarea('Ready[comment]', '', ['cols' => '25'],['class'=>'form-control mb-2']);
                     echo Html::submitButton(
-                        'Закрыть заявку', ['class' => 'button', 'onclick' => 'return confirm("Продолжаем?")']
+                        'Закрыть заявку', ['class' => 'btn btn-outline-danger btn-sm mt-2', 'onclick' => 'return confirm("Продолжаем?")']
                     );
                     echo Html::endForm();
                     ?>
+                    </div>
                 </div>
-</div>
-<?php
+
+
+                </p>
+                <?php
 }
 ?>
-    </td>
-    </tr>
-    </table>
-<br/><br/>
+            </div>
+            <div class="card-footer zlist-footer">
+                <p class="text-muted text">
+                    Статус:
+                    <?php
+                    if ($zayavka->status == "new") {
+                          
+                        echo FAS::icon('plus-circle',['title'=>'Новая заявка']);
+                         }
+                    if ($zayavka->status == "cancelled") {
+                        echo FAR::icon('times-circle');
+                         }
+                    if ($zayavka->status == "inprogress") {
+                        echo FAR::icon('hourglass',['title'=>'проверяется'])->spin(20);  
+                           }
+                    if ($zayavka->status == "otkaz") {
+                        echo FAS::icon('ban',['class' => 'skull-crossbones','title'=>'Отказ']);  
+                        }
+                    if ($zayavka->status == "chist") {
+                        echo FAR::icon('check-circle',['title'=>'чистота выдана']);  
+                     }
+                    if ($zayavka->status == "katorga") {
+                        echo FAS::icon('ban',['class' => 'skull-crossbones','title'=>'Наказан каторгой']);  
+                        }
+                    if ($zayavka->status == "block") {
+            
+                        echo FAS::icon('ban',['class' => 'skull-crossbones','title'=>'Наказан блоком'
+                            ]);  
+                     }
+            ?>
+                </p>
 
+                <?php   
+                    if (!Yii::$app->user->isGuest) {
+                    if (true) {
+                    ?> <p class="text-muted zayavka-id">
+                    <?php
+                 echo Html::a(
+                            '#' . $zayavka->zId, Url::to([
+                            '/site/sitem', 'id' => $zayavka->zId
+                        ])
+                        ); }
+                        
+                    }
+                   
+                ?>
+                </p>
+            </div>
 
+        </div>
+    </div>
 
-
-<?php
+    <?php
 }
 } else {
     echo "<p>Нет заявок для закрытия</p>";
@@ -414,12 +443,12 @@ function returnComment($comment)
 
 
 <script>
-    function toggleView($id) {
-        $element = document.getElementById($id);
-        if ($element.style.display === 'none') {
-            $element.style.display = 'block';
-        } else {
-            $element.style.display = 'none';
-        }
+function toggleView($id) {
+    $element = document.getElementById($id);
+    if ($element.style.display === 'none') {
+        $element.style.display = 'block';
+    } else {
+        $element.style.display = 'none';
     }
+}
 </script>

@@ -3,6 +3,10 @@
 $params = require(__DIR__ . '/params.php');
 
 $config = [
+     'aliases' => [
+        '@bower' => '@vendor/bower-asset',
+        '@npm'   => '@vendor/npm-asset'
+    ],
     'timeZone' => 'Europe/Moscow',
     'id' => 'basic',
     'basePath' => dirname(__DIR__),

@@ -18,60 +18,64 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php
     if ($model->failedTries < $settings->login_attempts) {
         ?>
-        <h1><?= Html::encode($this->title) ?></h1>
-        <p>Пожалуйста, заполните все поля для входа:</p>
+    <h1><?= Html::encode($this->title) ?></h1>
+    <p>Пожалуйста, заполните все поля для входа:</p>
 
-        <?php
+    <?php
         $form = ActiveForm::begin([
                     'id' => 'login-form',
                     'layout' => 'horizontal',
+                   
                     'fieldConfig' => [
-                        'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
+                        'template' => "{label}\n
+                        <div class=\"\">{input}</div>\n
+                        <div class=\">{error}</div>",
                         'labelOptions' => ['class' => 'col-lg-1 control-label'],
                     ],
         ]);
         ?>
 
-        <?= $form->field($model, 'username')->textInput(['autofocus' => true])->label('Ник') ?>
+    <?= $form->field($model, 'username',['enableLabel' => false])->textInput(array('placeholder' => 'Ник', 'class'=>'form-control'))?>
 
-        <?= $form->field($model, 'password')->passwordInput()->label('Пароль') ?>
+    <?= $form->field($model, 'password',['enableLabel' => false])->passwordInput(array('placeholder' => 'Пароль', 'class'=>'form-control'))?>
 
-        <!--<?//=
+    <!--<?//=
         //$form->field($model, 'rememberMe')->checkbox([
          //   'template' => "<div class=\"col-lg-offset-1 col-lg-3\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
         //])->label('Запомнить меня')
         ?>-->
-		<?= $form->field($model, 'rememberMe',['inputOptions' => ['value' => '1']])->hiddenInput()->label(false) ?>
+    <?= $form->field($model, 'rememberMe',['inputOptions' => ['value' => '1']])->hiddenInput()->label(false) ?>
 
-        <div class="form-group">
-            <div class="col-lg-offset-1 col-lg-11">
-                <?= Html::submitButton('Войти', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-                <br/><br/>
-                <?= Html::a('Регистрация', Yii::$app->request->baseUrl . '/registration/'/* , ['class' => 'btn btn-primary'] */) ?>
-                <br/>
-                <?= Html::a('Восстановление пароля', Yii::$app->request->baseUrl . '/lostpassword/'/* , ['class' => 'btn btn-primary'] */) ?>
-                <?php
+    <div class="form-group">
+        <div class="">
+            <?= Html::submitButton('Войти', ['class' => 'btn btn-primary btn-login', 'name' => 'login-button']) ?>
+            <br /><br />
+            <?= Html::a('Регистрация', Yii::$app->request->baseUrl . '/registration/'/* , ['class' => 'btn btn-primary'] */) ?>
+            <br />
+            <?= Html::a('Восстановление пароля', Yii::$app->request->baseUrl . '/lostpassword/'/* , ['class' => 'btn btn-primary'] */) ?>
+            <?php
                 if ($settings->busylogin_enabled == 1) {
                     ?>
-                    <br/>
-                    <?= Html::a('Я не регистрировался, но мой логин занят', Yii::$app->request->baseUrl . '/loginbusy/'/* , ['class' => 'btn btn-primary'] */) ?>    
-                    <?php
+            <br />
+            <?= Html::a('Я не регистрировался, но мой логин занят', Yii::$app->request->baseUrl . '/loginbusy/'/* , ['class' => 'btn btn-primary'] */) ?>
+            <?php
                 }
                 ?>
-            </div>
-
         </div>
 
-        <?php ActiveForm::end(); ?>
+    </div>
 
-        <?php
+    <?php ActiveForm::end(); ?>
+
+    <?php
     } else {
         ?>
-        <br><br>
-        <center>
-            <h3><span style="color:#ac2925">Мы заметили, что Вы очень часто ошибаетесь при вводе имени/пароля. <br><br>Пожалуйста, подождите немного перед новой попыткой</span></h3>
-        </center>
-        <?php
+    <br><br>
+    <center>
+        <h3><span style="color:#ac2925">Мы заметили, что Вы очень часто ошибаетесь при вводе имени/пароля.
+                <br><br>Пожалуйста, подождите немного перед новой попыткой</span></h3>
+    </center>
+    <?php
     }
     ?>
 

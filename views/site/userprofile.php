@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
+use yii\bootstrap4\ActiveForm;
 use app\models\Params;
 use yii\helpers\Url;
 use app\models\Users;
@@ -42,13 +42,13 @@ if ($model->user->groupId > 9) {
         echo $form->field($model, 'userId')->hiddenInput()->label(false);
         echo $form->field($model, 'alias')->textInput()->label('Подпись');
         ?>
-        <div class="form-group">
-            <div class="col-lg-offset-1 col-lg-11">
-                <?= Html::submitButton('Изменить подпись', ['class' => 'btn btn-primary', 'name' => 'login-button', 'onclick' => 'return validateAlias()'], ['id' => 'submit']) ?>
-            </div>
-        </div>
-        <?php ActiveForm::end(); ?>
-        <?php
+<div class="form-group">
+    <div class="col-lg-offset-1 col-lg-11">
+        <?= Html::submitButton('Изменить подпись', ['class' => 'btn btn-primary', 'name' => 'login-button', 'onclick' => 'return validateAlias()'], ['id' => 'submit']) ?>
+    </div>
+</div>
+<?php ActiveForm::end(); ?>
+<?php
     }
     if ($model->adminUserRights->superadmin == 1 ||
         ($model->adminUserRights->boss == 1 AND (
@@ -77,119 +77,119 @@ if ($model->user->groupId > 9) {
         echo Html::hiddenInput('Userprofile[action]', 'updateDragonRights');
         echo Html::hiddenInput('Userprofile[userId]', $model->user->id);
         ?>
-        <table>
-            <?php if ($model->adminUserRights->superadmin == 1) { ?>
-                <tr>
-                    <td>
-                        Суперадмин:&nbsp;&nbsp;
-                    </td>
-                    <td colspan="3">
-                        <?= Html::activeCheckbox($model, 'superadmin', ['label' => false]) ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Модератор:&nbsp;&nbsp;
-                    </td>
-                    <td colspan="3">
-                        <?= Html::activeCheckbox($model, 'approver', ['label' => false]) ?>
-                    </td>
-                </tr>
-            <?php } ?>
-            <tr>
-                <td>
-                    Города привязки:&nbsp;&nbsp;
-                </td>
-                <td>
-                    <?= Html::activeCheckbox($model, 'kovcheg', ['label' => 'Ковчег']) ?>&nbsp;&nbsp;
-                </td>
-                <td>
-                    <?= Html::activeCheckbox($model, 'smorye', ['label' => 'Сморка']) ?>&nbsp;&nbsp;
-                </td>
-                <td>
-                    <?= Html::activeCheckbox($model, 'utes', ['label' => 'Утёс']) ?>&nbsp;&nbsp;
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Начальство города:&nbsp;&nbsp;
-                </td>
-                <td colspan="3">
-                    <?= Html::activeCheckbox($model, 'boss', ['label' => false]) ?>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Доступ уровней проверки:&nbsp;&nbsp;
-                </td>
-                <td>
-                    Стажёр:&nbsp;&nbsp;
-                </td>
-                <td>
-                    <?= Html::activeCheckbox($model, 'boi_prov', ['label' => 'Б/перепроверка&nbsp;&nbsp;']) ?>
-                </td>
-                <td>
-                    <?= Html::activeCheckbox($model, 'per_prov', ['label' => 'П/перепроверка&nbsp;&nbsp;']) ?>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    &nbsp;&nbsp;
-                </td>
-                <td>
-                    &nbsp;&nbsp;
-                </td>
-                <td>
-                    <?= Html::activeCheckbox($model, 'boi', ['label' => 'Бои']) ?>
-                </td>
-                <td>
-                    <?= Html::activeCheckbox($model, 'peredachi', ['label' => 'Передачи']) ?>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    &nbsp;&nbsp;
-                </td>
-                <td>
-                    ОП:&nbsp;&nbsp;
-                </td>
-                <td colspan="2">
-                    <?= Html::activeCheckbox($model, 'fullbp', ['label' => 'Б/П', 'onclick' => 'validateCheckbox("bp")']) ?>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Наказания:&nbsp;&nbsp;
-                </td>
-                <td>
-                    <?= Html::activeCheckbox($model, 'prokli', ['label' => 'Прокли', 'onclick' => 'validateCheckbox("prokli")']) ?>
-                </td>
-                <td>
-                    <?= Html::activeCheckbox($model, 'katorga', ['label' => 'Каторга', 'onclick' => 'validateCheckbox("katorga")']) ?>
-                </td>
-                <td>
-                    <?= Html::activeCheckbox($model, 'ban', ['label' => 'Блок', 'onclick' => 'validateCheckbox("block")']) ?>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Чистота:&nbsp;&nbsp;
-                </td>
-                <td colspan="3">
-                    <?= Html::activeCheckbox($model, 'chistota', ['label' => false, 'onclick' => 'validateCheckbox("chistota")']) ?>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Невид:&nbsp;&nbsp;
-                </td>
-                <td colspan="3">
-                    <?= Html::activeCheckbox($model, 'nevid', ['label' => false, 'onclick' => 'validateCheckbox("nevid")']) ?>
-                </td>
-            </tr>
-        </table>
-        <br>
-        <?php
+<table>
+    <?php if ($model->adminUserRights->superadmin == 1) { ?>
+    <tr>
+        <td>
+            Суперадмин:&nbsp;&nbsp;
+        </td>
+        <td colspan="3">
+            <?= Html::activeCheckbox($model, 'superadmin', ['label' => false]) ?>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Модератор:&nbsp;&nbsp;
+        </td>
+        <td colspan="3">
+            <?= Html::activeCheckbox($model, 'approver', ['label' => false]) ?>
+        </td>
+    </tr>
+    <?php } ?>
+    <tr>
+        <td>
+            Города привязки:&nbsp;&nbsp;
+        </td>
+        <td>
+            <?= Html::activeCheckbox($model, 'kovcheg', ['label' => 'Ковчег']) ?>&nbsp;&nbsp;
+        </td>
+        <td>
+            <?= Html::activeCheckbox($model, 'smorye', ['label' => 'Сморка']) ?>&nbsp;&nbsp;
+        </td>
+        <td>
+            <?= Html::activeCheckbox($model, 'utes', ['label' => 'Утёс']) ?>&nbsp;&nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Начальство города:&nbsp;&nbsp;
+        </td>
+        <td colspan="3">
+            <?= Html::activeCheckbox($model, 'boss', ['label' => false]) ?>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Доступ уровней проверки:&nbsp;&nbsp;
+        </td>
+        <td>
+            Стажёр:&nbsp;&nbsp;
+        </td>
+        <td>
+            <?= Html::activeCheckbox($model, 'boi_prov', ['label' => 'Б/перепроверка&nbsp;&nbsp;']) ?>
+        </td>
+        <td>
+            <?= Html::activeCheckbox($model, 'per_prov', ['label' => 'П/перепроверка&nbsp;&nbsp;']) ?>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            &nbsp;&nbsp;
+        </td>
+        <td>
+            &nbsp;&nbsp;
+        </td>
+        <td>
+            <?= Html::activeCheckbox($model, 'boi', ['label' => 'Бои']) ?>
+        </td>
+        <td>
+            <?= Html::activeCheckbox($model, 'peredachi', ['label' => 'Передачи']) ?>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            &nbsp;&nbsp;
+        </td>
+        <td>
+            ОП:&nbsp;&nbsp;
+        </td>
+        <td colspan="2">
+            <?= Html::activeCheckbox($model, 'fullbp', ['label' => 'Б/П', 'onclick' => 'validateCheckbox("bp")']) ?>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Наказания:&nbsp;&nbsp;
+        </td>
+        <td>
+            <?= Html::activeCheckbox($model, 'prokli', ['label' => 'Прокли', 'onclick' => 'validateCheckbox("prokli")']) ?>
+        </td>
+        <td>
+            <?= Html::activeCheckbox($model, 'katorga', ['label' => 'Каторга', 'onclick' => 'validateCheckbox("katorga")']) ?>
+        </td>
+        <td>
+            <?= Html::activeCheckbox($model, 'ban', ['label' => 'Блок', 'onclick' => 'validateCheckbox("block")']) ?>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Чистота:&nbsp;&nbsp;
+        </td>
+        <td colspan="3">
+            <?= Html::activeCheckbox($model, 'chistota', ['label' => false, 'onclick' => 'validateCheckbox("chistota")']) ?>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Невид:&nbsp;&nbsp;
+        </td>
+        <td colspan="3">
+            <?= Html::activeCheckbox($model, 'nevid', ['label' => false, 'onclick' => 'validateCheckbox("nevid")']) ?>
+        </td>
+    </tr>
+</table>
+<br>
+<?php
         echo Html::submitButton(
             'Утвердить права', ['onclick' => 'return confirm("Это серъёзная штука. Уверены?")']
         );
@@ -223,7 +223,7 @@ if (sizeof($model->userZayavki) > 0) {
     foreach ($model->userZayavki as $zayavka) {
         ?>
 
-        <table style="width:800px; border: 0px none; padding: 5px; background-color: <?= $settings->color_background ?>;
+<table style="width:800px; border: 0px none; padding: 5px; background-color: <?= $settings->color_background ?>;
         <?php
         if ($zayavka->status == "new") {
             echo "box-shadow: 0 0 15px  grey";
@@ -251,37 +251,36 @@ if (sizeof($model->userZayavki) > 0) {
         }
         ?>
                 ">
-            <tr style="height: 40px">
-                <td width="5%" style="padding: 5px;"><?php
+    <tr style="height: 40px">
+        <td width="5%" style="padding: 5px;"><?php
                     echo Html::a(
                         '#' . $zayavka->id, Url::to([
                         '/site/sitem', 'id' => $zayavka->id
                     ])
                     );
                     ?>
-                </td>
-                <td width="25%" style="padding: 5px;"><a
-                            href="http://apeha.ru/info.html?user=<?= $model->user->apeha_id ?>"
-                            target="_blank"><?= $model->user->username ?></a></td>
-                <td width="35%" style="padding: 5px;">Статус: <?= getStatus($zayavka->status) ?> </td>
-                <td align="right" width="35%" style="padding: 5px;">Подана: <?= $zayavka->date_added ?></td>
-            </tr>
-            <tr>
-                <td colspan="2" style="padding: 5px;">
-                    Тип:<?= $zayavka->type ?><br>
-                </td>
-                <td colspan="2" style="padding: 5px;">
-                    <?php
+        </td>
+        <td width="25%" style="padding: 5px;"><a href="http://apeha.ru/info.html?user=<?= $model->user->apeha_id ?>"
+                target="_blank"><?= $model->user->username ?></a></td>
+        <td width="35%" style="padding: 5px;">Статус: <?= getStatus($zayavka->status) ?> </td>
+        <td align="right" width="35%" style="padding: 5px;">Подана: <?= $zayavka->date_added ?></td>
+    </tr>
+    <tr>
+        <td colspan="2" style="padding: 5px;">
+            Тип:<?= $zayavka->type ?><br>
+        </td>
+        <td colspan="2" style="padding: 5px;">
+            <?php
                     if (strlen($zayavka->city) > 0) {
                         echo "Город: " . $zayavka->city;
                     }
                     ?>
-                    <span style="font-size: 12px; font-style: italic">(Рассматривается в: <?= $zayavka->proverka_city ?>)</span>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="4">
-                    <?php
+            <span style="font-size: 12px; font-style: italic">(Рассматривается в: <?= $zayavka->proverka_city ?>)</span>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4">
+            <?php
                     echo Html::a(
                         "Показать в топе проверок", Url::to([
                         '/site/zlist', 'action' => 'show', 'zayavka' => $zayavka->id
@@ -301,11 +300,11 @@ if (sizeof($model->userZayavki) > 0) {
                         ]
                     );
                     ?>
-                </td>
-            </tr>
-        </table>
-        <br>
-        <?php
+        </td>
+    </tr>
+</table>
+<br>
+<?php
     }
 } else {
     echo "<hr>У пользователя нет ни одной поданной заявки на чистоту<hr>";
@@ -365,131 +364,130 @@ function getStatus($status)
 ?>
 
 <script>
+function validateAlias() {
+    $element = document.getElementById("userprofile-alias");
+    if ($element.value.toString().trim().length > 0) {
+        return confirm("Изменить подпись на " + $element.value.toString().trim() + "?");
+    } else {
+        alert("Подпись на форуме не может быть пустой строкой");
+        return false;
+    }
+}
 
-    function validateAlias() {
-        $element = document.getElementById("userprofile-alias");
-        if ($element.value.toString().trim().length > 0) {
-            return confirm("Изменить подпись на " + $element.value.toString().trim() + "?");
+function validateCheckbox($el) {
+    $bp = document.getElementById("userprofile-fullbp");
+    $b = document.getElementById("userprofile-boi");
+    $p = document.getElementById("userprofile-peredachi");
+    $b_prov = document.getElementById("userprofile-boi_prov");
+    $p_prov = document.getElementById("userprofile-per_prov");
+    $prokli = document.getElementById("userprofile-prokli");
+    $katorga = document.getElementById("userprofile-katorga");
+    $block = document.getElementById("userprofile-ban");
+    $chistota = document.getElementById("userprofile-chistota");
+    $nevid = document.getElementById("userprofile-nevid");
+    if ($el === "bp") {
+        if ($bp.checked === true) {
+            $b.checked = false;
+            $p.checked = false;
+            $b_prov.checked = false;
+            $p_prov.checked = false;
         } else {
-            alert("Подпись на форуме не может быть пустой строкой");
-            return false;
+            $prokli.checked = false;
+            $katorga.checked = false;
+            $block.checked = false;
+            $chistota.checked = false;
+            $nevid.checked = false;
         }
     }
-
-    function validateCheckbox($el) {
-        $bp = document.getElementById("userprofile-fullbp");
-        $b = document.getElementById("userprofile-boi");
-        $p = document.getElementById("userprofile-peredachi");
-        $b_prov = document.getElementById("userprofile-boi_prov");
-        $p_prov = document.getElementById("userprofile-per_prov");
-        $prokli = document.getElementById("userprofile-prokli");
-        $katorga = document.getElementById("userprofile-katorga");
-        $block = document.getElementById("userprofile-ban");
-        $chistota = document.getElementById("userprofile-chistota");
-        $nevid = document.getElementById("userprofile-nevid");
-        if ($el === "bp") {
-            if ($bp.checked === true) {
-                $b.checked = false;
-                $p.checked = false;
-                $b_prov.checked = false;
-                $p_prov.checked = false;
-            } else {
-                $prokli.checked = false;
-                $katorga.checked = false;
-                $block.checked = false;
-                $chistota.checked = false;
-                $nevid.checked = false;
-            }
+    if ($el === "nevid") {
+        if ($nevid.checked === true) {
+            $b.checked = false;
+            $p.checked = false;
+            $b_prov.checked = false;
+            $p_prov.checked = false;
+            $chistota.checked = true;
+            $block.checked = true;
+            $katorga.checked = true;
+            $prokli.checked = true;
+            $bp.checked = true;
         }
-        if ($el === "nevid") {
-            if ($nevid.checked === true) {
-                $b.checked = false;
-                $p.checked = false;
-                $b_prov.checked = false;
-                $p_prov.checked = false;
-                $chistota.checked = true;
-                $block.checked = true;
-                $katorga.checked = true;
-                $prokli.checked = true;
-                $bp.checked = true;
-            }
-        }
-        if ($el === "chistota") {
-            if ($chistota.checked === true) {
-                $b.checked = false;
-                $p.checked = false;
-                $b_prov.checked = false;
-                $p_prov.checked = false;
-                $block.checked = true;
-                $katorga.checked = true;
-                $prokli.checked = true;
-                $bp.checked = true;
-            } else {
-                $nevid.checked = false;
-                $block.checked = false;
-            }
-        }
-        if ($el === "block") {
-            if ($block.checked === true) {
-                $chistota.checked = true;
-                $katorga.checked = true;
-                $prokli.checked = true;
-                $bp.checked = true;
-                $b.checked = false;
-                $p.checked = false;
-                $b_prov.checked = false;
-                $p_prov.checked = false;
-            } else {
-                $nevid.checked = false;
-                $chistota.checked = false;
-            }
-        }
-        if ($el === "katorga") {
-            if ($katorga.checked === true) {
-                $prokli.checked = true;
-                $bp.checked = true;
-                $b.checked = false;
-                $p.checked = false;
-                $b_prov.checked = false;
-                $p_prov.checked = false;
-            } else {
-                $nevid.checked = false;
-                $block.checked = false;
-                $chistota.checked = false;
-            }
-        }
-        if ($el === "prokli") {
-            if ($prokli.checked === true) {
-                $bp.checked = true;
-                $b.checked = false;
-                $p.checked = false;
-                $b_prov.checked = false;
-                $p_prov.checked = false;
-            } else {
-                $katorga.checked = false;
-                $block.checked = false;
-                $chistota.checked = false;
-                $nevid.checked = false;
-            }
-        }
-
     }
-
-    function toggleIpView() {
-        $div = document.getElementById('ips');
-        if ($div.style.display === 'none') {
-            $div.style.display = 'block';
+    if ($el === "chistota") {
+        if ($chistota.checked === true) {
+            $b.checked = false;
+            $p.checked = false;
+            $b_prov.checked = false;
+            $p_prov.checked = false;
+            $block.checked = true;
+            $katorga.checked = true;
+            $prokli.checked = true;
+            $bp.checked = true;
         } else {
-            $div.style.display = 'none';
+            $nevid.checked = false;
+            $block.checked = false;
+        }
+    }
+    if ($el === "block") {
+        if ($block.checked === true) {
+            $chistota.checked = true;
+            $katorga.checked = true;
+            $prokli.checked = true;
+            $bp.checked = true;
+            $b.checked = false;
+            $p.checked = false;
+            $b_prov.checked = false;
+            $p_prov.checked = false;
+        } else {
+            $nevid.checked = false;
+            $chistota.checked = false;
+        }
+    }
+    if ($el === "katorga") {
+        if ($katorga.checked === true) {
+            $prokli.checked = true;
+            $bp.checked = true;
+            $b.checked = false;
+            $p.checked = false;
+            $b_prov.checked = false;
+            $p_prov.checked = false;
+        } else {
+            $nevid.checked = false;
+            $block.checked = false;
+            $chistota.checked = false;
+        }
+    }
+    if ($el === "prokli") {
+        if ($prokli.checked === true) {
+            $bp.checked = true;
+            $b.checked = false;
+            $p.checked = false;
+            $b_prov.checked = false;
+            $p_prov.checked = false;
+        } else {
+            $katorga.checked = false;
+            $block.checked = false;
+            $chistota.checked = false;
+            $nevid.checked = false;
         }
     }
 
-    function toggleZayavkiView() {
-        $div = document.getElementById('zayavki');
-        if ($div.style.display == 'none') {
-            $div.style.display = 'block';
-        } else {
-            $div.style.display = 'none';
-        }
+}
+
+function toggleIpView() {
+    $div = document.getElementById('ips');
+    if ($div.style.display === 'none') {
+        $div.style.display = 'block';
+    } else {
+        $div.style.display = 'none';
     }
+}
+
+function toggleZayavkiView() {
+    $div = document.getElementById('zayavki');
+    if ($div.style.display == 'none') {
+        $div.style.display = 'block';
+    } else {
+        $div.style.display = 'none';
+    }
+}
 </script>

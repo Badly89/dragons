@@ -1,7 +1,7 @@
 <?php
 
 use kartik\datetime\DateTimePicker;
-use yii\bootstrap\Html;
+use yii\helpers\Html;
 
 $this->title = 'Садовод';
 $this->params['breadcrumbs'][] = $this->title;
@@ -31,51 +31,45 @@ $fruits = array(
 );
 ?>
 
-    <style>
-        td {
-            padding: 5px
-        }
-    </style>
+<script>
+Date.prototype.addHours = function(h) {
+    this.setTime(this.getTime() + (h * 60 * 60 * 1000));
+    return this;
+}
 
-    <script>
-        Date.prototype.addHours = function (h) {
-            this.setTime(this.getTime() + (h * 60 * 60 * 1000));
-            return this;
-        }
-
-        function calc() {
-            let el = document.getElementById('picker');
-            if (el.value != null && el.value !== '') {
-                let totalItems = document.getElementById('total_items').innerText;
-                for (let i = 0; i < totalItems; i++) {
-                    let readyTime = document.getElementById('readyTime_' + i).innerText;
-                    let result = new Date(el.value);
-                    result.addHours(-1 * readyTime)
-                    let resTime = document.getElementById('resTime_' + i);
-                    if (result < new Date) {
-                        resTime.innerText = "Уже никак не успеть :(";
-                    } else {
-                        var options = {
-                            weekday: 'long',
-                            month: 'long',
-                            day: 'numeric',
-                            hour: 'numeric',
-                            minute: 'numeric'
-                        };
-                        resTime.innerText = result.toLocaleDateString("ru-RU", options);
-                    }
-
-                }
+function calc() {
+    let el = document.getElementById('picker');
+    if (el.value != null && el.value !== '') {
+        let totalItems = document.getElementById('total_items').innerText;
+        for (let i = 0; i < totalItems; i++) {
+            let readyTime = document.getElementById('readyTime_' + i).innerText;
+            let result = new Date(el.value);
+            result.addHours(-1 * readyTime)
+            let resTime = document.getElementById('resTime_' + i);
+            if (result < new Date) {
+                resTime.innerText = "Уже никак не успеть :(";
+            } else {
+                var options = {
+                    weekday: 'long',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric'
+                };
+                resTime.innerText = result.toLocaleDateString("ru-RU", options);
             }
-        }
-    </script>
 
-    <div class="row">
-        <div class="col-sm-4">
-            <div align="center" style="margin-top: 20px; width: 100%">
-                <div class="row" style="margin-bottom: 8px">
-                    <div class="col-sm-10">
-                        <?=
+        }
+    }
+}
+</script>
+
+<div class="row">
+    <div class="col-sm-4">
+        <div align="center" style="margin-top: 20px; width: 100%">
+            <div class="row" style="margin-bottom: 8px">
+                <div class="col-sm-10">
+                    <?=
                         DateTimePicker::widget([
                             'id' => 'picker',
                             'readonly' => 'true',
@@ -84,34 +78,21 @@ $fruits = array(
                             'pluginOptions' => ['autoclose' => true],
 
                         ]); ?>
-                    </div>
-                    <?php
+                </div>
+                <?php
                     Html::submitButton('Submit', ['class' => 'btn btn-primary', 'name' => 'contact-button']);
                     ?>
-                </div>
             </div>
         </div>
     </div>
-    <div>
-        <br/><br/>
-        <table border="1" style="width: 100%">
-            <tr>
-                <td>
-                    Вид растения
-                </td>
-                <td>
-                    Бонус
-                </td>
-                <td>
-                    Время до роста/порчи
-                </td>
-                <td>
-                    При посадке сейчас<br/>вырастет/испортится
-                </td>
-                <td>
-                    Когда нужно посадить,<br/>чтобы выросло к выбранному времени
-                </td>
-                <?php
+</div>
+<div>
+    <div class="row">
+
+
+
+
+        <?php
                 $i = 0;
                 foreach ($fruits as $item) {
                     $arr = explode("&", $item);
@@ -125,22 +106,33 @@ $fruits = array(
                     $objDateTimeTrash = new DateTime('NOW');
                     $objDateTimeTrash->modify('+' . ($arr[2] + $arr[3]) . ' hours');
                     $trash_time = $objDateTimeTrash->format('D d h:i');
-                    echo "<tr>";
-                    echo "<td>$arr[0]</td>";
-                    echo "<td>$arr[1]</td>";
-                    echo "<td>$arr[2]ч / $arr[3]ч</td>";
-                    echo "<td>" . weekDaysReplace($ready_time) . " / " . weekDaysReplace($trash_time) . "</td>";
-                    echo "<td id='resTime_$i'>выберите время кнопкой выше</td>";
-                    echo "</tr>";
+                   
+
+                    
+                    echo '<div class="col-xs-4 col-md-4">';
+                    echo '<div class="thumbnail">';
+                    echo '<div class="caption">';
+                    echo "<h4>$arr[0]</h4>";
+                    echo "<ul class='list-unstyled'><li><b>Бонус:</b> $arr[1]</li>";
+                    echo "<li><b>Время до роста/порчи:</b> $arr[2]ч / $arr[3]ч </li>";
+                    echo "<li><b>Посадим сейчас вырастет/испортится:</b>";
+                    echo weekDaysReplace($ready_time) . " / " . weekDaysReplace($trash_time) ;
+                    echo "</li>";
+                                       
+                    echo "<p id='resTime_$i'>выберите время кнопкой выше</p>";
                     echo "<span style='display: none' id='readyTime_$i'>$arr[2]</span>";
+                    echo '</div>';
+                    echo '</div>';
+                    echo '</div>';
                     $i++;
                 }
                 echo "<span style='display: none' id='total_items'>$i</span>";
                 ?>
-            </tr>
-        </table>
+
     </div>
-<?php
+
+
+    <?php
 
 function weekDaysReplace($input)
 {
