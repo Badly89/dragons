@@ -67,27 +67,12 @@ $fruits = array(
 
                 }
             } else {
-                var options = {
-                    weekday: 'long',
-                    month: 'long',
-                    day: 'numeric',
-                    hour: 'numeric',
-                    minute: 'numeric'
-                };
-                resTime.innerText = result.toLocaleDateString("ru-RU", options);
-                cardFruit.classList.add('border-success');
-            }
-
-
-
-        }
-    } else {
-        let totalItems = document.getElementById('total_items').innerText;
-        for (let i = 0; i < totalItems; i++) {
-            let cardFruit = document.getElementById('cardFruit_' + i);
-            cardFruit.classList.remove('card-fruit-none');
-            cardFruit.classList.remove('border-success');
-            cardFruit.classList.remove('border-danger');
+                let totalItems = document.getElementById('total_items').innerText;
+                for (let i = 0; i < totalItems; i++) {
+                    let cardFruit = document.getElementById('cardFruit_' + i);
+                    cardFruit.classList.remove('card-fruit-none');
+                    cardFruit.classList.remove('border-success');
+                    cardFruit.classList.remove('border-danger');
 
 
                 }
@@ -117,55 +102,48 @@ $fruits = array(
             </div>
         </div>
     </div>
-</div>
-<div>
-    <div class="row">
+    <div>
+        <div class="row">
 
 
+            <?php
+            $i = 0;
+            foreach ($fruits as $item) {
+                $arr = explode("&", $item);
+
+                //ready time
+                $objDateTime = new DateTime('NOW');
+                $objDateTime->modify('+' . $arr[2] . ' hours');
+                $ready_time = $objDateTime->format('D d h:i');
+
+                //trash time
+                $objDateTimeTrash = new DateTime('NOW');
+                $objDateTimeTrash->modify('+' . ($arr[2] + $arr[3]) . ' hours');
+                $trash_time = $objDateTimeTrash->format('D d h:i');
 
 
-        <?php
-                $i = 0;
-                foreach ($fruits as $item) {
-                    $arr = explode("&", $item);
+                echo "<div class=\"col-xl-4 col-md-6 col-sm-12 mb-3\">";
+                echo "<div class=\"card card-fruit\" id=\"cardFruit_$i\">";
+                echo "<div class=\"card-header\">";
+                echo "<h5 class=\"card-title\">$arr[0]</h5>";
+                echo "</div>";
+                echo "<div class=\"card-body\">";
+                echo "<ul class=\"list-group\">";
+                echo "<li class=\"list-group-item\">Бонус: $arr[1]</li>";
+                echo "<li class=\"list-group-item\">Время до роста/порчи: $arr[2] ч / $arr[3] ч";
+                echo "</li>";
+                echo "<li class=\"list-group-item\" style='font-size: 14px'>Посадим сейчас вырастет/испортится:<br>";
+                echo weekDaysReplace($ready_time) . " / " . weekDaysReplace($trash_time);
+                echo "</li>";
+                echo "<li class=\"list-group-item\">Чтобы выросло в нужное время:<br>";
+                echo "<p id='resTime_$i'>выберите время вверху страницы</p>";
+                echo "<span style='display: none' id='readyTime_$i'>$arr[2]</span>";
+                echo "</li>";
+                echo "</div>";
+                echo "</div>";
+                echo "</div>";
 
-                    //ready time
-                    $objDateTime = new DateTime('NOW');
-                    $objDateTime->modify('+' . $arr[2] . ' hours');
-                    $ready_time = $objDateTime->format('D d h:i');
-
-                    //trash time
-                    $objDateTimeTrash = new DateTime('NOW');
-                    $objDateTimeTrash->modify('+' . ($arr[2] + $arr[3]) . ' hours');
-                    $trash_time = $objDateTimeTrash->format('D d h:i');
-                    
-                   
-
-            echo"<div class=\"col-xl-4 col-md-6 col-sm-12 mb-3\">";
-            echo"<div class=\"card card-fruit\" id=\"cardFruit_$i\">";
-            echo"<div class=\"card-header\">";
-            echo"<h5 class=\"card-title\">$arr[0]</h5>";
-            echo"</div>";
-            echo"<div class=\"card-body\">";
-            echo"<p class=\"card-text\">Бонус: $arr[1]</p>";
-            echo"<p class=\"card-text\">Время до роста/порчи: $arr[2] ч / $arr[3] ч";
-            echo"</p>";
-            echo"<p class=\"card-text\">Посадим сейчас вырастет/испортится: ";
-            echo weekDaysReplace($ready_time). " / " . weekDaysReplace($trash_time);
-            echo"</p>";
-            echo"</div>";
-            echo"<div class=\"card-footer\">";
-            echo"<p id='resTime_$i'>выберите время кнопкой выше</p>";
-            echo"<span style='display: none' id='readyTime_$i'>$arr[2]</span>";
-            echo"</div>";
-            echo"</div>";
-            echo"</div>";
-
-            $i++;
-            
-        }
-            echo" <span style='display: none' id='total_items'>$i</span>";
-        ?>
+                $i++;
 
             }
             echo " <span style='display: none' id='total_items'>$i</span>";
