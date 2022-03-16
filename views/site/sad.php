@@ -62,8 +62,9 @@ function calc($id) {
                 };
                 resTime.innerText = result.toLocaleDateString("ru-RU", options);
                 cardFruit.classList.add('border-success');
-                cardFruit.style.border = "2px solid";
             }
+
+
 
         }
     } else {
@@ -131,13 +132,12 @@ function calc($id) {
             echo"<h5 class=\"card-title\">$arr[0]</h5>";
             echo"</div>";
             echo"<div class=\"card-body\">";
-            echo"<ul class=\"list-group\">";
-            echo"<li class=\"list-group-item\">Бонус: $arr[1]</li>";
-            echo"<li class=\"list-group-item\">Время до роста/порчи: $arr[2] ч / $arr[3] ч";
-            echo"</li>";
-            echo"<li class=\"list-group-item\">Посадим сейчас вырастет/испортится:";
+            echo"<p class=\"card-text\">Бонус: $arr[1]</p>";
+            echo"<p class=\"card-text\">Время до роста/порчи: $arr[2] ч / $arr[3] ч";
+            echo"</p>";
+            echo"<p class=\"card-text\">Посадим сейчас вырастет/испортится: ";
             echo weekDaysReplace($ready_time). " / " . weekDaysReplace($trash_time);
-            echo"</li>";
+            echo"</p>";
             echo"</div>";
             echo"<div class=\"card-footer\">";
             echo"<p id='resTime_$i'>выберите время кнопкой выше</p>";
