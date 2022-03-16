@@ -176,7 +176,7 @@ $settings->loadSettings();
             array_push($menuItems, ['label' => Yii::$app->user->identity->username, 'items' => [
                     ['label' => 'Блокнот', 'url' => ['/site/notepad']],
                     
-                    // ['label' => 'Админка', 'url' => ['/site/superadmin']],
+                    ['label' => 'Админка', 'url' => ['/site/superadmin']],
                     ['label' => 'Смена пароля', 'url' => ['/site/changepass']],
                     [
                         'label' => 'Выход' ,
