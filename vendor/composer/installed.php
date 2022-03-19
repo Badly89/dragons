@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'b9ee6eaed5fb542a8243154ec148217ae87781eb',
+        'reference' => 'f27feeb9563a5c2506785778f3771d06d18f5213',
         'name' => 'yiisoft/yii2-app-basic',
         'dev' => true,
     ),
@@ -144,7 +144,7 @@
             'aliases' => array(
                 0 => '1.5.x-dev',
             ),
-            'reference' => '881985a5e482a4e37d1901c7857912ba5af3f298',
+            'reference' => '85b22d38553ca207f86be198f37e6531347e9a23',
             'dev_requirement' => false,
         ),
         'myclabs/deep-copy' => array(
@@ -225,7 +225,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'b9ee6eaed5fb542a8243154ec148217ae87781eb',
+            'reference' => 'f27feeb9563a5c2506785778f3771d06d18f5213',
             'dev_requirement' => false,
         ),
         'yiisoft/yii2-bootstrap' => array(
