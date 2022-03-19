@@ -8,7 +8,7 @@ use yii\helpers\Html;
 use yii\base\Widget;
 use yii\data\Pagination;
 use yii\helpers\ArrayHelper;
-use yii\widgets\LinkPager;
+use yii\bootstrap4\LinkPager;
 
 class ZlistLinkPager extends LinkPager {
 

@@ -26,11 +26,6 @@ $dragonR = $dragonRights;
 
 ?>
 <style>
-.name {
-    font-size: 14px;
-    color: <?=$settings->sign_color ?>;
-}
-
 .text_italic {
     font-size: 13px;
     color: <?=$settings->comment_color ?>;
@@ -251,7 +246,7 @@ foreach ($zayavki as $zayavka) {
 
 
 <!-- начало списка заявок -->
-<div class="col-xl-4 col-sm-12 col-md-6 mb-3">
+<div class="col-xl-6 col-sm-12 col-md-6 mb-3">
     <div class="card h-100 application" style=" background-color:
            /* выставляем цвета */
            <?php

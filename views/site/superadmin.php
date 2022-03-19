@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
 use app\models\Users;
 use yii\data\Pagination;
-use yii\widgets\LinkPager;
+use yii\bootstrap4\LinkPager;
 use app\models\Dragonsrights;
 use app\models\Superadmin;
 use yii\helpers\Url;
