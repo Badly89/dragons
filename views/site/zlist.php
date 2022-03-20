@@ -41,6 +41,11 @@ $dragonR = $dragonRights;
     font-size: 14px;
     color: <?=$settings->otkaz_color ?>;
 }
+
+.name {
+    font-size: 14px;
+    color: <?=$settings->sign_color ?>;
+}
 </style>
 <script src="<?= Yii::$app->request->baseUrl ?>/js/clipboard.min.js"></script>
 <script src="<?= Yii::$app->request->baseUrl ?>/js/jquery-3.6.0.min.js"></script>

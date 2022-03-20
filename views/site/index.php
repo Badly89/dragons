@@ -99,7 +99,7 @@ if ($model->userActive) {
             ?>
 
 <!-- col-sm-12 col-md-6  col-lg-4 -->
-<div class=" col-sm-12 col-md-6  col-xl-4 mb-4 ">
+<div class=" col-sm-12 col-md-6  col-xl-6 mb-4 ">
     <div class="card application h-100 " style=" background-color: <?= $settings->own_z_color ?>; <?php
             if ($zayavka->status == "new") {
                 echo "box-shadow: 0 0 15px  grey";
