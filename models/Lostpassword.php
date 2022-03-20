@@ -9,7 +9,7 @@ use app\models\Forum;
 use app\models\PasswordResetAttempts;
 use app\models\Logs;
 
-class Lostpassword extends \yii\base\Model {
+class Lostpassword extends Model {
 
     public $username;
     public $secretkey;
