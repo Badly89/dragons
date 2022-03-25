@@ -318,7 +318,7 @@ class DateTimePicker extends InputWidget
         $icon = ArrayHelper::remove($options, 'label', $this->$iconType);
         $title = ArrayHelper::getValue($options, 'title', '');
         if ($title !== false && empty($title)) {
-            $options['title'] = $isPicker ? Yii::t('kvdtime', 'Select date & time') : Yii::t('kvdtime', 'Clear field');
+            $options['title'] = $isPicker ? Yii::t('kvdtime', 'Выберите время и дату') : Yii::t('kvdtime', 'Очистить');
         }
         return Html::tag('span', $icon, $options);
     }

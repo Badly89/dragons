@@ -157,9 +157,17 @@ p {
 }
 
 .otmetka {
-  -ms-flex-item-align: end;
-      align-self: flex-end;
-  max-width: 250px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  text-align: end;
 }
 
 .readmore-js-toggle,
@@ -175,6 +183,7 @@ p {
 .link-toggle {
   cursor: pointer;
   text-decoration: none !important;
+  font-size: 12px;
 }
 
 .text {
@@ -215,6 +224,10 @@ p {
 
 .inprogress-zayavka {
   color: #fc7a01;
+}
+
+.cancelled {
+  color: #0c0c0c;
 }
 
 .form-label {
@@ -537,6 +550,109 @@ p {
 }
 
 /*sad end*/
+/*logs*/
+.table-logs {
+  height: 100vh;
+}
+
+.table-logs td {
+  font-size: 14px;
+  word-break: break-all;
+}
+
+/*superadmin stert*/
+.title-card-user {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.footer-card-user {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.link-user-info {
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.link-user-info:hover {
+  text-decoration: none;
+}
+
+.btn-user-info {
+  background-color: transparent;
+  color: #17a2b8;
+}
+
+.btn-user-info:hover {
+  background-color: transparent;
+  color: #127281;
+}
+
+.make-user {
+  color: #0c0c0c;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+.btn-make-dragon {
+  color: #7e0612;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+.btn-make-dragon:hover,
+.btn-make-dragon:active {
+  color: #dc3545;
+  background-color: transparent;
+}
+
+.btn-admin {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.card-user {
+  border-radius: 12px;
+  background-color: transparent;
+  -webkit-transition: all ease-in 300ms;
+  transition: all ease-in 300ms;
+}
+
+.card-user:hover {
+  -webkit-transform: scale(1.04);
+          transform: scale(1.04);
+  background-color: rgba(245, 234, 206, 0.637);
+  -webkit-box-shadow: 0 0 15px rgba(9, 84, 233, 0.795);
+          box-shadow: 0 0 15px rgba(9, 84, 233, 0.795);
+  -webkit-transition: all ease-in 300ms;
+  transition: all ease-in 300ms;
+}
+
+/*superadmin end*/
 .jumbotron {
   text-align: center;
   background-color: transparent;

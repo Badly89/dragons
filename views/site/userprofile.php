@@ -5,6 +5,8 @@ use yii\bootstrap4\ActiveForm;
 use app\models\Params;
 use yii\helpers\Url;
 use app\models\Users;
+use rmrevin\yii\fontawesome\FAR;
+use rmrevin\yii\fontawesome\FAS;
 
 $this->title = 'Профиль пользователя ' . $model->user->username;
 $this->params['breadcrumbs'][] = ['label' => 'Админка', 'url' => ['superadmin']];
@@ -72,34 +74,43 @@ if ($model->user->groupId > 9) {
         $model->nevid = $model->dragonrights->nevid;
         $model->approver = $model->dragonrights->approver;
 
-        echo "<hr>Управление правами дракона: <br><br>";
+        // echo "<hr>Управление правами дракона: <br><br>";
         echo Html::beginForm(['/site/userprofile'], 'post');
         echo Html::hiddenInput('Userprofile[action]', 'updateDragonRights');
         echo Html::hiddenInput('Userprofile[userId]', $model->user->id);
         ?>
-<table>
+<table class="table table-borderless table-sm">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col"> </th>
+            <th scope="col">Управление правами дракона:</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+
+    </thead>
     <?php if ($model->adminUserRights->superadmin == 1) { ?>
     <tr>
-        <td>
+        <th>
             Суперадмин:&nbsp;&nbsp;
-        </td>
+        </th>
         <td colspan="3">
             <?= Html::activeCheckbox($model, 'superadmin', ['label' => false]) ?>
         </td>
     </tr>
     <tr>
-        <td>
+        <th>
             Модератор:&nbsp;&nbsp;
-        </td>
+        </th>
         <td colspan="3">
             <?= Html::activeCheckbox($model, 'approver', ['label' => false]) ?>
         </td>
     </tr>
     <?php } ?>
     <tr>
-        <td>
+        <th>
             Города привязки:&nbsp;&nbsp;
-        </td>
+        </th>
         <td>
             <?= Html::activeCheckbox($model, 'kovcheg', ['label' => 'Ковчег']) ?>&nbsp;&nbsp;
         </td>
@@ -111,18 +122,18 @@ if ($model->user->groupId > 9) {
         </td>
     </tr>
     <tr>
-        <td>
+        <th>
             Начальство города:&nbsp;&nbsp;
-        </td>
+        </th>
         <td colspan="3">
             <?= Html::activeCheckbox($model, 'boss', ['label' => false]) ?>
         </td>
     </tr>
     <tr>
-        <td>
+        <th>
             Доступ уровней проверки:&nbsp;&nbsp;
-        </td>
-        <td>
+        </th>
+        <td class="text-right">
             Стажёр:&nbsp;&nbsp;
         </td>
         <td>
@@ -150,7 +161,7 @@ if ($model->user->groupId > 9) {
         <td>
             &nbsp;&nbsp;
         </td>
-        <td>
+        <td class="text-right">
             ОП:&nbsp;&nbsp;
         </td>
         <td colspan="2">
@@ -158,9 +169,9 @@ if ($model->user->groupId > 9) {
         </td>
     </tr>
     <tr>
-        <td>
+        <th>
             Наказания:&nbsp;&nbsp;
-        </td>
+        </th>
         <td>
             <?= Html::activeCheckbox($model, 'prokli', ['label' => 'Прокли', 'onclick' => 'validateCheckbox("prokli")']) ?>
         </td>
@@ -172,17 +183,17 @@ if ($model->user->groupId > 9) {
         </td>
     </tr>
     <tr>
-        <td>
+        <th>
             Чистота:&nbsp;&nbsp;
-        </td>
+        </th>
         <td colspan="3">
             <?= Html::activeCheckbox($model, 'chistota', ['label' => false, 'onclick' => 'validateCheckbox("chistota")']) ?>
         </td>
     </tr>
     <tr>
-        <td>
+        <th>
             Невид:&nbsp;&nbsp;
-        </td>
+        </th>
         <td colspan="3">
             <?= Html::activeCheckbox($model, 'nevid', ['label' => false, 'onclick' => 'validateCheckbox("nevid")']) ?>
         </td>
@@ -191,11 +202,14 @@ if ($model->user->groupId > 9) {
 <br>
 <?php
         echo Html::submitButton(
-            'Утвердить права', ['onclick' => 'return confirm("Это серъёзная штука. Уверены?")']
+            // 'Утвердить права', 
+             Yii::t('app', '{icon} Утвердить права', ['icon' => FAR::icon('check-circle',['class' => ''])]),
+            [
+                'class' => 'btn btn-primary btn-sm float-right',
+                'onclick' => 'return confirm("Это серъёзная штука. Уверены?")']
         );
         echo Html::endForm();
 
-        echo "<hr>";
     }
 }
 //------------------------------------------------END DRAGON---------------------------------------------
@@ -204,13 +218,13 @@ echo "<br><br>";
 echo "<a href=\"javascript:toggleIpView()\">Просмотр информации о входах в систему</a>";
 echo "<div id=\"ips\" style=\"display:none\">";
 if (sizeof($model->loginips) > 0) {
-    echo "<hr><table>";
+    echo "<hr><ul class=\"list-group\">";
     foreach ($model->loginips as $ip) {
-        echo "<tr>";
-        echo "<td>" . $ip->date . "&nbsp;&nbsp;&nbsp;-</td><td>&nbsp;&nbsp;&nbsp;" . $ip->ip . "</td>";
-        echo "</tr>";
+        // echo "<tr>";
+        echo "<li class=\"list-group-item\">" . $ip->date . "&nbsp;&nbsp;&nbsp;-</td><td>&nbsp;&nbsp;&nbsp;" . $ip->ip . "</li>";
+        // echo "</tr>";
     }
-    echo "</table><hr>";
+    echo "</ul><hr>";
 } else {
     echo "<hr>Пользователь не входил в систему после регистрации<hr>";
 }
@@ -219,93 +233,143 @@ echo "</div>";
 echo "<br><br>";
 echo "<a href=\"javascript:toggleZayavkiView()\">Просмотр информации о заявках на чистоту</a>";
 echo "<div id=\"zayavki\" style=\"display:none\"><br>";
+echo "<div class=\"row\">";
 if (sizeof($model->userZayavki) > 0) {
     foreach ($model->userZayavki as $zayavka) {
         ?>
 
-<table style="width:800px; border: 0px none; padding: 5px; background-color: <?= $settings->color_background ?>;
-        <?php
-        if ($zayavka->status == "new") {
-            echo "box-shadow: 0 0 15px  grey";
-        }
-        if ($zayavka->status == "cancelled") {
-            echo "box-shadow: 0 0 15px  " . $settings->color_cancelled;
-        }
-        if ($zayavka->status == "inprogress") {
-            echo "box-shadow: 0 0 15px  " . $settings->color_inprogress;
-        }
-        if ($zayavka->status == "otkaz") {
-            echo "box-shadow: 0 0 15px  " . $settings->color_otkaz;
-        }
-        if ($zayavka->status == "chist") {
-            echo "box-shadow: 0 0 15px  " . $settings->color_chist;
-        }
-        if ($zayavka->status == "katorga") {
-            echo "box-shadow: 0 0 15px  " . $settings->color_killed;
-        }
-        if ($zayavka->status == "prokli") {
-            echo "box-shadow: 0 0 15px  " . $settings->color_killed;
-        }
-        if ($zayavka->status == "block") {
-            echo "box-shadow: 0 0 15px  " . $settings->color_killed;
-        }
-        ?>
-                ">
-    <tr style="height: 40px">
-        <td width="5%" style="padding: 5px;"><?php
-                    echo Html::a(
-                        '#' . $zayavka->id, Url::to([
-                        '/site/sitem', 'id' => $zayavka->id
-                    ])
-                    );
-                    ?>
-        </td>
-        <td width="25%" style="padding: 5px;"><a href="http://apeha.ru/info.html?user=<?= $model->user->apeha_id ?>"
-                target="_blank"><?= $model->user->username ?></a></td>
-        <td width="35%" style="padding: 5px;">Статус: <?= getStatus($zayavka->status) ?> </td>
-        <td align="right" width="35%" style="padding: 5px;">Подана: <?= $zayavka->date_added ?></td>
-    </tr>
-    <tr>
-        <td colspan="2" style="padding: 5px;">
-            Тип:<?= $zayavka->type ?><br>
-        </td>
-        <td colspan="2" style="padding: 5px;">
-            <?php
-                    if (strlen($zayavka->city) > 0) {
-                        echo "Город: " . $zayavka->city;
-                    }
-                    ?>
-            <span style="font-size: 12px; font-style: italic">(Рассматривается в: <?= $zayavka->proverka_city ?>)</span>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="4">
-            <?php
-                    echo Html::a(
-                        "Показать в топе проверок", Url::to([
-                        '/site/zlist', 'action' => 'show', 'zayavka' => $zayavka->id
-                    ]), [
+<div class=" col-sm-12 col-md-6  col-xl-4 mb-4 ">
+    <div class="card application h-100 " style=" background-color: <?= $settings->color_background ?>; <?php
+            if ($zayavka->status == "new") {
+                echo "box-shadow: 0 0 15px  grey";
+            }
+            if ($zayavka->status == "cancelled") {
+                echo "box-shadow: 0 0 15px  " . $settings->color_cancelled;
+            }
+            if ($zayavka->status == "inprogress") {
+                echo "box-shadow: 0 0 15px  " . $settings->color_inprogress;
+            }
+            if ($zayavka->status == "otkaz") {
+                echo "box-shadow: 0 0 15px  " . $settings->color_otkaz;
+            }
+            if ($zayavka->status == "chist") {
+                echo "box-shadow: 0 0 15px  " . $settings->color_chist;
+            }
+            if ($zayavka->status == "katorga") {
+                echo "box-shadow: 0 0 15px  " . $settings->color_killed;
+            }
+            if ($zayavka->status == "prokli") {
+                echo "box-shadow: 0 0 15px  " . $settings->color_killed;
+            }
+            if ($zayavka->status == "block") {
+                echo "box-shadow: 0 0 15px  " . $settings->color_killed;
+            }
+            ?> ">
+
+        <div class=" card-header zayavka-head">
+
+            <a href="http://apeha.ru/info.html?user=<?= $model->user->apeha_id ?>" target="_blank"
+                class="zlistNick text-decoration-none" title="Открыть инфу персонажа"><?= $model->user->username ?></a>
+            <p class="text-muted zayavka-time">
+                <?php echo FAR::icon('clock');
+                      ?>
+                <?= $zayavka->date_added ?>
+            </p>
+        </div>
+        <div class="card-body application-body ">
+
+            <div>
+                <h5 class="card-title zayavka-title"> <?= $zayavka->type ?><br></h5>
+                <div class="card-subtitle zayavka-subtitle  ">
+                    <?php
+                        if (strlen($zayavka->city) > 0) {
+                            echo "Город: " . $zayavka->city;
+                        }
+                        ?>
+                </div>
+            </div>
+
+
+
+        </div>
+
+        <div class="card-footer my-zayvka-footer ">
+            <div class="subfooter">
+                <p class="text-muted text pr-5"> <?php
+                        echo Html::a(
+                                FAR::icon('eye'), Url::to([
+                                    '/site/zlist', 'action' => 'show', 'zayavka' => $zayavka->id
+                                ]), [
                             'style' => [
                                 'color' => '#666',
                                 'cursor' => 'pointer',
-                                'display' => 'block',
-                                'font-size' => '12px',
+                                // 'display' => 'block',
+                                 'font-size' => '12px',
                                 'font-weight' => 'bold',
                                 'line-height' => 'normal',
-                                'padding' => '10px',
-                                'margin-top' => '-10px',
                                 'text-decoration' => 'underline',
-                                'word-wrap' => 'break-word'
-                            ]
-                        ]
-                    );
-                    ?>
-        </td>
-    </tr>
-</table>
+                               
+                            ],
+                            'title' => 'Показать в топе проверок'
+                                ]
+                        );
+                        ?></p>
+                <p class="text-muted text">Статус:
+                    <!-- <?= getStatus($zayavka->status) ?> -->
+                    <?php
+                    if ($zayavka->status == "new") {
+                          
+                        echo FAS::icon('plus-circle',['title'=>'Новая заявка']);
+                         }
+                    if ($zayavka->status == "cancelled") {
+                        echo FAR::icon('times-circle',
+                        ['class' => 'cancelled','title'=>'Отменена пользователем']);
+                         }
+                    if ($zayavka->status == "inprogress") {
+                        echo FAR::icon('hourglass',['class' => 'inprogress-zayavka','title'=>'проверяется'])->spin(20);  
+                           }
+                    if ($zayavka->status == "otkaz") {
+                        echo FAS::icon('ban',['class' => 'otkaz-zayavka','title'=>'Отказ']);  
+                        }
+                    if ($zayavka->status == "chist") {
+                        echo FAR::icon('check-circle',['class' => 'chist-zayavka', 'title'=>'чистота выдана']);  
+                     }
+                    if ($zayavka->status == "katorga") {
+                        echo FAS::icon('ban',['class' => 'otkaz-zayavka','title'=>'Наказан каторгой']);  
+                        }
+                    if ($zayavka->status == "block") {
+            
+                        echo FAS::icon('ban',['class' => 'otkaz-zayavka','title'=>'Наказан блоком'
+                            ]);  
+                     }
+            ?>
+                </p>
+
+            </div>
+
+            <p class="text-muted zayavka-id">
+                <?php
+                        // if ($user_group > 1) {
+                            echo Html::a(
+                                    '#' . $zayavka->id, Url::to([
+                                        '/site/sitem', 'id' => $zayavka->id
+                                    ])
+                            );
+                        // } else {
+                            // echo "#" . $zayavka->id;
+                        // }
+                        ?>
+            </p>
+        </div>
+
+    </div>
+</div>
+
+
 <br>
 <?php
     }
+     echo"</div>";
 } else {
     echo "<hr>У пользователя нет ни одной поданной заявки на чистоту<hr>";
 }

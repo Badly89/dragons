@@ -196,30 +196,31 @@ if ($model->userActive) {
                 <p class="text-muted text">Статус:
                     <!-- <?= getStatus($zayavka->status) ?> -->
                     <?php
-                      if ($zayavka->status == "new") {
+                    if ($zayavka->status == "new") {
                           
-                          echo FAS::icon('plus-circle',['title'=>'Новая заявка']);
+                        echo FAS::icon('plus-circle',['title'=>'Новая заявка']);
                          }
-                      if ($zayavka->status == "cancelled") {
-                          echo FAR::icon('times-circle');
+                    if ($zayavka->status == "cancelled") {
+                        echo FAR::icon('times-circle',
+                        ['class' => 'cancelled','title'=>'Отменена пользователем']);
                          }
-            if ($zayavka->status == "inprogress") {
-                 echo FAR::icon('hourglass',['title'=>'проверяется'])->spin(20);  
+                    if ($zayavka->status == "inprogress") {
+                        echo FAR::icon('hourglass',['class' => 'inprogress-zayavka','title'=>'проверяется'])->spin(20);  
                            }
-            if ($zayavka->status == "otkaz") {
-                 echo FAS::icon('skull',['class' => 'skull-crossbones','title'=>'Отказ']);  
-            }
-            if ($zayavka->status == "chist") {
-                 echo FAR::icon('check-circle',['title'=>'чистота выдана']);  
-            }
-            if ($zayavka->status == "katorga") {
-                 echo FAS::icon('skull',['class' => 'skull-crossbones','title'=>'Наказан каторгой']);  
-            }
-            if ($zayavka->status == "block") {
+                    if ($zayavka->status == "otkaz") {
+                        echo FAS::icon('ban',['class' => 'otkaz-zayavka','title'=>'Отказ']);  
+                        }
+                    if ($zayavka->status == "chist") {
+                        echo FAR::icon('check-circle',['class' => 'chist-zayavka', 'title'=>'чистота выдана']);  
+                     }
+                    if ($zayavka->status == "katorga") {
+                        echo FAS::icon('ban',['class' => 'otkaz-zayavka','title'=>'Наказан каторгой']);  
+                        }
+                    if ($zayavka->status == "block") {
             
-                 echo FAS::icon('skull',['class' => 'skull-crossbones','title'=>'Наказан блоком'
-                ]);  
-            }
+                        echo FAS::icon('ban',['class' => 'otkaz-zayavka','title'=>'Наказан блоком'
+                            ]);  
+                     }
             ?>
                 </p>
             </div>

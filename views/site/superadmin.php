@@ -8,6 +8,9 @@ use yii\bootstrap4\LinkPager;
 use app\models\Dragonsrights;
 use app\models\Superadmin;
 use yii\helpers\Url;
+use rmrevin\yii\fontawesome\FAR;
+use rmrevin\yii\fontawesome\FAS; 
+use rmrevin\yii\fontawesome\FAl;
 
 //echo "action: " . $model->action . "<br>";
 //echo "userName: " . $model->userName . "<br>";
@@ -95,56 +98,93 @@ if ($model->action == 'userSearch') {
             'lastPageLabel' => '>>',
             'prevPageLabel' => '<',
             'nextPageLabel' => '>',]);
-        echo "<table>";
+        echo "<div class=\"row card-desk\">";
         foreach ($model->users as $user) {
-            echo "<tr><td>";
+            echo "<div class=\"col-xl-3 col-md-4 col-sm-6 mb-3\">";
+            echo "<div class=\"card card-user \">";
+           
+                        
+            echo "<div class=\"card-body  title-card-user\">";
+            
+              echo"<div class=\"  \">";
+              echo"<h5 class=\"card-title  d-flex flex-column\">";
+              echo "<div>";
             if ($user->groupId > 9) {
-                echo "<span style=\"color:red\">Dr </span>";
+                echo "<span class=\" text-danger pr-1\" style=\"font-size:14px;\" >Dr </span>";
             }
-            echo "<a href=\"http://kovcheg2.apeha.ru/info.html?user=" . $user->apeha_id . "\" target=\"_blank\">" . $user->username . "</a>";
-            echo "<td>";
-            echo Html::beginForm(['/site/userprofile'], 'post');
-            echo Html::hiddenInput('Userprofile[action]', 'userInfo');
-            echo Html::hiddenInput('Userprofile[userId]', $user->id);
-            echo Html::submitButton(
-                'Просмотр иформации', ['class' => 'btn btn-link logout']
-            );
-            echo Html::endForm();
-            echo "</td><td>";
-            if ($user->active == 0) {
-                echo "<span style=\"color:red; padding-left:12px; \">НЕ АКТИВЕН</span>";
+          
+            echo "<a href=\"http://kovcheg2.apeha.ru/info.html?user=" . $user->apeha_id . "\" target=\"_blank\" class=\"link-user-info text-info  \">" . $user->username . "</a> ";
+            echo "<div>";
+              if ($user->active == 0) {
+                echo "<span style=\"color:red;  \">НЕ АКТИВЕН</span>";
             }
             if ($user->groupId == 5) {
-                echo "<span style=\"color:green; padding-left:12px; \">СУДЬЯ</span>";
+                echo "<span style=\"color:green;  \">СУДЬЯ</span>";
             }
-            if ($user->groupId == 1 && $user->active == 1) {
+             echo "</h5>";
+            echo"</div>";
+            echo"<div class=\"btn-admin\">";
+            echo Html::a('<i class="fas fa-info-circle"></i>',['/site/userprofile'],
+            [   'class' => ' btn-user-info mb-2',
+                'data'=> [
+                        'method'=>'post',
+                        'params'=>[ 'Userprofile[userId]'=> $user->id,
+                                    'Userprofile[action]'=> 'userInfo'    
+                                  ]
+                ],
+                 'title' => 'Открыть инфу пользователя',
+            ]
+            );
+
+           
+            echo Html::endForm();
+             if ($user->groupId == 1 && $user->active == 1) {
                 if (Users::findGroupById(Yii::$app->user->getId()) == 99) {
-                    echo Html::beginForm(['/site/superadmin'], 'post');
-                    echo Html::hiddenInput('Superadmin[action]', 'makeDragon');
-                    echo Html::hiddenInput('Superadmin[userId]', $user->id);
-                    echo Html::hiddenInput('Superadmin[userName]', $model->userName);
-                    echo Html::submitButton(
-                        'Сделать драконом', ['class' => 'btn btn-link logout', 'onclick' => 'return confirm("Юзер станет драконом в системе. Продолжаем?")']
-                    );
-                    echo Html::endForm();
+                    echo Html::a('<i class="fas fa-user-check make-user"></i> <i class="fas fa-arrow-right text-decoration-none"></i>  <i class="fas fa-dragon"></i>',['/site/superadmin'],
+                    [  'class' => 'btn-make-dragon',
+                        'data'=> [
+                        'method'=>'post',
+                        'params'=>[ 'Superadmin[userId]'=> $user->id,
+                                    'Superadmin[action]'=> 'makeDragon',
+                                    'Superadmin[userName]' => $model->userName
+                                  ]
+                                ],
+                        'title' => 'Перевести в драконы',
+                        'onclick' => 'return confirm("Юзер станет драконом в системе. Продолжаем?")'
+                    ]);
+
+                   
                 }
             } else {
                 if ($user->groupId > 9) {
                     if (Users::findGroupById(Yii::$app->user->getId()) == 99) {
-                        echo Html::beginForm(['/site/superadmin'], 'post');
-                        echo Html::hiddenInput('Superadmin[action]', 'fireDragon');
-                        echo Html::hiddenInput('Superadmin[userId]', $user->id);
-                        echo Html::hiddenInput('Superadmin[userName]', $model->userName);
-                        echo Html::submitButton(
-                            'Перевести в юзеры', ['class' => 'btn btn-link logout', 'onclick' => 'return confirm("Обрезаем крылья? Точно?")']
-                        );
-                        echo Html::endForm();
+                        echo Html::a('<i class="fas fa-dragon btn-make-dragon"></i> <i class="fas fa-arrow-right text-decoration-none"></i> <i class="fas fa-user-check"></i>',['/site/superadmin'],
+                        [  'class' => 'make-user',
+                        'data'=> [
+                        'method'=>'post',
+                        'params'=>[ 'Superadmin[userId]'=> $user->id,
+                                    'Superadmin[action]'=> 'fireDragon',
+                                    'Superadmin[userName]' => $model->userName
+                                  ]
+                                ],
+                        'title'=>'Первести в юзеры',                                
+                        'onclick' => 'return confirm("Обрезаем крылья? Точно?")'
+                    ]);
+                      
                     }
                 }
             }
-            echo "</td></tr>";
+            echo"</div>";
+           
+
+          
+           
+            echo "</div>";
+            
+            echo "</div>";
+            echo "</div>";
         }
-        echo "</table>";
+        echo "</div>";
         echo LinkPager::widget(['pagination' => $model->pagination,
             'firstPageLabel' => '<<',
             'lastPageLabel' => '>>',

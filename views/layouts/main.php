@@ -141,9 +141,10 @@ $settings->loadSettings();
         }
         $additionalSeparate = explode('(', $items_additional_text);
         $zayavki_submenu = [];
-        if ($newItemsCount > 0) {
-            array_push($zayavki_submenu, ['label' => 'Все заявки (' . $newItemsCount . ')', 'url' => ['/site/zlist']]);
-        }
+        // if ($newItemsCount > 0) {
+        //     array_push($zayavki_submenu, ['label' => 'Все заявки (' . $newItemsCount . ')', 'url' => ['/site/zlist']]);
+        // }
+        array_push($zayavki_submenu, ['label' => 'Все заявки ( Нов: ' . $newItemsCount . ')', 'url' => ['/site/zlist']]);
 
         if ($ready_count > 0) {
             array_push($zayavki_submenu, ['label' => 'Б/П заявки (' . $ready_count . ')', 'url' => ['/site/ready']]);

@@ -93,7 +93,7 @@ function calc() {
                             'readonly' => 'true',
                             'name' => 'date_in_modal_1',
                             'options' => ['placeholder' => 'Время созревания...', 'onChange' => 'calc()'],
-                            'pluginOptions' => ['autoclose' => true],
+                            'pluginOptions' => ['autoclose' => true, 'title'=>'TEST'],
 
                         ]); ?>
                 </div>
@@ -116,12 +116,12 @@ function calc() {
                 //ready time
                 $objDateTime = new DateTime('NOW');
                 $objDateTime->modify('+' . $arr[2] . ' hours');
-                $ready_time = $objDateTime->format('D d h:i');
+                $ready_time = $objDateTime->format('D d H:i');
 
                 //trash time
                 $objDateTimeTrash = new DateTime('NOW');
                 $objDateTimeTrash->modify('+' . ($arr[2] + $arr[3]) . ' hours');
-                $trash_time = $objDateTimeTrash->format('D d h:i');
+                $trash_time = $objDateTimeTrash->format('D d H:i');
 
 
                 echo "<div class=\"col-xl-4 col-md-6 col-sm-12 mb-3\">";
