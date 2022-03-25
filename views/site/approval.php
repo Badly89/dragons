@@ -30,10 +30,10 @@ if (sizeof($model->newUsers) > 0) {
             <div class="card-body ">
                 <div class="approval-body-card mb-4">
                     <p class="card-text">Пользователь: <a class="text-decoration-none" target="_blank"
-                            href="http://newforest.apeha.ru/info.html?nick=<?= urlencode(iconv("UTF-8", "CP1251", $user->username)) ?>"><?= $user->username ?></a>
+                            href="http://kovcheg2.apeha.ru/info.html?nick=<?= urlencode(iconv("UTF-8", "CP1251", $user->username)) ?>"><?= $user->username ?></a>
                     </p>
                     <p class="card-text">Ссылка по ID: <a target="_blank"
-                            href="http://newforest.apeha.ru/info.html?user=<?= $user->apeha_id ?>"><?= $user->username ?></a>
+                            href="http://kovcheg2.apeha.ru/info.html?user=<?= $user->apeha_id ?>"><?= $user->username ?></a>
                     </p>
                 </div>
                 <div class="approval-bottom-card">
@@ -91,7 +91,7 @@ if (sizeof($model->restoreUsers) > 0) {
             <div class="card-body ">
                 <div class="approval-body-card mb-4">
                     <p class="card-text">Пользователь: <a class="text-decoration-none" target="_blank"
-                            href="http://newforest.apeha.ru/info.html?nick=<?= urlencode(iconv("UTF-8", "CP1251", $user->username)) ?>"><?= $user->username ?></a>
+                            href="http://kovcheg2.apeha.ru/info.html?nick=<?= urlencode(iconv("UTF-8", "CP1251", $user->username)) ?>"><?= $user->username ?></a>
                     </p>
 
                 </div>
@@ -160,11 +160,11 @@ if (sizeof($model->busyLogins) > 0) {
     <tr>
         <td align="center">
             <a target="_blank"
-                href="http://newforest.apeha.ru/info.html?nick=<?= urlencode(iconv("UTF-8", "CP1251", $user->username)) ?>"><?= $user->username ?></a>
+                href="http://kovcheg2.apeha.ru/info.html?nick=<?= urlencode(iconv("UTF-8", "CP1251", $user->username)) ?>"><?= $user->username ?></a>
         </td>
         <td align="center">
             <a target="_blank"
-                href="http://newforest.apeha.ru/info.html?user=<?= $user->apeha_id ?>"><?= $user->username ?></a>
+                href="http://kovcheg2.apeha.ru/info.html?user=<?= $user->apeha_id ?>"><?= $user->username ?></a>
         </td>
         <td align="center">
             <?= $busyLogin->ip ?>

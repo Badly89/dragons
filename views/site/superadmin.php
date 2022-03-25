@@ -101,7 +101,7 @@ if ($model->action == 'userSearch') {
             if ($user->groupId > 9) {
                 echo "<span style=\"color:red\">Dr </span>";
             }
-            echo "<a href=\"http://newforest.apeha.ru/info.html?user=" . $user->apeha_id . "\" target=\"_blank\">" . $user->username . "</a>";
+            echo "<a href=\"http://kovcheg2.apeha.ru/info.html?user=" . $user->apeha_id . "\" target=\"_blank\">" . $user->username . "</a>";
             echo "<td>";
             echo Html::beginForm(['/site/userprofile'], 'post');
             echo Html::hiddenInput('Userprofile[action]', 'userInfo');

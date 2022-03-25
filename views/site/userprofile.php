@@ -20,7 +20,7 @@ $settings->loadSettings();
 if ($model->user->groupId > 9) {
     echo "<span style=\"color:red\">Dr </span>";
 }
-echo "<a target=\"blank\" href=\"http://newforest.apeha.ru/info.html?nick=" . $model->user->username . "\">" . $model->user->username . "</a>";
+echo "<a target=\"blank\" href=\"http://kovcheg2.apeha.ru/info.html?nick=" . $model->user->username . "\">" . $model->user->username . "</a>";
 echo " &nbsp;[Зарегистрирован: " . $model->user->date_registered . " с IP: " . $model->user->ips . "]";
 //-----------------------------------------------------DRAGON--------------------------------------------
 

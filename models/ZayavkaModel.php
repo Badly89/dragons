@@ -89,8 +89,8 @@ class ZayavkaModel extends Model
             $this->verifyIsActiveZayavkaExists();
             if (!$this->activeZayavka) {
                 $this->item = new Zayavka();
-                $this->item->proverka_city = $this->filterProverkaCity();
-
+                // $this->item->proverka_city = $this->filterProverkaCity();
+                $this->item->proverka_city = "kovcheg";
                 $this->item->user_id = Yii::$app->user->getId();
                 $this->item->city = $this->city;
                 $this->item->type = $this->type;
@@ -105,118 +105,119 @@ class ZayavkaModel extends Model
 
     public function filterProverkaCity()
     {
-        $loadKovcheg = 1;
-        $loadSmorye = 1;
-        $loadUtes = 1;
-        $currentKovchegCount = 0;
-        $currentSmoryeCount = 0;
-        $currentUtesCount = 0;
-        $prCity = "";
-        $this->settings = Settings::find()->all();
-        foreach ($this->settings as $setting) {
-            if ($setting->name == "loadKovcheg") {
-                $loadKovcheg = $setting->value;
-            }
-            if ($setting->name == "loadSmorye") {
-                $loadSmorye = $setting->value;
-            }
-            if ($setting->name == "loadUtes") {
-                $loadUtes = $setting->value;
-            }
-        }
-        $currentKovchegCount = sizeof(Zayavka::findActiveZayavkiForCityAndCategory("kovcheg", $this->getCategory($this->type))->all());
-        $currentSmoryeCount = sizeof(Zayavka::findActiveZayavkiForCityAndCategory("smorye", $this->getCategory($this->type))->all());
-        $currentUtesCount = sizeof(Zayavka::findActiveZayavkiForCityAndCategory("utes", $this->getCategory($this->type))->all());
-        if (($currentKovchegCount + $currentSmoryeCount + $currentUtesCount) == 0) {
-            if ($this->city == "common") {
-                return "kovcheg";
-            }
-            return $this->city;
-        }
-        //Заявка в ковш
-        if ($this->city == "kovcheg") {
-            if (($currentKovchegCount / ($currentKovchegCount + $currentSmoryeCount + $currentUtesCount) * 100) > $loadKovcheg) {
-                if ($currentUtesCount / $loadUtes < $currentSmoryeCount / $loadSmorye) {
-                    $prCity = "utes";
-                } else {
-                    if ($currentUtesCount / $loadUtes > $currentSmoryeCount / $loadSmorye) {
-                        $prCity = "smorye";
-                    } else {
-                        $prCity = "utes";
-                    }
-                }
-            } else {
-                $prCity = "kovcheg";
-            }
-        }
-        //Заявка в сморье        
-        if ($this->city == "smorye") {
-            if (($currentSmoryeCount / ($currentKovchegCount + $currentSmoryeCount + $currentUtesCount) * 100) > $loadSmorye) {
-                if ($currentKovchegCount / $loadKovcheg < $currentUtesCount / $loadUtes) {
-                    $prCity = "kovcheg";
-                } else {
-                    if ($currentKovchegCount / $loadKovcheg > $currentUtesCount / $loadUtes) {
-                        $prCity = "utes";
-                    } else {
-                        $prCity = "kovcheg";
-                    }
-                }
-            } else {
-                $prCity = "smorye";
-            }
-        }
-        //Заявка в утёс        
-        if ($this->city == "utes") {
-            if (($currentUtesCount / ($currentKovchegCount + $currentSmoryeCount + $currentUtesCount) * 100) > $loadUtes) {
-                if ($currentKovchegCount / $loadKovcheg < $currentSmoryeCount / $loadSmorye) {
-                    $prCity = "kovcheg";
-                } else {
-                    if ($currentKovchegCount / $loadKovcheg > $currentSmoryeCount / $loadSmorye) {
-                        $prCity = "smorye";
-                    } else {
-                        $prCity = "kovcheg";
-                    }
-                }
-            } else {
-                $prCity = "utes";
-            }
-        }
-        if ($this->city == "common") {
-            if ($currentKovchegCount / $loadKovcheg < $currentSmoryeCount / $loadSmorye) {
-                if ($currentKovchegCount / $loadKovcheg < $currentUtesCount / $loadUtes) {
-                    $prCity = "kovcheg";
-                } else {
-                    if ($currentKovchegCount / $loadKovcheg > $currentUtesCount / $loadUtes) {
-                        $prCity = "utes";
-                    } else {
-                        $prCity = "kovcheg";
-                    }
-                }
-            } else {
-                if ($currentKovchegCount / $loadKovcheg > $currentSmoryeCount / $loadSmorye) {
-                    if ($currentSmoryeCount / $loadSmorye < $currentUtesCount / $loadUtes) {
-                        $prCity = "smorye";
-                    } else {
-                        if ($currentSmoryeCount / $loadSmorye > $currentUtesCount / $loadUtes) {
-                            $prCity = "utes";
-                        } else {
-                            $prCity = "utes";
-                        }
-                    }
-                } else {
-                    if ($currentKovchegCount / $loadKovcheg < $currentUtesCount / $loadUtes) {
-                        $prCity = "kovcheg";
-                    } else {
-                        if ($currentKovchegCount / $loadKovcheg > $currentUtesCount / $loadUtes) {
-                            $prCity = "utes";
-                        } else {
-                            $prCity = "kovcheg";
-                        }
-                    }
-                }
-            }
-        }
-        return $prCity;
+      return "kovcheg";
+        // $loadKovcheg = 1;
+        // $loadSmorye = 1;
+        // $loadUtes = 1;
+        // $currentKovchegCount = 0;
+        // $currentSmoryeCount = 0;
+        // $currentUtesCount = 0;
+        // $prCity = "";
+        // $this->settings = Settings::find()->all();
+        // foreach ($this->settings as $setting) {
+        //     if ($setting->name == "loadKovcheg") {
+        //         $loadKovcheg = $setting->value;
+        //     }
+        //     if ($setting->name == "loadSmorye") {
+        //         $loadSmorye = $setting->value;
+        //     }
+        //     if ($setting->name == "loadUtes") {
+        //         $loadUtes = $setting->value;
+        //     }
+        // }
+        // $currentKovchegCount = sizeof(Zayavka::findActiveZayavkiForCityAndCategory("kovcheg", $this->getCategory($this->type))->all());
+        // $currentSmoryeCount = sizeof(Zayavka::findActiveZayavkiForCityAndCategory("smorye", $this->getCategory($this->type))->all());
+        // $currentUtesCount = sizeof(Zayavka::findActiveZayavkiForCityAndCategory("utes", $this->getCategory($this->type))->all());
+        // if (($currentKovchegCount + $currentSmoryeCount + $currentUtesCount) == 0) {
+        //     if ($this->city == "common") {
+        //         return "kovcheg";
+        //     }
+        //     return $this->city;
+        // }
+        // //Заявка в ковш
+        // if ($this->city == "kovcheg") {
+        //     if (($currentKovchegCount / ($currentKovchegCount + $currentSmoryeCount + $currentUtesCount) * 100) > $loadKovcheg) {
+        //         if ($currentUtesCount / $loadUtes < $currentSmoryeCount / $loadSmorye) {
+        //             $prCity = "utes";
+        //         } else {
+        //             if ($currentUtesCount / $loadUtes > $currentSmoryeCount / $loadSmorye) {
+        //                 $prCity = "smorye";
+        //             } else {
+        //                 $prCity = "utes";
+        //             }
+        //         }
+        //     } else {
+        //         $prCity = "kovcheg";
+        //     }
+        // }
+        // //Заявка в сморье        
+        // if ($this->city == "smorye") {
+        //     if (($currentSmoryeCount / ($currentKovchegCount + $currentSmoryeCount + $currentUtesCount) * 100) > $loadSmorye) {
+        //         if ($currentKovchegCount / $loadKovcheg < $currentUtesCount / $loadUtes) {
+        //             $prCity = "kovcheg";
+        //         } else {
+        //             if ($currentKovchegCount / $loadKovcheg > $currentUtesCount / $loadUtes) {
+        //                 $prCity = "utes";
+        //             } else {
+        //                 $prCity = "kovcheg";
+        //             }
+        //         }
+        //     } else {
+        //         $prCity = "smorye";
+        //     }
+        // }
+        // //Заявка в утёс        
+        // if ($this->city == "utes") {
+        //     if (($currentUtesCount / ($currentKovchegCount + $currentSmoryeCount + $currentUtesCount) * 100) > $loadUtes) {
+        //         if ($currentKovchegCount / $loadKovcheg < $currentSmoryeCount / $loadSmorye) {
+        //             $prCity = "kovcheg";
+        //         } else {
+        //             if ($currentKovchegCount / $loadKovcheg > $currentSmoryeCount / $loadSmorye) {
+        //                 $prCity = "smorye";
+        //             } else {
+        //                 $prCity = "kovcheg";
+        //             }
+        //         }
+        //     } else {
+        //         $prCity = "utes";
+        //     }
+        // }
+        // if ($this->city == "common") {
+        //     if ($currentKovchegCount / $loadKovcheg < $currentSmoryeCount / $loadSmorye) {
+        //         if ($currentKovchegCount / $loadKovcheg < $currentUtesCount / $loadUtes) {
+        //             $prCity = "kovcheg";
+        //         } else {
+        //             if ($currentKovchegCount / $loadKovcheg > $currentUtesCount / $loadUtes) {
+        //                 $prCity = "utes";
+        //             } else {
+        //                 $prCity = "kovcheg";
+        //             }
+        //         }
+        //     } else {
+        //         if ($currentKovchegCount / $loadKovcheg > $currentSmoryeCount / $loadSmorye) {
+        //             if ($currentSmoryeCount / $loadSmorye < $currentUtesCount / $loadUtes) {
+        //                 $prCity = "smorye";
+        //             } else {
+        //                 if ($currentSmoryeCount / $loadSmorye > $currentUtesCount / $loadUtes) {
+        //                     $prCity = "utes";
+        //                 } else {
+        //                     $prCity = "utes";
+        //                 }
+        //             }
+        //         } else {
+        //             if ($currentKovchegCount / $loadKovcheg < $currentUtesCount / $loadUtes) {
+        //                 $prCity = "kovcheg";
+        //             } else {
+        //                 if ($currentKovchegCount / $loadKovcheg > $currentUtesCount / $loadUtes) {
+        //                     $prCity = "utes";
+        //                 } else {
+        //                     $prCity = "kovcheg";
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
+        // return $prCity;
     }
 
     public function isCancel()

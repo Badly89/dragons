@@ -52,7 +52,7 @@ $dragonR = $dragonRights;
 <script src="<?= Yii::$app->request->baseUrl ?>/js/jquery-3.6.0.min.js"></script>
 <script src="<?= Yii::$app->request->baseUrl ?>/js/readmore.min.js"></script>
 <div class="zlist-tabs">
-    <div class="mb-3">
+    <div class="mb-3 d-none">
         <?php 
         $itemsCity=[];
         if($city =='kovcheg'){
@@ -344,7 +344,7 @@ foreach ($zayavki as $zayavka) {
                     echo"</div>";
                        }
                     }?>
-                    <a href="http://kovcheg1.apeha.ru/info.html?nick=<?= urlencode(iconv("UTF-8", "CP1251", $zayavka->username)) ?>"
+                    <a href="http://kovcheg2.apeha.ru/info.html?nick=<?= urlencode(iconv("UTF-8", "CP1251", $zayavka->username)) ?>"
                         target="_blank" class="zlistNick text-decoration-none"
                         title="Открыть инфу персонажа"><?= $zayavka->username ?></a>
                     <p class="text-muted zayavka-time pr-1">

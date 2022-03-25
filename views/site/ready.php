@@ -112,7 +112,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 } 
                 ?>
 
-                    <p><a href="http://newforest.apeha.ru/info.html?nick=<?= urlencode(iconv("UTF-8", "CP1251", $zayavka->username)) ?>"
+                    <p><a href="http://kovcheg2.apeha.ru/info.html?nick=<?= urlencode(iconv("UTF-8", "CP1251", $zayavka->username)) ?>"
                             class="zlistNick text-decoration-none" target="_blank"><?= $zayavka->username ?></a></p>
 
                     <p class="text-muted zayavka-time pr-1">

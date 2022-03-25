@@ -475,7 +475,8 @@ class SiteController extends Controller
         if ($model->load($request->post())) {
             //We got all from POST.
             $loadedFromPost = true;
-            $defaultCity = $model->city;
+            // Next disabled because of disabling city functionality
+            // $defaultCity = $model->city;
             $defaultType = $model->type;
             $model->dragonsRight = $dragonRights;
             $model->verifyAndSaveAction();
