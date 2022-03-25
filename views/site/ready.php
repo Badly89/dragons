@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
 }
 
 .text {
-    font-size: 14px;
+    font-size: 16px;
     color: <?=$settings->comment_color ?>;
 }
 
@@ -45,7 +45,8 @@ $this->params['breadcrumbs'][] = $this->title;
 }
 </style>
 <script src="<?= Yii::$app->request->baseUrl ?>/js/clipboard.min.js"></script>
-<div class=" row">
+<!-- <div class=" row"> -->
+<ul class="list-group list-group-flush">
     <br />
     <?php
     if (sizeof($model->zayavkiArray) > 0) {
@@ -53,7 +54,8 @@ $this->params['breadcrumbs'][] = $this->title;
     foreach ($model->zayavkiArray as $zayavka) {
     $actions = ActionsUserView::findActionsByZid($zayavka->zId);
     ?>
-    <div class="col-xl-6 col-md-6 col-sm-12 mb-4 ">
+    <!-- <div class="col-xl-6 col-md-6 col-sm-12 mb-4 "> -->
+    <li class="list-group-item">
         <div class="card application h-100" style=" background-color: <?= $settings->color_background ?>;
        <?php
                  if ($zayavka->status == "new") {
@@ -112,8 +114,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 } 
                 ?>
 
-                    <p><a href="http://kovcheg2.apeha.ru/info.html?nick=<?= urlencode(iconv("UTF-8", "CP1251", $zayavka->username)) ?>"
-                            class="zlistNick text-decoration-none" target="_blank"><?= $zayavka->username ?></a></p>
+                    <h5 class="card-title"><a
+                            href="http://kovcheg2.apeha.ru/info.html?nick=<?= urlencode(iconv("UTF-8", "CP1251", $zayavka->username)) ?>"
+                            class="zlistNick text-decoration-none" target="_blank"><?= $zayavka->username ?></a></h5>
 
                     <p class="text-muted zayavka-time pr-1">
                         <?php  echo FAR::icon('clock',['title'=>'Время подачи заявки']); ?>
@@ -215,11 +218,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 if (strlen($stager_text) > 1) {
                     ?>
 
-                    <span style="font-size:13px; color: green"><b><?= $stager_text ?></b><br></span>
+                    <span style="font-size:16px; color: green"><b><?= $stager_text ?></b><br></span>
                     <?php
                     if (strlen($stager_comment) > 1) {
                         ?>
-                    <span style="font-size:13px; color: red"><b><?= returnComment($stager_comment) ?></b><br></span>
+                    <span style="font-size:16px; color: red"><b><?= returnComment($stager_comment) ?></b><br></span>
 
                     <?php
                     }
@@ -245,12 +248,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                 }
                 ?>
-                    <span style="font-size:13px; color: green"><b><?= $dragon_text ?></b><br></span>
+                    <span style="font-size:16px; color: green"><b><?= $dragon_text ?></b><br></span>
 
                     <?php
                 if (strlen($dragon_notes) > 1) {
                     ?>
-                    <span style="font-size:13px; color: red"><b><?= returnComment($dragon_notes) ?></b><br></span>
+                    <span style="font-size:16px; color: red"><b><?= returnComment($dragon_notes) ?></b><br></span>
 
                     <?php
                 }
@@ -294,31 +297,32 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
             </div>
             <div class="card-footer zlist-footer">
-                <p class="text-muted text">
-                    Статус:
+                <p class="text-muted text">Статус:
+                    <!-- <?= getStatus($zayavka->status) ?> -->
                     <?php
                     if ($zayavka->status == "new") {
                           
                         echo FAS::icon('plus-circle',['title'=>'Новая заявка']);
                          }
                     if ($zayavka->status == "cancelled") {
-                        echo FAR::icon('times-circle');
+                        echo FAR::icon('times-circle',
+                        ['class' => 'cancelled','title'=>'Отменена пользователем']);
                          }
                     if ($zayavka->status == "inprogress") {
-                        echo FAR::icon('hourglass',['title'=>'проверяется'])->spin(20);  
+                        echo FAR::icon('hourglass',['class' => 'inprogress-zayavka','title'=>'проверяется'])->spin(20);  
                            }
                     if ($zayavka->status == "otkaz") {
-                        echo FAS::icon('ban',['class' => 'skull-crossbones','title'=>'Отказ']);  
+                        echo FAS::icon('ban',['class' => 'otkaz-zayavka','title'=>'Отказ']);  
                         }
                     if ($zayavka->status == "chist") {
-                        echo FAR::icon('check-circle',['title'=>'чистота выдана']);  
+                        echo FAR::icon('check-circle',['class' => 'chist-zayavka', 'title'=>'чистота выдана']);  
                      }
                     if ($zayavka->status == "katorga") {
-                        echo FAS::icon('ban',['class' => 'skull-crossbones','title'=>'Наказан каторгой']);  
+                        echo FAS::icon('ban',['class' => 'otkaz-zayavka','title'=>'Наказан каторгой']);  
                         }
                     if ($zayavka->status == "block") {
             
-                        echo FAS::icon('ban',['class' => 'skull-crossbones','title'=>'Наказан блоком'
+                        echo FAS::icon('ban',['class' => 'otkaz-zayavka','title'=>'Наказан блоком'
                             ]);  
                      }
             ?>
@@ -342,10 +346,13 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
 
         </div>
-    </div>
+    </li>
+    <!-- </div> -->
 
     <?php
 }
+// echo "</div>";
+echo "</ul>";
 } else {
     echo "<p>Нет заявок для закрытия</p>";
 }
@@ -439,16 +446,16 @@ function returnComment($comment)
 
 ?>
 
-</div>
 
 
-<script>
-function toggleView($id) {
-    $element = document.getElementById($id);
-    if ($element.style.display === 'none') {
-        $element.style.display = 'block';
-    } else {
-        $element.style.display = 'none';
+
+    <script>
+    function toggleView($id) {
+        $element = document.getElementById($id);
+        if ($element.style.display === 'none') {
+            $element.style.display = 'block';
+        } else {
+            $element.style.display = 'none';
+        }
     }
-}
-</script>
+    </script>

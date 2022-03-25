@@ -83,19 +83,19 @@ p {
   justify-content: space-between;
   flex-wrap: wrap;
   padding: 10px !important;
-  font-size: 12px;
+  // font-size: 12px;
 }
 .zayavka-title {
-  font-size: 16px;
+  // font-size: 16px;
   align-self: flex-start;
 }
 .zayavka-subtitle {
-  font-size: 14px;
+  // font-size: 14px;
   align-self: flex-start;
 }
 .zayavka-id,
 .zayavka-time {
-  font-size: 12px;
+  // font-size: 12px;
   margin-bottom: 0;
 }
 .zayavka-id a {
@@ -107,6 +107,7 @@ p {
 }
 .otmetka {
   display: flex;
+  font-size: 16px;
   flex-direction: column;
   // align-self: flex-end;
   align-items: flex-end;
@@ -136,6 +137,7 @@ p {
 }
 .text {
   margin: 0;
+  // font-size: 14px !important;
 }
 .my-zayvka-footer {
   display: flex;
@@ -309,7 +311,7 @@ p {
 .zlistNick {
   /* flex: 2 1 auto; */
   align-self: center;
-  font-size: 16px;
+  // font-size: 20px;
 }
 .zlist-head-buttons {
   display: flex;
@@ -318,10 +320,31 @@ p {
 .btn-zlist {
   position: relative;
   display: inline-block;
-  padding: 2px 4px;
-  font-size: 13px;
+  // padding: 2px 4px;
+  font-size: 16px;
   font-weight: bold;
   line-height: 20px;
+  border: 0;
+}
+
+.btn-zlist:hover {
+  color: #9bc0c6;
+  background-color: transparent;
+  border: 0;
+}
+.btn-zlist-danger {
+  position: relative;
+  display: inline-block;
+  // padding: 2px 4px;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 20px;
+  border: 0;
+}
+.btn-zlist-danger:hover {
+  color: #e8969e;
+  background-color: transparent;
+  border: 0;
 }
 .zlist-footer {
   display: flex;
@@ -390,24 +413,27 @@ p {
   justify-content: space-between;
   // flex-direction: column;
 }
-.footer-card-user {
-  display: flex;
-  align-items: center;
+// .footer-card-user {
+//   display: flex;
+//   align-items: center;
 
-  justify-content: flex-end;
-  // flex-direction: column;
+//   justify-content: flex-end;
+//   // flex-direction: column;
+// }
+.list-user {
+  padding: 0;
+  // border: 0;
 }
-
 .link-user-info {
   text-decoration: none;
-  font-size: 16px;
+  // font-size: 16px;
 }
 .link-user-info:hover {
   text-decoration: none;
 }
 .btn-user-info {
   background-color: transparent;
-  // font-size: 16px;
+
   color: #17a2b8;
 }
 .btn-user-info:hover {
@@ -418,14 +444,14 @@ p {
   color: #0c0c0c;
   background-color: transparent;
   text-decoration: none;
-  // font-size: 12px;
+  font-size: 18px; // font-size: 12px;
 }
 
 .btn-make-dragon {
   color: #7e0612;
   background-color: transparent;
   text-decoration: none;
-  // font-size: 12px;
+  font-size: 18px;
 }
 .btn-make-dragon:hover,
 .btn-make-dragon:active {
@@ -438,12 +464,12 @@ p {
   align-items: center;
 }
 .card-user {
-  border-radius: 12px;
+  // border-radius: 12px;
   background-color: transparent;
   transition: all ease-in 300ms;
 }
 .card-user:hover {
-  transform: scale(1.04);
+  // transform: scale(1.04);
   background-color: rgba(245, 234, 206, 0.637);
   box-shadow: 0 0 15px rgba(9, 84, 233, 0.795);
   transition: all ease-in 300ms;

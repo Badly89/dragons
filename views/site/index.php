@@ -22,7 +22,7 @@ $user_group = Users::findGroupById(Yii::$app->user->getId());
 ?>
 <style>
 .name {
-    font-size: 12px;
+    font-size: 16px;
     color: <?=$settings->sign_color ?>;
 }
 
@@ -33,19 +33,20 @@ $user_group = Users::findGroupById(Yii::$app->user->getId());
 }
 
 .text {
-    font-size: 14px;
+    font-size: 16px;
     color: <?=$settings->comment_color ?>;
 }
 
 .text_otkaz {
-    font-size: 14px;
+    font-size: 16px;
     color: <?=$settings->otkaz_color ?>;
 }
 </style>
 <?php
 if ($model->userActive) {
     echo "<h2>Ваши заявки на чистоту:</h2><br>";
-    echo "<div class='row  my-zayavki'>";
+    // echo "<div class='row  my-zayavki'>";
+    echo "<ul class=\"list-group list-group-flush mb-3\">";
     if (sizeof($model->allZayavki) > 0) {
         //creating array of arrays
         $allZ = array();
@@ -99,7 +100,9 @@ if ($model->userActive) {
             ?>
 
 <!-- col-sm-12 col-md-6  col-lg-4 -->
-<div class=" col-sm-12 col-md-6  col-xl-6 mb-4 ">
+<!-- <div class=" col-sm-12 col-md-6  col-xl-6 mb-4 ">
+     -->
+<li class="list-group-item">
     <div class="card application h-100 " style=" background-color: <?= $settings->own_z_color ?>; <?php
             if ($zayavka->status == "new") {
                 echo "box-shadow: 0 0 15px  grey";
@@ -267,14 +270,15 @@ if ($model->userActive) {
         </div>
 
     </div>
-</div>
+    <!-- </div> -->
+</li>
 
 <?php
 
         }
        
-      echo"</div>";
-        
+    //   echo"</div>";
+        echo"</ul>";
    
     } else {
         echo "<h2>У вас нет ни одной поданной заявки на чистоту</h2>";

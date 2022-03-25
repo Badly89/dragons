@@ -98,32 +98,26 @@ if ($model->action == 'userSearch') {
             'lastPageLabel' => '>>',
             'prevPageLabel' => '<',
             'nextPageLabel' => '>',]);
-        echo "<div class=\"row card-desk\">";
+        // echo "<div class=\"row card-desk\">";
+        echo "<ul class=\"list-group list-group-flush mb-3\">";
         foreach ($model->users as $user) {
-            echo "<div class=\"col-xl-3 col-md-4 col-sm-6 mb-3\">";
-            echo "<div class=\"card card-user \">";
-           
-                        
-            echo "<div class=\"card-body  title-card-user\">";
+            // echo "<div class=\"col-xl-3 col-md-4 col-sm-6 mb-3\">";
             
-              echo"<div class=\"  \">";
-              echo"<h5 class=\"card-title  d-flex flex-column\">";
-              echo "<div>";
+            echo "<li class=\"list-group-item list-user \">";
+            echo "<div class=\"card card-user \">";
+            echo "<div class=\"card-body  title-card-user p-2\">";
+            
+            //   echo"<div class=\"  \">";
+            //   echo"<h5 class=\"card-title  d-flex flex-column\">";
+            echo"<h5 class=\"card-title mb-0\">";
+            //   echo "<div>";
             if ($user->groupId > 9) {
-                echo "<span class=\" text-danger pr-1\" style=\"font-size:14px;\" >Dr </span>";
+                echo "<span class=\" text-danger pr-1\" style=\"font-size:16px;\" >Dr </span>";
             }
           
             echo "<a href=\"http://kovcheg2.apeha.ru/info.html?user=" . $user->apeha_id . "\" target=\"_blank\" class=\"link-user-info text-info  \">" . $user->username . "</a> ";
-            echo "<div>";
-              if ($user->active == 0) {
-                echo "<span style=\"color:red;  \">НЕ АКТИВЕН</span>";
-            }
-            if ($user->groupId == 5) {
-                echo "<span style=\"color:green;  \">СУДЬЯ</span>";
-            }
-             echo "</h5>";
-            echo"</div>";
-            echo"<div class=\"btn-admin\">";
+            // echo "<div>";
+             
             echo Html::a('<i class="fas fa-info-circle"></i>',['/site/userprofile'],
             [   'class' => ' btn-user-info mb-2',
                 'data'=> [
@@ -135,9 +129,19 @@ if ($model->action == 'userSearch') {
                  'title' => 'Открыть инфу пользователя',
             ]
             );
-
+            
+             echo "</h5>";
+            // echo"</div>";
+            echo"<div class=\"btn-admin\">";
+            
+             if ($user->active == 0) {
+                echo "<span style=\"color:red;  \">НЕ АКТИВЕН</span>";
+            }
+            if ($user->groupId == 5) {
+                echo "<span style=\"color:green;  \">СУДЬЯ</span>";
+            }
            
-            echo Html::endForm();
+            // echo Html::endForm();
              if ($user->groupId == 1 && $user->active == 1) {
                 if (Users::findGroupById(Yii::$app->user->getId()) == 99) {
                     echo Html::a('<i class="fas fa-user-check make-user"></i> <i class="fas fa-arrow-right text-decoration-none"></i>  <i class="fas fa-dragon"></i>',['/site/superadmin'],
@@ -175,16 +179,13 @@ if ($model->action == 'userSearch') {
                 }
             }
             echo"</div>";
-           
-
-          
-           
             echo "</div>";
-            
-            echo "</div>";
-            echo "</div>";
+            // echo "</div>";
+            // echo "</div>";
+            echo "</li>";
         }
-        echo "</div>";
+        // echo "</div>";
+        echo "</ul>";
         echo LinkPager::widget(['pagination' => $model->pagination,
             'firstPageLabel' => '<<',
             'lastPageLabel' => '>>',

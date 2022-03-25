@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style>
 .name {
-    font-size: 14px;
+    font-size: 16px;
     color: <?=$settings->sign_color ?>;
 }
 
@@ -35,18 +35,18 @@ $this->params['breadcrumbs'][] = $this->title;
 }
 
 .text {
-    font-size: 14px;
+    font-size: 16px;
     color: <?=$settings->comment_color ?>;
 }
 
 .text_otkaz {
-    font-size: 14px;
+    font-size: 16px;
     color: <?=$settings->otkaz_color ?>;
 }
 </style>
 <script src="<?= Yii::$app->request->baseUrl ?>/js/clipboard.min.js"></script>
-<div class="row">
-
+<!-- <div class="row"> -->
+<ul class="list-group list-group-flush">
     <br />
     <?php
     if (sizeof($model->zayavkiArray) > 0) {
@@ -54,7 +54,8 @@ $this->params['breadcrumbs'][] = $this->title;
     foreach ($model->zayavkiArray as $zayavka) {
     $actions = ActionsUserView::findActionsByZid($zayavka->zId);
     ?>
-    <div class="col-xl-6 col-md-6 col-sm-12">
+    <!-- <div class="col-xl-6 col-md-6 col-sm-12"> -->
+    <li class="list-group-item">
         <div class="card application h-100" style=" background-color: <?= $settings->color_background ?>;
            <?php
                  if ($zayavka->status == "new") {
@@ -115,8 +116,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 } 
                 ?>
 
-                    <p><a href="http://kovcheg2.apeha.ru/info.html?nick=<?= urlencode(iconv("UTF-8", "CP1251", $zayavka->username)) ?>"
-                            class="zlistNick text-decoration-none" target="_blank"><?= $zayavka->username ?></a></p>
+                    <h5 class="card-title"><a
+                            href="http://kovcheg2.apeha.ru/info.html?nick=<?= urlencode(iconv("UTF-8", "CP1251", $zayavka->username)) ?>"
+                            class="zlistNick text-decoration-none" target="_blank"><?= $zayavka->username ?></a></h5>
 
                     <p class="text-muted zayavka-time pr-1">
                         <?php  echo FAR::icon('clock',['title'=>'Время подачи заявки']); ?>
@@ -216,11 +218,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
                 if (strlen($stager_text) > 1) {
                     ?>
-                    <span style="font-size:13px; color: green"><b><?= $stager_text ?></b><br></span>
+                    <span style="font-size:16px; color: green"><b><?= $stager_text ?></b><br></span>
                     <?php
                     if (strlen($stager_comment) > 1) {
                         ?>
-                    <span style="font-size:13px; color: red"><b><?= returnComment($stager_comment) ?></b><br></span>
+                    <span style="font-size:16px; color: red"><b><?= returnComment($stager_comment) ?></b><br></span>
                     <?php
                     }
                 }
@@ -245,14 +247,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                 }
                 ?>
-                    <span style="font-size:13px; color: green"><b><?= $dragon_text ?></b><br></span>
+                    <span style="font-size:16px; color: green"><b><?= $dragon_text ?></b><br></span>
                     <?php
                 if (strlen($dragon_notes) > 1) {
                     ?>
-                    <span style="font-size:13px; color: red"><b><?= returnComment($dragon_notes) ?></b><br></span>
+                    <span style="font-size:16px; color: red"><b><?= returnComment($dragon_notes) ?></b><br></span>
                     <?php
                 }
-                echo "<br><span style=\"font-size:13px; color: black\"><b>Доппроверка</b><br></span>";
+                echo "<br><span style=\"font-size:16px; color: black\"><b>Доппроверка</b><br></span>";
                 //END DISPLAYING PROVERKA INFO
                 //CHECK IF DRAGON HAS RIGHTS TO PERFORM NEVID ACITON
                 if ($dragonRights->nevid == 1) {
@@ -338,10 +340,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 </p>
             </div>
         </div>
-    </div>
+        <!-- </div> -->
+    </li>
 
     <?php
         }
+        echo "</ul>";
     } else {
         echo "<p>Нет невидов для проверки</p>";
     }
@@ -433,16 +437,16 @@ $this->params['breadcrumbs'][] = $this->title;
     }
     ?>
 
-</div>
+    <!-- </div> -->
 
 
-<script>
-function toggleView($id) {
-    $element = document.getElementById($id);
-    if ($element.style.display === 'none') {
-        $element.style.display = 'block';
-    } else {
-        $element.style.display = 'none';
+    <script>
+    function toggleView($id) {
+        $element = document.getElementById($id);
+        if ($element.style.display === 'none') {
+            $element.style.display = 'block';
+        } else {
+            $element.style.display = 'none';
+        }
     }
-}
-</script>
+    </script>

@@ -34,17 +34,17 @@ $dragonR = $dragonRights;
 }
 
 .text {
-    font-size: 14px;
+    font-size: 16px;
     color: <?=$settings->comment_color ?>;
 }
 
 .text_otkaz {
-    font-size: 14px;
+    font-size: 16px;
     color: <?=$settings->otkaz_color ?>;
 }
 
 .name {
-    font-size: 14px;
+    font-size: 16px;
     color: <?=$settings->sign_color ?>;
 }
 </style>
@@ -197,7 +197,7 @@ $dragonR = $dragonRights;
 <?php
 echo "<div aria-label='navigation' class=\"zlist-pagination mb-3\"> ";
 echo ZlistLinkPager::widget([
-    'maxButtonCount' => 5,
+    'maxButtonCount' => 10,
     'pagination' => $pagination,
     'firstPageLabel' => '<<',
     'lastPageLabel' => '>>',
@@ -208,7 +208,8 @@ echo ZlistLinkPager::widget([
     
 ]);
 echo "</div>";
-echo"<div class=\"row mb-3\">";
+// echo"<div class=\"row mb-3\">";
+echo "<ul class=\"list-group list-group-flush mb-3\">";
 foreach ($zayavki as $zayavka) {
     //if (sizeof($dragonRights) > 0) {
     if ($dragonRights != null) {
@@ -220,7 +221,8 @@ foreach ($zayavki as $zayavka) {
 
 
 <!-- начало списка заявок -->
-<div class="col-xl-6 col-sm-12 col-md-6 mb-3">
+<!-- <div class="col-xl-6 col-sm-12 col-md-6 mb-3"> -->
+<li class="list-group-item">
     <div class="card h-100 application" style=" background-color:
            /* выставляем цвета */
            <?php
@@ -290,7 +292,7 @@ foreach ($zayavki as $zayavka) {
                 }
                 </script>
                 <div class="zlist-head-buttons">
-                    <button class="btn_<?= $zayavka->zId ?> btn-outline-info btn btm-sm btn-zlist mr-1" style="">
+                    <button class="btn_<?= $zayavka->zId ?> btn-outline-info btn btn-sm btn-zlist mr-1" style="">
                         <?php echo FAS::icon('clipboard')?>
                     </button>
                     <script>
@@ -311,42 +313,45 @@ foreach ($zayavki as $zayavka) {
                     <?php
                      if ($zayavka->status == "inprogress") {
                                     ?>
-                    <div id="spec_button_<?= $zayavka->zId ?>_div" style="display: none;">
-                        <button class="ext_btn_<?= $zayavka->zId ?> btn btn-outline-danger btn-sm btn-zlist">
-                            <?php echo FAS::icon('clipboard')?>
-                            <!-- <img width="14px" src="<?= Yii::$app->request->baseUrl ?>/img/clippy_red.png"
+                    <!-- <div id="spec_button_<?= $zayavka->zId ?>_div" style="display: none;"> -->
+                    <button id="spec_button_<?= $zayavka->zId ?>_div" style="display: none;"
+                        class="ext_btn_<?= $zayavka->zId ?> btn btn-outline-danger btn-sm btn-zlist-danger">
+                        <?php echo FAS::icon('clipboard')?>
+                        <!-- <img width="14px" src="<?= Yii::$app->request->baseUrl ?>/img/clippy_red.png"
                         alt="Copy to clipboard"> -->
-                        </button>
-                        <div id="spectext_<?= $zayavka->zId ?>" style="display: none">
-                            <?= switchType($professions, $zayavka->type) ?>
-                            <?= switchCity($zayavka->city) ?>
-                        </div>
-                        <script>
-                        var clipboard = new Clipboard('.ext_btn_<?= $zayavka->zId ?>', {
-                            text: function() {
-                                text = document.getElementById(
-                                        'spectext_<?= $zayavka->zId ?>')
-                                    .innerHTML;
-                                return text;
-                            }
-                        });
-
-                        clipboard.on('success', function(e) {
-                            console.log(e);
-                        });
-
-                        clipboard.on('error', function(e) {
-                            console.log(e);
-                        });
-                        </script>
+                    </button>
+                    <div id="spectext_<?= $zayavka->zId ?>" style="display: none">
+                        <?= switchType($professions, $zayavka->type) ?>
+                        <?= switchCity($zayavka->city) ?>
                     </div>
+                    <script>
+                    var clipboard = new Clipboard('.ext_btn_<?= $zayavka->zId ?>', {
+                        text: function() {
+                            text = document.getElementById(
+                                    'spectext_<?= $zayavka->zId ?>')
+                                .innerHTML;
+                            return text;
+                        }
+                    });
+
+                    clipboard.on('success', function(e) {
+                        console.log(e);
+                    });
+
+                    clipboard.on('error', function(e) {
+                        console.log(e);
+                    });
+                    </script>
+                    <!-- </div> -->
                     <?php } 
                     echo"</div>";
                        }
                     }?>
-                    <a href="http://kovcheg2.apeha.ru/info.html?nick=<?= urlencode(iconv("UTF-8", "CP1251", $zayavka->username)) ?>"
-                        target="_blank" class="zlistNick text-decoration-none"
-                        title="Открыть инфу персонажа"><?= $zayavka->username ?></a>
+                    <h5 class="card-title">
+                        <a href="http://kovcheg2.apeha.ru/info.html?nick=<?= urlencode(iconv("UTF-8", "CP1251", $zayavka->username)) ?>"
+                            target="_blank" class="zlistNick text-decoration-none"
+                            title="Открыть инфу персонажа"><?= $zayavka->username ?></a>
+                    </h5>
                     <p class="text-muted zayavka-time pr-1">
                         <?php  echo FAR::icon('clock',['title'=>'Время подачи заявки']); ?>
                         <?= $zayavka->date_added ?></p>
@@ -1101,15 +1106,16 @@ foreach ($zayavki as $zayavka) {
             ?>
             </div>
         </div>
-    </div>
-    <br />
+</li>
+<br />
 
-    <?php
+<?php
 }
-echo "</div>";
+// echo "</div>";
+echo "</ul>";
 echo "<div aria-label='navigation' class=\"zlist-pagination mb-3\"> ";
 echo ZlistLinkPager::widget([
-    'maxButtonCount' => 5,
+    'maxButtonCount' => 10,
     'pagination' => $pagination,
     'firstPageLabel' => '<<',
     'lastPageLabel' => '>>',
@@ -1689,22 +1695,22 @@ function getReadOnlyActions($allActions, $zayava)
     ?>
 
 
-    <script>
-    function toggleView($id) {
-        $element = document.getElementById($id);
-        if ($element.style.display === 'none') {
-            $element.style.display = 'block';
-        } else {
-            $element.style.display = 'none';
-        }
+<script>
+function toggleView($id) {
+    $element = document.getElementById($id);
+    if ($element.style.display === 'none') {
+        $element.style.display = 'block';
+    } else {
+        $element.style.display = 'none';
     }
-    </script>
-    <script>
-    $('article').readmore({
-        speed: 50, //Açılma Hızı
-        maxHeight: 50,
-        collapsedHeight: 20, // 100px sonra yazının kesileceğini belirtir.
-        moreLink: '<a class="link-toggle" href="#">Подробнее</a>', // açma linki yazısı
-        lessLink: '<a class="link-toggle" href="#">Скрыть</a>', // kapatma linki yazısı
-    });
-    </script>
+}
+</script>
+<script>
+$('article').readmore({
+    speed: 50, //Açılma Hızı
+    maxHeight: 50,
+    collapsedHeight: 20, // 100px sonra yazının kesileceğini belirtir.
+    moreLink: '<a class="link-toggle" href="#">Подробнее</a>', // açma linki yazısı
+    lessLink: '<a class="link-toggle" href="#">Скрыть</a>', // kapatma linki yazısı
+});
+</script>
