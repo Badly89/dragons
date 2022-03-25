@@ -53,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
     foreach ($model->zayavkiArray as $zayavka) {
     $actions = ActionsUserView::findActionsByZid($zayavka->zId);
     ?>
-    <div class="col-xl-4 col-md-6 col-sm-12 mb-4 ">
+    <div class="col-xl-6 col-md-6 col-sm-12 mb-4 ">
         <div class="card application h-100" style=" background-color: <?= $settings->color_background ?>;
        <?php
                  if ($zayavka->status == "new") {

@@ -183,7 +183,11 @@ $settings->loadSettings();
                         'url'=> ['/site/logout'],
                         'linkOptions'=>['data-method'=>'post']
                     ]                                      
-                ]]
+                    ],
+
+                   
+            ],
+                
             );
         } else {
             array_push($menuItems, ['label' => Yii::$app->user->identity->username, 'items' => [

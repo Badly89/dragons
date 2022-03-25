@@ -12,6 +12,7 @@ use yii\helpers\Url;
 use app\models\ActionsUserView;
 use rmrevin\yii\fontawesome\FAR;
 use rmrevin\yii\fontawesome\FAS;
+use yii\bootstrap4\Tabs;
 
 $this->title = 'Заявки на чистоту';
 $this->params['breadcrumbs'][] = $this->title;
@@ -50,185 +51,153 @@ $dragonR = $dragonRights;
 <script src="<?= Yii::$app->request->baseUrl ?>/js/clipboard.min.js"></script>
 <script src="<?= Yii::$app->request->baseUrl ?>/js/jquery-3.6.0.min.js"></script>
 <script src="<?= Yii::$app->request->baseUrl ?>/js/readmore.min.js"></script>
-<center>
+<div class="zlist-tabs">
+    <div class="mb-3">
+        <?php 
+        $itemsCity=[];
+        if($city =='kovcheg'){
+            $itemsCity[]=[
+                'encodeLabels'=>false,
+                'label'=>'Ковчег',
+                'url' =>['/site/zlist', 'city' => 'kovcheg', 'type' => $type],
+                'active' =>true,
+                'linkOptions'=>['class'=>'link-city']
+               
+            ];
+          
+        } else{
+             $itemsCity[]= [
+                'label'=>'Ковчег',
+                'url' =>['/site/zlist', 'city' => 'kovcheg', 'type' => $type ],
+                'active' =>false,
+                
+                
+           ];
+        }
 
+        if($city =='smorye'){
+           $itemsCity[]= [
+                'label'=>'Среднеморье',
+                'url' =>['/site/zlist', 'city' => 'smorye', 'type' => $type ],
+                'active' =>true,
+                 'linkOptions'=>['class'=>'link-city']
+           ];
+        } else{
+            $itemsCity[]=[
+                'label'=>'Среднеморье',
+                'url' =>['/site/zlist', 'city' => 'smorye', 'type' => $type ],
+                'active' =>false
+           ];
+        }
+         if($city =='utes'){
+           $itemsCity[]=[
+                'label'=>'Утес',
+                'url' =>['/site/zlist', 'city' => 'utes', 'type' => $type ],
+                'active' =>true,
+                'encode'=>false,
+                'linkOptions'=>[
+                    'class'=>'link-city'
+               ]
+           ];
+        } else{
+            $itemsCity[]=[
+                'label'=>'Утес',
+                'url' =>['/site/zlist', 'city' => 'utes', 'type' => $type ],
+                'active' =>false
+           ];
+        }
+    ?>
 
-    <table style="width:600px; height: 34px;">
-        <tr>
-            <td style="border:1px solid; 
-            <?php
-                 if ($city == 'kovcheg') {
-                echo "box-shadow: 0 0 34px $active_shadow";
-              }
-            ?>" align="center" width="33%" <?php
-                if ($city == 'kovcheg') {
-                    echo "bgcolor=\"$active_bg\"";
-                } else {
-                    echo "bgcolor=\"$td_bg_color\"";
-                }?>>
-                <?php
-                if ($city == "kovcheg") {
-                    echo "Ковчег";
-                } else {
-                    echo Html::a(
-                        'Ковчег', Url::to([
-                        '/site/zlist', 'city' => 'kovcheg', 'type' => $type
-                    ])
-                    );
-                }
-                ?>
-            </td>
-            <td style="border:1px solid; <?php
-            if ($city == 'smorye') {
-                echo "box-shadow: 0 0 34px $active_shadow";
-            }
-            ?>" align="center" width="34%" <?php
-                if ($city == 'smorye') {
-                    echo "bgcolor=\"$active_bg\"";
-                } else {
-                    echo "bgcolor=\"$td_bg_color\"";
-                }
-                ?>>
-                <?php
-                if ($city == "smorye") {
-                    echo "Среднеморье";
-                } else {
-                    echo Html::a(
-                        'Среднеморье', Url::to([
-                        '/site/zlist', 'city' => 'smorye', 'type' => $type
-                    ])
-                    );
-                }
-                ?>
-            </td>
-            <td style="border:1px solid; <?php
-            if ($city == 'utes') {
-                echo "box-shadow: 0 0 30px $active_shadow";
-            }
-            ?>" align="center" width="33%" <?php
-                if ($city == 'utes') {
-                    echo "bgcolor=\"$active_bg\"";
-                } else {
-                    echo "bgcolor=\"$td_bg_color\"";
-                }
-                ?>>
-                <?php
-                if ($city == "utes") {
-                    echo "Утёс дракона";
-                } else {
-                    echo Html::a(
-                        'Утёс', Url::to([
-                        '/site/zlist', 'city' => 'utes', 'type' => $type
-                    ])
-                    );
-                }
-                ?>
-            </td>
-        </tr>
-    </table>
-    <table style="width:600px; height: 34px;">
-        <tr>
-            <td style="border:1px solid; <?php
-            if ($type == 'klan') {
-                echo "box-shadow: 0 0 30px $active_shadow";
-            }
-            ?>" align="center" width="25%" <?php
-                if ($type == 'klan') {
-                    echo "bgcolor=\"$active_bg\"";
-                } else {
-                    echo "bgcolor=\"$td_bg_color\"";
-                }
-                ?>>
-                <?php
-                if ($type == "klan") {
-                    echo "Клан";
-                } else {
-                    echo Html::a(
-                        'Клан', Url::to([
-                        '/site/zlist', 'city' => $city, 'type' => 'klan'
-                    ])
-                    );
-                }
-                ?>
-            </td>
+        <?= Tabs::widget([
+        'navType' =>'nav-pills',
+        'items'=>$itemsCity,
+        
+    ])     
+     ?>
+    </div>
+    <div>
+        <?php 
+    $itemsProf =[];
+    if($type=='klan'){
+        $itemsProf[]=[
+            'label'=>'Кланы',            
+            'active' =>true,
+            'url'=>['/site/zlist', 'city' => $city, 'type' => 'klan'],
+            'linkOptions'=>[
+                    'class'=>'link-prof'
+               ]
+        ];
+    } else{
+        $itemsProf[]=[
+            'label'=>'Кланы',            
+            'active' =>false,
+            'url'=>['/site/zlist', 'city' => $city, 'type' => 'klan']
+        ];
+    }
+    if($type=='naim'){
+        $itemsProf[]=[
+            'label'=>'Наймы',            
+            'active' =>true,
+            'url'=>['/site/zlist', 'city' => $city, 'type' => 'naim'],
+            'linkOptions'=>[
+                   'class'=>'link-prof'
+               ]
+        ];
+    } else{
+        $itemsProf[]=[
+            'label'=>'Наймы',            
+            'active' =>false,
+            'url'=>['/site/zlist', 'city' => $city, 'type' => 'naim']
+        ];
+    }
+     if($type=='trav'){
+        $itemsProf[]=[
+            'label'=>'Травники',            
+            'active' =>true,
+            'url'=>['/site/zlist', 'city' => $city, 'type' => 'trav'],
+            'linkOptions'=>[
+                   'class'=>'link-prof'
+               ]
+        ];
+    } else{
+        $itemsProf[]=[
+            'label'=>'Травники',            
+            'active' =>false,
+            'url'=>['/site/zlist', 'city' => $city, 'type' => 'trav']
+        ];
+    }
+    if($type=='common'){
+        $itemsProf[]=[
+            'label'=>'Общие',            
+            'active' =>true,
+            'url'=>['/site/zlist', 'city' => $city, 'type' => 'common'],
+            'linkOptions'=>[
+                   'class'=>'link-prof'
+               ]
+        ];
+    } else{
+        $itemsProf[]=[
+            'label'=>'Общие',            
+            'active' =>false,
+            'url'=>['/site/zlist', 'city' => $city, 'type' => 'common']
+        ];
+    }
 
-            <td style="border:1px solid; <?php
-            if ($type == 'naim') {
-                echo "box-shadow: 0 0 30px $active_shadow";
-            }
-            ?>" align="center" width="25%" <?php
-                if ($type == 'naim') {
-                    echo "bgcolor=\"$active_bg\"";
-                } else {
-                    echo "bgcolor=\"$td_bg_color\"";
-                }
-                ?>>
-                <?php
-                if ($type == "naim") {
-                    echo "Наймы";
-                } else {
-                    echo Html::a(
-                        'Наймы', Url::to([
-                        '/site/zlist', 'city' => $city, 'type' => 'naim'
-                    ])
-                    );
-                }
-                ?>
-            </td>
-            <td style="border:1px solid; <?php
-            if ($type == 'trav') {
-                echo "box-shadow: 0 0 30px $active_shadow";
-            }
-            ?>" align="center" width="25%" <?php
-                if ($type == 'trav') {
-                    echo "bgcolor=\"$active_bg\"";
-                } else {
-                    echo "bgcolor=\"$td_bg_color\"";
-                }
-                ?>>
-                <?php
-                if ($type == "trav") {
-                    echo "Травники";
-                } else {
-                    echo Html::a(
-                        'Травники', Url::to([
-                        '/site/zlist', 'city' => $city, 'type' => 'trav'
-                    ])
-                    );
-                }
-                ?>
-            </td>
-            <td style="border:1px solid; <?php
-            if ($type == 'common') {
-                echo "box-shadow: 0 0 30px $active_shadow";
-            }
-            ?>" align="center" width="25%" <?php
-                if ($type == 'common') {
-                    echo "bgcolor=\"$active_bg\"";
-                } else {
-                    echo "bgcolor=\"$td_bg_color\"";
-                }
-                ?>>
-                <?php
-                if ($type == "common") {
-                    echo "Общие";
-                } else {
-                    echo Html::a(
-                        'Общие', Url::to([
-                        '/site/zlist', 'city' => $city, 'type' => 'common'
-                    ])
-                    );
-                }
-                ?>
-            </td>
+    ?>
+        <?= Tabs::widget([
+        'navType' =>'nav-pills',
+        'items'=>$itemsProf,
+        
+    ])     
+     ?>
+    </div>
+</div>
 
-        </tr>
-    </table>
-</center>
 <br />
 <?php
-echo "<nav aria-label='navigation' class='nav justify-content-center mb-3' ";
+echo "<div aria-label='navigation' class=\"zlist-pagination mb-3\"> ";
 echo ZlistLinkPager::widget([
+    'maxButtonCount' => 5,
     'pagination' => $pagination,
     'firstPageLabel' => '<<',
     'lastPageLabel' => '>>',
@@ -238,7 +207,7 @@ echo ZlistLinkPager::widget([
     'type' => $type,
     
 ]);
-echo "</nav>";
+echo "</div>";
 echo"<div class=\"row mb-3\">";
 foreach ($zayavki as $zayavka) {
     //if (sizeof($dragonRights) > 0) {
@@ -1138,8 +1107,9 @@ foreach ($zayavki as $zayavka) {
     <?php
 }
 echo "</div>";
-echo "<nav aria-label='navigation' class='nav justify-content-center mb-3' ";
+echo "<div aria-label='navigation' class=\"zlist-pagination mb-3\"> ";
 echo ZlistLinkPager::widget([
+    'maxButtonCount' => 5,
     'pagination' => $pagination,
     'firstPageLabel' => '<<',
     'lastPageLabel' => '>>',
@@ -1147,8 +1117,9 @@ echo ZlistLinkPager::widget([
     'nextPageLabel' => '>',
     'city' => $city,
     'type' => $type,
+    
 ]);
-echo "</nav>";
+echo "</div>";
 
 function getReadOnlyActions($allActions, $zayava)
 {
@@ -1202,7 +1173,7 @@ function getReadOnlyActions($allActions, $zayava)
                 }
             }
             if ($action->action == "dopproverka_p") {
-                $result .= "<span class=\"name\">";
+                $result .= "<span class=\"name\" >";
                 $result .= "П *" . $action->username . "<br>";
                 $result .= "</span>";
                 if (strlen($action->notes) > 1) {
@@ -1216,9 +1187,11 @@ function getReadOnlyActions($allActions, $zayava)
                 $result .= "Отказ *" . $action->username . "<br>";
                 $result .= "</span>";
                 if (strlen($action->notes) > 1) {
-                    $result .= "<div class=\"text_otkaz article\" id =\"comment_$action->id\">";
+                    $result .= "<article  id =\"comment_$action->id\" class=\"readmore-js-section readmore-js-collapsed \">";
+                    $result .= "<span class=\"text_otkaz article\">";
                     $result .= returnComment($action->notes) . "<br>";
-                    $result .= "</div>";
+                    $result .= "</span>";
+                    $result .= "</article>";
                     // $result.="<a class=\"text_otkaz-toggle\"  id =\"btn_$action->id\" href=\"javascript:toggleComment('$action->id')\">Подробнее</a>";
                 
     }
@@ -1298,10 +1271,10 @@ function getReadOnlyActions($allActions, $zayava)
         $result .= "Доппроверка/Отказ. Выявлены нарушения. Наказан каторгой *" . $action->username . "<br>";
         $result .= "</span>";
     if (strlen($action->notes) > 1) {
-        $result .= "<div class=\"text_otkaz article\" id =\"comment_$action->id\">";
+        $result .= "<span class=\"text_otkaz \">";
         $result .= returnComment($action->notes) . "<br>";
-        $result .= "</div>";
-        $result.="<a class=\"text_otkaz-toggle\" id =\"btn_$action->id\" href=\"javascript:toggleComment('$action->id')\">Подробнее</a>";
+        $result .= "</span>";
+
     }
     }
     if ($action->action == "nevid_done_prokli") {
@@ -1312,7 +1285,6 @@ function getReadOnlyActions($allActions, $zayava)
         $result .= "<div class=\"text_otkaz article\" id =\"comment_$action->id\">";
         $result .= returnComment($action->notes) . "<br>";
         $result .= "</div>";
-        $result.="<a class=\"text_otkaz-toggle\" id =\"btn_$action->id\" href=\"javascript:toggleComment('$action->id')\">Подробнее</a>";
     }
     }
     if ($action->action == "nevid_done_block") {
@@ -1323,7 +1295,6 @@ function getReadOnlyActions($allActions, $zayava)
         $result .= "<div class=\"text_otkaz article\" id =\"comment_$action->id\">";
         $result .= returnComment($action->notes) . "<br>";
         $result .= "</div>";
-        $result.="<a class=\"text_otkaz-toggle\" id =\"btn_$action->id\" href=\"javascript:toggleComment('$action->id')\">Подробнее</a>";
     }
     }
     if ($action->action == "nevid_done_otkaz") {
@@ -1334,7 +1305,6 @@ function getReadOnlyActions($allActions, $zayava)
         $result .= "<div class=\"text_otkaz article\" id =\"comment_$action->id\">";
         $result .= returnComment($action->notes) . "<br>";
         $result .= "</div>";
-        $result.="<a class=\"text_otkaz-toggle\" id =\"btn_$action->id\" href=\"javascript:toggleComment('$action->id')\">Подробнее</a>";
     }
     }
     if ($action->action == "done_chist") {
@@ -1355,7 +1325,6 @@ function getReadOnlyActions($allActions, $zayava)
      $result .= "<div class=\"text_otkaz article\" id =\"comment_$action->id\">";
         $result .= returnComment($action->notes) . "<br>";
         $result .= "</div>";
-        $result.="<a class=\"text_otkaz-toggle\" id =\"btn_$action->id\" href=\"javascript:toggleComment('$action->id')\">Подробнее</a>";
     }
     }
     if ($action->action == "done_prokli") {
@@ -1366,7 +1335,6 @@ function getReadOnlyActions($allActions, $zayava)
         $result .= "<div class=\"text_otkaz article\" id =\"comment_$action->id\">";
         $result .= returnComment($action->notes) . "<br>";
         $result .= "</div>";
-        $result.="<a class=\"text_otkaz-toggle\" id =\"$action->id\" href=\"javascript:toggleComment('$action->id')\">Подробнее</a>";
     }
     }
     if ($action->action == "done_block") {
@@ -1377,7 +1345,6 @@ function getReadOnlyActions($allActions, $zayava)
         $result .= "<div class=\"text_otkaz article\" id =\"comment_$action->id\">";
         $result .= returnComment($action->notes) . "<br>";
         $result .= "</div>";
-        $result.="<a class=\"text_otkaz-toggle\" id =\"btn_$action->id\" href=\"javascript:toggleComment('$action->id')\">Подробнее</a>";
     }
     }
     if ($action->action == "done_otkaz") {
@@ -1388,7 +1355,6 @@ function getReadOnlyActions($allActions, $zayava)
         $result .= "<div class=\"text_otkaz article\" id =\"comment_$action->id\">";
         $result .= returnComment($action->notes) . "<br>";
         $result .= "</div>";
-        $result.="<a id =\"btn_$action->id\" class=\"text_otkaz-toggle\" href=\"javascript:toggleComment('$action->id')\">Подробнее</a>";
     }
     }
     }
@@ -1468,9 +1434,11 @@ function getReadOnlyActions($allActions, $zayava)
     $result .= "Отказ *" . $action->alias . "<br>";
     $result .= "</span>";
     if (strlen($action->notes) > 1) {
-    $result .= "<span class=\"text_otkaz hide\">";
+        $result .= "<article id =\"comment_$action->id\" class=\"readmore-js-section readmore-js-collapsed \">";
+        $result .= "<span class=\"text_otkaz article\" >";
         $result .= returnComment($action->notes) . "<br>";
         $result .= "</span>";
+        $result .= "</article>";
     }
     }
     if ($action->action == "b_done") {
@@ -1531,7 +1499,7 @@ function getReadOnlyActions($allActions, $zayava)
     $result .= "Доппроверка/Отказ. Выявлены нарушения. Наказан каторгой *" . $action->alias . "<br>";
     $result .= "</span>";
     if (strlen($action->notes) > 1) {
-    $result .= "<span class=\"text_otkaz hide\">";
+    $result .= "<span class=\"text_otkaz \">";
         $result .= returnComment($action->notes) . "<br>";
         $result .= "</span>";
     }
@@ -1540,7 +1508,7 @@ function getReadOnlyActions($allActions, $zayava)
     $result .= "Доппроверка/Отказ. Выявлены нарушения. Наказан комплектом проклятий *" . $action->alias . "<br>";
     $result .= "</span>";
     if (strlen($action->notes) > 1) {
-    $result .= "<span class=\"text_otkaz hide\">";
+    $result .= "<span class=\"text_otkaz \">";
         $result .= returnComment($action->notes) . "<br>";
         $result .= "</span>";
     }
@@ -1549,7 +1517,7 @@ function getReadOnlyActions($allActions, $zayava)
     $result .= "Доппроверка/Отказ. Выявлены нарушения. Наказан блоком *" . $action->alias . "<br>";
     $result .= "</span>";
     if (strlen($action->notes) > 1) {
-    $result .= "<span class=\"text_otkaz hide\">";
+    $result .= "<span class=\"text_otkaz \">";
         $result .= returnComment($action->notes) . "<br>";
         $result .= "</span>";
     }
@@ -1558,7 +1526,7 @@ function getReadOnlyActions($allActions, $zayava)
     $result .= "Доппроверка/Отказ. *" . $action->alias . "<br>";
     $result .= "</span>";
     if (strlen($action->notes) > 1) {
-    $result .= "<span class=\"text_otkaz hide\">";
+    $result .= "<span class=\"text_otkaz \">";
         $result .= returnComment($action->notes) . "<br>";
         $result .= "</span>";
     }
@@ -1576,7 +1544,7 @@ function getReadOnlyActions($allActions, $zayava)
     $result .= "Отказ. Нарушения. Наказан каторгой *" . $action->alias . "<br>";
     $result .= "</span>";
     if (strlen($action->notes) > 1) {
-    $result .= "<span class=\"text_otkaz hide\">";
+    $result .= "<span class=\"text_otkaz \">";
         $result .= returnComment($action->notes) . "<br>";
         $result .= "</span>";
     }
@@ -1585,7 +1553,7 @@ function getReadOnlyActions($allActions, $zayava)
     $result .= "Отказ. Нарушения. Наказан комплектом проклятий *" . $action->alias . "<br>";
     $result .= "</span>";
     if (strlen($action->notes) > 1) {
-    $result .= "<span class=\"text_otkaz hide\">";
+    $result .= "<span class=\"text_otkaz \">";
         $result .= returnComment($action->notes) . "<br>";
         $result .= "</span>";
     }
@@ -1594,7 +1562,7 @@ function getReadOnlyActions($allActions, $zayava)
     $result .= "Отказ. Нарушения. Наказан блоком *" . $action->alias . "<br>";
     $result .= "</span>";
     if (strlen($action->notes) > 1) {
-    $result .= "<span class=\"text_otkaz hide\">";
+    $result .= "<span class=\"text_otkaz \">";
         $result .= returnComment($action->notes) . "<br>";
         $result .= "</span>";
     }
@@ -1603,9 +1571,9 @@ function getReadOnlyActions($allActions, $zayava)
     $result .= "Отказ. *" . $action->alias . "<br>";
     $result .= "</span>";
     if (strlen($action->notes) > 1) {
-    $result .= "<span class=\"text_otkaz hide\">";
+    $result .= "<div class=\"text_otkaz article\" id =\"comment_$action->id\">";
         $result .= returnComment($action->notes) . "<br>";
-        $result .= "</span>";
+        $result .= "</div>";
     }
     }
     if ($action->action == "dopproverka_p" || $action->action == "dopproverka_bp") {
@@ -1732,10 +1700,11 @@ function getReadOnlyActions($allActions, $zayava)
     }
     </script>
     <script>
-    $('.article').readmore({
-        speed: 5000, //Açılma Hızı
-        collapsedHeight: 50, // 100px sonra yazının kesileceğini belirtir.
-        moreLink: '<a class="text_otkaz-toggle" href="#">Подробнее</a>', // açma linki yazısı
-        lessLink: '<a class="text_otkaz-toggle" href="#">Скрыть</a>', // kapatma linki yazısı
+    $('article').readmore({
+        speed: 50, //Açılma Hızı
+        maxHeight: 50,
+        collapsedHeight: 20, // 100px sonra yazının kesileceğini belirtir.
+        moreLink: '<a class="link-toggle" href="#">Подробнее</a>', // açma linki yazısı
+        lessLink: '<a class="link-toggle" href="#">Скрыть</a>', // kapatma linki yazısı
     });
     </script>
