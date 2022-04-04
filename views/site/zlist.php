@@ -12,7 +12,9 @@ use yii\helpers\Url;
 use app\models\ActionsUserView;
 use rmrevin\yii\fontawesome\FAR;
 use rmrevin\yii\fontawesome\FAS;
+use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Tabs;
+use yii\helpers\ArrayHelper;
 
 $this->title = 'Заявки на чистоту';
 $this->params['breadcrumbs'][] = $this->title;
@@ -115,7 +117,7 @@ $dragonR = $dragonRights;
     ])     
      ?>
     </div>
-    <div>
+    <div class="select-type">
         <?php 
     $itemsProf =[];
     if($type=='klan'){
@@ -191,13 +193,14 @@ $dragonR = $dragonRights;
     ])     
      ?>
     </div>
+
 </div>
 
 <br />
 <?php
 echo "<div aria-label='navigation' class=\"zlist-pagination mb-3\"> ";
 echo ZlistLinkPager::widget([
-    'maxButtonCount' => 10,
+    'maxButtonCount' => 4,
     'pagination' => $pagination,
     'firstPageLabel' => '<<',
     'lastPageLabel' => '>>',
@@ -1115,7 +1118,7 @@ foreach ($zayavki as $zayavka) {
 echo "</ul>";
 echo "<div aria-label='navigation' class=\"zlist-pagination mb-3\"> ";
 echo ZlistLinkPager::widget([
-    'maxButtonCount' => 10,
+    'maxButtonCount' => 4,
     'pagination' => $pagination,
     'firstPageLabel' => '<<',
     'lastPageLabel' => '>>',
@@ -1198,7 +1201,7 @@ function getReadOnlyActions($allActions, $zayava)
                     $result .= returnComment($action->notes) . "<br>";
                     $result .= "</span>";
                     $result .= "</article>";
-                    // $result.="<a class=\"text_otkaz-toggle\"  id =\"btn_$action->id\" href=\"javascript:toggleComment('$action->id')\">Подробнее</a>";
+                  
                 
     }
     }
@@ -1707,7 +1710,7 @@ function toggleView($id) {
 </script>
 <script>
 $('article').readmore({
-    speed: 50, //Açılma Hızı
+    speed: 400, //Açılma Hızı
     maxHeight: 50,
     collapsedHeight: 20, // 100px sonra yazının kesileceğini belirtir.
     moreLink: '<a class="link-toggle" href="#">Подробнее</a>', // açma linki yazısı

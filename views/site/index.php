@@ -33,7 +33,8 @@ $user_group = Users::findGroupById(Yii::$app->user->getId());
 }
 
 .text {
-    font-size: 16px;
+    font-size: 18px;
+    padding-right: 10px;
     color: <?=$settings->comment_color ?>;
 }
 
@@ -186,7 +187,7 @@ if ($model->userActive) {
                                 'color' => '#666',
                                 'cursor' => 'pointer',
                                 // 'display' => 'block',
-                                 'font-size' => '12px',
+                                 'font-size' => '18px',
                                 'font-weight' => 'bold',
                                 'line-height' => 'normal',
                                 'text-decoration' => 'underline',
@@ -201,27 +202,27 @@ if ($model->userActive) {
                     <?php
                     if ($zayavka->status == "new") {
                           
-                        echo FAS::icon('plus-circle',['title'=>'Новая заявка']);
+                        echo FAS::icon('plus-circle',['class'=>'icon-status','title'=>'Новая заявка']);
                          }
                     if ($zayavka->status == "cancelled") {
                         echo FAR::icon('times-circle',
-                        ['class' => 'cancelled','title'=>'Отменена пользователем']);
+                        ['class' => 'cancelled icon-status','title'=>'Отменена пользователем']);
                          }
                     if ($zayavka->status == "inprogress") {
-                        echo FAR::icon('hourglass',['class' => 'inprogress-zayavka','title'=>'проверяется'])->spin(20);  
+                        echo FAR::icon('hourglass',['class' => 'inprogress-zayavka icon-status','title'=>'проверяется'])->spin(20);  
                            }
                     if ($zayavka->status == "otkaz") {
-                        echo FAS::icon('ban',['class' => 'otkaz-zayavka','title'=>'Отказ']);  
+                        echo FAS::icon('ban',['class' => 'otkaz-zayavka icon-status','title'=>'Отказ']);  
                         }
                     if ($zayavka->status == "chist") {
-                        echo FAR::icon('check-circle',['class' => 'chist-zayavka', 'title'=>'чистота выдана']);  
+                        echo FAR::icon('check-circle',['class' => 'chist-zayavka icon-status', 'title'=>'чистота выдана']);  
                      }
                     if ($zayavka->status == "katorga") {
-                        echo FAS::icon('ban',['class' => 'otkaz-zayavka','title'=>'Наказан каторгой']);  
+                        echo FAS::icon('ban',['class' => 'otkaz-zayavka icon-status','title'=>'Наказан каторгой']);  
                         }
                     if ($zayavka->status == "block") {
             
-                        echo FAS::icon('ban',['class' => 'otkaz-zayavka','title'=>'Наказан блоком'
+                        echo FAS::icon('ban',['class' => 'otkaz-zayavka icon-status','title'=>'Наказан блоком'
                             ]);  
                      }
             ?>

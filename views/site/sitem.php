@@ -6,6 +6,8 @@ use app\models\Users;
 use app\models\Actions;
 use yii\bootstrap4\ActiveForm;
 use app\models\Params;
+use rmrevin\yii\fontawesome\FAR;
+use rmrevin\yii\fontawesome\FAS;
 use yii\helpers\Url;
 
 $settings = new Params();
@@ -31,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
 }
 
 .text {
-    font-size: 14px;
+    font-size: 18px;
     color: <?=$settings->comment_color ?>;
 }
 
@@ -45,8 +47,10 @@ if (Zayavka::findZayavkaById($model->id)) {
     $zayavka = Zayavka::findZayavkaById($model->id);
     $user = Users::findById($zayavka->user_id);
     ?>
-<center>
-    <table style="width:800px; border: 0px none; padding: 5px; background-color: <?= $settings->color_background ?>; 
+<ul class="list-group list-group-flush mb-3">
+    <li class="list-group-item">
+
+        <div class="card application h-100 " style="background-color:<?= $settings->color_background ?>; 
         <?php
         if ($zayavka->status == "new") {
             echo "box-shadow: 0 0 15px  grey";
@@ -74,8 +78,10 @@ if (Zayavka::findZayavkaById($model->id)) {
         }
         ?>
                ">
-        <tr style="height: 40px">
-            <td width="5%" style="padding: 5px;"><?php
+            <div class="card-header">
+
+                <div class="buttons-nick-time">
+                    <?php
                     if (Users::findGroupById(Yii::$app->user->getId()) > 1) {
                         echo Html::a(
                                 '#' . $zayavka->id, Url::to([
@@ -86,51 +92,84 @@ if (Zayavka::findZayavkaById($model->id)) {
                         echo "#" . $zayavka->id;
                     }
                     ?>
-            </td>
-            <td width="25%" style="padding: 5px;"><a href="http://apeha.ru/info.html?user=<?= $user->apeha_id ?>"
-                    target="_blank"><?= $user->username ?></a></td>
-            <td width="35%" style="padding: 5px;">Статус: <?= getStatus($zayavka->status) ?></td>
-            <td align="right" width="35%" style="padding: 5px;">Подана: <?= $zayavka->date_added ?></td>
-        </tr>
-        <tr>
-            <td colspan="2" style="padding: 5px;">
-                <?= switchType($professions, $zayavka->type) ?>
-            </td>
-            <td colspan="2" style="padding: 5px;">
-                <?= switchCity($zayavka->city) ?>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="4" style="padding:10px">
-                <?= getAllActions($zayavka) ?>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="4">
-                <?php
-                    echo Html::a(
-                            "Показать в топе проверок", Url::to([
-                                '/site/zlist', 'action' => 'show', 'zayavka' => $zayavka->id
-                            ]), [
-                        'style' => [
-                            'color' => '#666',
-                            'cursor' => 'pointer',
-                            'display' => 'block',
-                            'font-size' => '12px',
-                            'font-weight' => 'bold',
-                            'line-height' => 'normal',
-                            'padding' => '10px',
-                            'margin-top' => '-10px',
-                            'text-decoration' => 'underline',
-                            'word-wrap' => 'break-word'
-                        ]
-                            ]
-                    );
-                    ?>
-            </td>
-        </tr>
-    </table>
-</center>
+
+                    <h5 class="card-title"><a href="http://apeha.ru/info.html?user=<?= $user->apeha_id ?>"
+                            target="_blank"><?= $user->username ?></a></h5>
+                    <p class="text-muted zayavka-time pr-1">
+                        <?php  echo FAR::icon('clock',['title'=>'Время подачи заявки']); ?>
+                        <?= $zayavka->date_added ?>
+                    </p>
+                </div>
+            </div>
+            <div class="card-body application-body">
+                <div class="zlist-sub p-2">
+                    <h5 class="card-title zayavka-title"> <?= switchType($professions, $zayavka->type) ?></h5>
+                    <div class="card-subtitle zayavka-subtitle  ">
+                        <?= switchCity($zayavka->city) ?>
+
+                    </div>
+                </div>
+                <div class="card-text otmetka ">
+                    <?= getAllActions($zayavka) ?>
+                </div>
+            </div>
+            <div class="card-footer zlist-footer">
+                <p class="text-muted text pr-5">
+                    <?php
+                        echo Html::a(
+                                FAR::icon('eye-slash'), Url::to([
+                                    '/site/zlist', 'action' => 'show', 'zayavka' => $zayavka->id
+                                ]), [
+                            'style' => [
+                                'color' => '#666',
+                                'cursor' => 'pointer',
+                                // 'display' => 'block',
+                                 'font-size' => '18px',
+                                // 'font-weight' => 'bold',
+                                'line-height' => 'normal',
+                                'text-decoration' => 'none',
+                               
+                            ],
+                            'title' => 'Показать в топе проверок',
+                            'class' =>'link-status'
+                                ]
+                        );
+                        ?>
+                </p>
+                <p class="text-muted text status"> Статус:
+                    <!-- <?= getStatus($zayavka->status) ?> -->
+                    <?php
+                    if ($zayavka->status == "new") {
+                          
+                        echo FAS::icon('plus-circle',['title'=>'Новая заявка']);
+                         }
+                    if ($zayavka->status == "cancelled") {
+                        echo FAR::icon('times-circle');
+                         }
+                    if ($zayavka->status == "inprogress") {
+                        echo FAR::icon('hourglass',['class' => 'inprogress-zayavka','title'=>'проверяется'])->spin(20);  
+                           }
+                    if ($zayavka->status == "otkaz") {
+                        echo FAS::icon('ban',['class' => 'otkaz-zayavka','title'=>'Отказ']);  
+                        }
+                    if ($zayavka->status == "chist") {
+                        echo FAR::icon('check-circle',['class' => 'chist-zayavka', 'title'=>'чистота выдана']);  
+                     }
+                    if ($zayavka->status == "katorga") {
+                        echo FAS::icon('ban',['class' => 'otkaz-zayavka','title'=>'Наказан каторгой']);  
+                        }
+                    if ($zayavka->status == "block") {
+            
+                        echo FAS::icon('ban',['class' => 'otkaz-zayavka','title'=>'Наказан блоком'
+                            ]);  
+                     }
+            ?>
+                </p>
+            </div>
+        </div>
+    </li>
+</ul>
+
 <?php
     if (Users::findGroupById(Yii::$app->user->getId()) == 99) {
         $form = ActiveForm::begin([

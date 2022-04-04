@@ -16,7 +16,7 @@ use app\models\Params;
 use app\models\LastActiveActions;
 use rmrevin\yii\fontawesome\AssetBundle;
 
-AssetBundle::register($this);
+// AssetBundle::register($this);
 AppAsset::register($this);
 
 
@@ -186,9 +186,9 @@ $settings->loadSettings();
                     ]                                      
                     ],
 
-                   
-            ],
                 
+            ],
+              
             );
         } else {
             array_push($menuItems, ['label' => Yii::$app->user->identity->username, 'items' => [
@@ -206,6 +206,7 @@ $settings->loadSettings();
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav'],
         'items' => $menuItems,
+        
         
     ]);
 
@@ -232,7 +233,7 @@ $settings->loadSettings();
                     <div style="margin-top:15px">
                         <!--Rating Apeha-->
                         <a href="https://apeha.ru"><img width="88" border="0" height="31"
-                                src="https://kovcheg.apeha.ru/interface/counter.fpl/1"></a>
+                                src="https://kovcheg2.apeha.ru/interface/counter.fpl/1"></a>
                         <!--/counter code-->
                         <div style="display:none">
                             <!--Rating@Mail.ru COUNTEr-->

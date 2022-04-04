@@ -30,61 +30,102 @@ if ($model->action == "index" || $model->action == "deleteUser") {
         }
     }
 
-    $form = ActiveForm::begin([
+   
+    ?>
+<div class="main-block">
+    <div class="block-menu">
+        <ul class="list-group group-btn ">
+
+            <?php 
+    if (Users::findGroupById(Yii::$app->user->getId()) == 99) {
+        echo "  <li class=\"list-group-item\">";
+        echo Html::a('Настройки системы',['/site/settings'],
+            [   'class' => 'btn btn-primary',
+                'data'=> [
+                        'method'=>'post',
+                        'params'=>[ 
+                                    'Params[action]'=> 'view'    
+                                  ]
+                ],
+                 'title' => 'Настройки системы',
+            ]
+            );
+        echo "</li>";
+        echo "  <li class=\"list-group-item\">";
+        echo Html::a('Профессии чистоты',['/site/professions'],
+            [   'class' => 'btn btn-primary',
+                'data'=> [
+                        'method'=>'post',
+                        'params'=>[ 
+                                    'Params[action]'=> 'view'    
+                                  ]
+                ],
+                 'title' => 'Профессии чистоты',
+            ]
+            );
+        echo "</li>";
+    
+
+    } 
+    if (accessToCleanStat()) {
+        //Showing clean button
+        ?>
+            <li class="list-group-item">
+                <a class="btn btn-primary w-100" href="<?= Yii::$app->request->baseUrl ?>/logs/">Логи системы</a>
+            </li>
+            <li class="list-group-item">
+                <a class="btn btn-primary w-100" href="<?= Yii::$app->request->baseUrl ?>/cleaning/">Подсчёт
+                    проверок</a>
+            </li>
+            <?php
+    }
+?>
+        </ul>
+    </div>
+    <div class="block-right mb-3">
+        <?php  $form = ActiveForm::begin([
         'method' => 'get',
         'action' => Url::to(['site/superadmin']),
         'id' => 'login-form',
         'layout' => 'horizontal',
         'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
+            'template' => "{label}\n<div class=\"\">{input}</div>\n<div class=\"\">{error}</div>",
             'labelOptions' => ['class' => 'col-lg-1 control-label'],
         ],
     ]);
     //$model->action = 'userSearch';
     echo Html::hiddenInput('action', 'userSearch');
     ?>
-<div class="form-group field-superadmin-username">
-    <?= Html::label('Ник', 'searchField', ['class' => 'col-lg-1 control-label']) ?>
-    <div class="col-lg-3"><?= Html::textInput('username', null, ['class' => 'form-control', 'id' => 'searchField']) ?>
+        <div class="input-group mb-3">
+            <?= Html::textInput('username', null, [
+                 'class' => 'form-control',
+                 'id' => 'searchField',
+                 'placeholder'=> 'Введите Ник',
+                 'aria-label'=>'Ник',
+                 'aria-describedby'=>'searchField',
+                 ]) ?>
+
+            <div class="input-group-append">
+                <?= Html::submitButton('<i class="fas fa-search"></i>', [
+                     'class' => 'btn btn-primary btn-search',
+                     'title'=>'Найти юзера'
+                    
+                    ], 
+                     ['id' => 'submit']) ?>
+            </div>
+        </div>
+
+
+        <?php ActiveForm::end(); 
+       
+   ?>
     </div>
-    <div class="col-lg-8">
-        <div class="help-block help-block-error "></div>
-    </div>
-</div>
-<div class="form-group">
-    <div class="col-lg-offset-1 col-lg-11">
-        <?= Html::submitButton('Найти юзера', ['class' => 'btn btn-primary'], ['id' => 'submit']) ?>
-    </div>
-</div>
-<?php ActiveForm::end(); ?>
-<hr>
-<?php
-    echo "<br><div class=\"col-lg-offset-0 col-lg-11\"  style=\"padding: 0\">";
-    if (Users::findGroupById(Yii::$app->user->getId()) == 99) {
-        echo Html::beginForm(['/site/settings'], 'post');
-        echo Html::hiddenInput('Params[action]', 'view');
-        echo Html::submitButton(
-            'Настройки сиcтемы', ['class' => 'btn btn-primary']
-        );
-        echo Html::endForm();
-    }
-    if (accessToCleanStat()) {
-        //Showing clean button
-        ?>
-<br>
-<div class="col-lg-offset-0 col-lg-11" style="padding: 0">
-    <a class="btn btn-primary" href="<?= Yii::$app->request->baseUrl ?>/logs/">Логи системы</a>
-</div>
-<br><br><br><br><br><br>
-<div class="col-lg-offset-0 col-lg-11" style="padding: 0">
-    <a class="btn btn-primary" href="<?= Yii::$app->request->baseUrl ?>/cleaning/">Подсчёт проверок</a>
 </div>
 <?php
-    }
-    echo "<br><br><br>";
-    echo "</div><hr>";
 }
+
 if ($model->action == 'userSearch') {
+    echo "<div class=\"main-block\">";
     if (strlen($model->userName) < 1) {
         $model->userName = "_";
     }
@@ -92,31 +133,115 @@ if ($model->action == 'userSearch') {
     $this->params['breadcrumbs'][] = ['label' => 'Админка', 'url' => ['superadmin']];
     $this->params['breadcrumbs'][] = $this->title;
     if ($model->users) {
+        
+        // echo "<div class=\"block-menu\">Панель меню </div>";
+        ?>
+<div class="block-menu sticky-block-menu">
+    <ul class="list-group">
+        <?php 
+    if (Users::findGroupById(Yii::$app->user->getId()) == 99) {
+        echo "  <li class=\"list-group-item\">";
+        echo Html::a('Настройки системы',['/site/settings'],
+            [   'class' => 'btn btn-primary',
+                'data'=> [
+                        'method'=>'post',
+                        'params'=>[ 
+                                    'Params[action]'=> 'view'    
+                                  ]
+                ],
+                 'title' => 'Настройки системы',
+            ]
+            );
+        echo "</li>";
+        echo "  <li class=\"list-group-item\">";
+        echo Html::a('Профессии чистоты',['/site/professions'],
+            [   'class' => 'btn btn-primary',
+                'data'=> [
+                        'method'=>'post',
+                        'params'=>[ 
+                                    'Params[action]'=> 'view'    
+                                  ]
+                ],
+                 'title' => 'Профессии чистоты',
+            ]
+            );
+        echo "</li>";
+     
+
+    }  
+    if (accessToCleanStat()) {
+        //Showing clean button
+        ?>
+        <li class="list-group-item">
+            <a class="btn btn-primary w-100" href="<?= Yii::$app->request->baseUrl ?>/logs/">Логи системы</a>
+        </li>
+        <li class="list-group-item">
+            <a class="btn btn-primary w-100" href="<?= Yii::$app->request->baseUrl ?>/cleaning/">Подсчёт
+                проверок</a>
+        </li>
+        <?php
+    }
+?>
+    </ul>
+</div>
+<?php
+        echo "<div class=\"block-right\">";
+        
         echo "<b>Найдено пользователей: " . $model->searchCount . "</b><br>";
         echo LinkPager::widget(['pagination' => $model->pagination,
             'firstPageLabel' => '<<',
             'lastPageLabel' => '>>',
             'prevPageLabel' => '<',
             'nextPageLabel' => '>',]);
-        // echo "<div class=\"row card-desk\">";
+            
+      $form = ActiveForm::begin([
+        'method' => 'get',
+        'action' => Url::to(['site/superadmin']),
+        'id' => 'login-form',
+        'layout' => 'horizontal',
+        'fieldConfig' => [
+            'template' => "{label}\n<div class=\"\">{input}</div>\n<div class=\"\">{error}</div>",
+            'labelOptions' => ['class' => 'col-lg-1 control-label'],
+        ],
+    ]);
+    //$model->action = 'userSearch';
+    echo Html::hiddenInput('action', 'userSearch');
+    ?>
+<div class="input-group mb-3">
+    <?= Html::textInput('username', null, [
+                 'class' => 'form-control',
+                 'id' => 'searchField',
+                 'placeholder'=> 'Введите Ник',
+                 'aria-label'=>'Ник',
+                 'aria-describedby'=>'searchField',
+                 ]) ?>
+
+    <div class="input-group-append">
+        <?= Html::submitButton('Найти юзера', [
+                     'class' => 'btn btn-primary',
+                     ''
+                    
+                    ], 
+                     ['id' => 'submit']) ?>
+    </div>
+</div>
+
+
+<?php ActiveForm::end(); 
+       
+
         echo "<ul class=\"list-group list-group-flush mb-3\">";
         foreach ($model->users as $user) {
-            // echo "<div class=\"col-xl-3 col-md-4 col-sm-6 mb-3\">";
             
             echo "<li class=\"list-group-item list-user \">";
             echo "<div class=\"card card-user \">";
             echo "<div class=\"card-body  title-card-user p-2\">";
-            
-            //   echo"<div class=\"  \">";
-            //   echo"<h5 class=\"card-title  d-flex flex-column\">";
             echo"<h5 class=\"card-title mb-0\">";
-            //   echo "<div>";
             if ($user->groupId > 9) {
                 echo "<span class=\" text-danger pr-1\" style=\"font-size:16px;\" >Dr </span>";
             }
           
             echo "<a href=\"http://kovcheg2.apeha.ru/info.html?user=" . $user->apeha_id . "\" target=\"_blank\" class=\"link-user-info text-info  \">" . $user->username . "</a> ";
-            // echo "<div>";
              
             echo Html::a('<i class="fas fa-info-circle"></i>',['/site/userprofile'],
             [   'class' => ' btn-user-info mb-2',
@@ -131,7 +256,6 @@ if ($model->action == 'userSearch') {
             );
             
              echo "</h5>";
-            // echo"</div>";
             echo"<div class=\"btn-admin\">";
             
              if ($user->active == 0) {
@@ -141,7 +265,6 @@ if ($model->action == 'userSearch') {
                 echo "<span style=\"color:green;  \">СУДЬЯ</span>";
             }
            
-            // echo Html::endForm();
              if ($user->groupId == 1 && $user->active == 1) {
                 if (Users::findGroupById(Yii::$app->user->getId()) == 99) {
                     echo Html::a('<i class="fas fa-user-check make-user"></i> <i class="fas fa-arrow-right text-decoration-none"></i>  <i class="fas fa-dragon"></i>',['/site/superadmin'],
@@ -180,54 +303,26 @@ if ($model->action == 'userSearch') {
             }
             echo"</div>";
             echo "</div>";
-            // echo "</div>";
-            // echo "</div>";
             echo "</li>";
         }
-        // echo "</div>";
         echo "</ul>";
+      
         echo LinkPager::widget(['pagination' => $model->pagination,
             'firstPageLabel' => '<<',
             'lastPageLabel' => '>>',
             'prevPageLabel' => '<',
             'nextPageLabel' => '>',]);
+       
     } else {
         echo "Юзер <b>" . $model->userName . "</b> не найден";
     }
-    $form = ActiveForm::begin([
-        'method' => 'get',
-        'action' => Url::to(['site/superadmin']),
-        'id' => 'login-form',
-        'layout' => 'horizontal',
-        'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
-            'labelOptions' => ['class' => 'col-lg-1 control-label'],
-        ],
-    ]);
-    //$model->action = 'userSearch';
-    echo Html::hiddenInput('action', 'userSearch');
-    ?>
-<div class="form-group field-superadmin-username">
-    <?= Html::label('Ник', 'searchField', ['class' => 'col-lg-1 control-label']) ?>
-    <div class="col-lg-3"><?= Html::textInput('username', null, ['class' => 'form-control', 'id' => 'searchField']) ?>
-    </div>
-    <div class="col-lg-8">
-        <div class="help-block help-block-error "></div>
-    </div>
-</div>
-<div class="form-group">
-    <div class="col-lg-offset-1 col-lg-11">
-        <?= Html::submitButton('Найти юзера', ['class' => 'btn btn-primary'], ['id' => 'submit']) ?>
-    </div>
-</div>
-<?php
-    ActiveForm::end();
+        echo "</div>";
 }
 
 //We have an action
 
 
-function accessToCleanStat()
+function  accessToCleanStat()
 {
     $result = false;
     if (Users::findGroupById(Yii::$app->user->getId()) == 99) {

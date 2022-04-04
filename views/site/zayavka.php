@@ -6,6 +6,8 @@ use app\models\Zayavka;
 use app\models\Actions;
 use app\models\Params;
 use app\models\Users;
+use rmrevin\yii\fontawesome\FAR;
+use rmrevin\yii\fontawesome\FAS;
 use yii\helpers\Url;
 
 $height = "260px";
@@ -97,8 +99,10 @@ if ($model->userActive) {
 <div class="">
 
 </div>
-<center>
-    <table style="width:800px; border: 0px none; padding: 5px; background-color: <?= $settings->own_z_color ?>;
+<ul class="list-group list-group-flush mb-3">
+    <li class="list-group-item">
+
+        <div class="card application h-100 " style="background-color: <?= $settings->own_z_color ?>;
             <?php
             if ($model->activeZayavka->status == "new") {
                 echo "box-shadow: 0 0 15px  grey";
@@ -126,9 +130,13 @@ if ($model->userActive) {
             }
             ?>
                     ">
-        <tr style="height: 40px">
-            <td width="5%" style="padding: 5px;"><?php
-                        if (Users::findGroupById(Yii::$app->user->getId()) > 1) {
+
+
+            <div class=" card-header zayavka-head">
+                <p class="text-muted zayavka-id">
+                    <?php
+               
+                if (Users::findGroupById(Yii::$app->user->getId()) > 1) {
                             echo Html::a(
                                 '#' . $model->activeZayavka->id, Url::to([
                                 '/site/sitem', 'id' => $model->activeZayavka->id
@@ -138,102 +146,130 @@ if ($model->userActive) {
                             echo "#" . $model->activeZayavka->id;
                         }
                         ?>
-            </td>
-            <td width="25%" style="padding: 5px;"></td>
-            <td width="35%" style="padding: 5px;">Статус: <?= getStatus($model->activeZayavka->status) ?> </td>
-            <td align="right" width="35%" style="padding: 5px;">
-                Подана: <?= $model->activeZayavka->date_added ?></td>
-        </tr>
-        <tr>
-            <td colspan="2" style="padding: 5px;">
-                <?= $model->activeZayavka->type ?><br>
-            </td>
-            <td colspan="2" style="padding: 5px;">
-                <?php
+                </p>
+                <p class="text-muted text">Статус:
+
+                    <?php
+                    if ($model->activeZayavka->status == "new") {
+                          
+                        echo FAS::icon('plus-circle',['title'=>'Новая заявка']);
+                         }
+                    if ($model->activeZayavka->status == "cancelled") {
+                        echo FAR::icon('times-circle',
+                        ['class' => 'cancelled','title'=>'Отменена пользователем']);
+                         }
+                    if ($model->activeZayavka->status == "inprogress") {
+                        echo FAR::icon('hourglass',['class' => 'inprogress-zayavka','title'=>'проверяется'])->spin(20);  
+                           }
+                    if ($model->activeZayavka->status == "otkaz") {
+                        echo FAS::icon('ban',['class' => 'otkaz-zayavka','title'=>'Отказ']);  
+                        }
+                    if ($model->activeZayavka->status == "chist") {
+                        echo FAR::icon('check-circle',['class' => 'chist-zayavka', 'title'=>'чистота выдана']);  
+                     }
+                    if ($model->activeZayavka->status == "katorga") {
+                        echo FAS::icon('ban',['class' => 'otkaz-zayavka','title'=>'Наказан каторгой']);  
+                        }
+                    if ($model->activeZayavka->status == "block") {
+            
+                        echo FAS::icon('ban',['class' => 'otkaz-zayavka','title'=>'Наказан блоком'
+                            ]);  
+                     }
+            ?>
+                </p>
+                <p class="text-muted zayavka-time">
+                    <?php echo FAR::icon('clock');
+                      ?>
+                    <?= $model->activeZayavka->date_added ?>
+                </p>
+            </div>
+            <div class="card-body application-body ">
+
+                <div>
+                    <h5 class="card-title zayavka-title"> <?= $model->activeZayavka->type ?></h5>
+                    <div class="card-subtitle zayavka-subtitle  ">
+                        <?php
                         if (strlen($model->activeZayavka->city) > 0) {
                             echo "Город: " . $model->activeZayavka->city;
                         }
                         ?>
-                <!-- <span style="font-size: 12px; font-style: italic">(Рассматривается в:
-                    <?= $model->activeZayavka->proverka_city ?>)</span> -->
-            </td>
-        </tr>
-        <tr>
-            <td colspan="4" style="padding: 10px">
-                <?php
+                    </div>
+                </div>
+                <p class="card-text otmetka">
+                    <?php
                         if (Users::findGroupById(Yii::$app->user->getId()) > 1) {
                             echo getReadOnlyActions($model->activeZayavka->id);
                         } else {
                             echo getReadOnlyActionsWithAliases($model->activeZayavka->id);
                         }
                         ?>
-
-            </td>
-        </tr>
-        <?php
-                if ($model->activeZayavka->active === 1) {
-                    ?>
-        <tr>
-            <td colspan="4">
+                </p>
 
 
-                <?php
+            </div>
+
+            <div class="card-footer my-zayvka-footer ">
+                <div class="subfooter">
+                    <p class="text-muted text pr-5">
+                        <?php
+                                echo Html::a(
+                                FAR::icon('eye'), Url::to([
+                                    '/site/zlist', 'action' => 'show', 'zayavka' => $model->activeZayavka->id
+                                ]), [
+                                'style' => [
+                                        'color' => '#666',
+                                        'cursor' => 'pointer',
+                                        // 'display' => 'block',
+                                        'font-size' => '16px',
+                                        'font-weight' => 'bold',
+                                        'line-height' => 'normal',
+                                        'text-decoration' => 'underline',
+                                   ],
+                                'title' => 'Показать в топе проверок',
+                                
+
+                                ]
+                        );
+                        ?>
+                    </p>
+
+                </div>
+                <div class="btn-cancel">
+
+                    <?php
+                      if ($model->activeZayavka->active === 1) {
                             $form = ActiveForm::begin([
                                 'id' => 'login-form',
-                                'layout' => 'horizontal',
+                                // 'layout' => 'horizontal',
                                 'fieldConfig' => [
                                     'template' => "{label}{input}",
                                     'labelOptions' => ['class' => 'col-lg-1 control-label'],
                                 ],
                             ]);
                             ?>
-                <?php $model->action = 'cancelZayavka'; ?>
-                <?php $model->z_id = $model->activeZayavka->id; ?>
-                <?php $model->city = 0; ?>
-                <?php $model->type = 0; ?>
-                <?= $form->field($model, 'action')->hiddenInput()->label(false) ?>
-                <?= $form->field($model, 'city')->hiddenInput()->label(false) ?>
-                <?= $form->field($model, 'type')->hiddenInput()->label(false) ?>
-                <?= $form->field($model, 'z_id')->hiddenInput()->label(false) ?>
-                <div class="form-group">
-                    <div style="margin-left: 30px">
-                        <?= Html::submitButton('Отменить проверку по данной заявке', ['class' => 'btn btn-primary', 'name' => 'login-button', 'onclick' => 'return confirm("Отмена заявки безвозвратна. Вы уверены?")',], ['id' => 'submit']) ?>
+                    <?php $model->action = 'cancelZayavka'; ?>
+                    <?php $model->z_id = $model->activeZayavka->id; ?>
+                    <?php $model->city = 0; ?>
+                    <?php $model->type = 0; ?>
+                    <?= $form->field($model, 'action')->hiddenInput()->label(false) ?>
+                    <?= $form->field($model, 'city')->hiddenInput()->label(false) ?>
+                    <?= $form->field($model, 'type')->hiddenInput()->label(false) ?>
+                    <?= $form->field($model, 'z_id')->hiddenInput()->label(false) ?>
+                    <div class="form-group">
+                        <div style="margin-left: 30px">
+                            <?= Html::submitButton('Отменить проверку по данной заявке', ['class' => 'btn btn-primary', 'name' => 'login-button', 'onclick' => 'return confirm("Отмена заявки безвозвратна. Вы уверены?")',], ['id' => 'submit']) ?>
+                        </div>
                     </div>
-                </div>
-                <?php
+                    <?php
                             ActiveForm::end();
-                            ?>
-            </td>
-        </tr>
-        <?php
-                }
-                ?>
-        <tr>
-            <td colspan="4">
-                <?php
-                        echo Html::a(
-                            "Показать в топе проверок", Url::to([
-                            '/site/zlist', 'action' => 'show', 'zayavka' => $model->activeZayavka->id
-                        ]), [
-                                'style' => [
-                                    'color' => '#666',
-                                    'cursor' => 'pointer',
-                                    'display' => 'block',
-                                    'font-size' => '12px',
-                                    'font-weight' => 'bold',
-                                    'line-height' => 'normal',
-                                    'padding' => '10px',
-                                    'margin-top' => '-10px',
-                                    'text-decoration' => 'underline',
-                                    'word-wrap' => 'break-word'
-                                ]
-                            ]
-                        );
-                        ?>
-            </td>
-        </tr>
-    </table>
-</center>
+                        }?>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>
+
+
 
 <?php
     }

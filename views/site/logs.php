@@ -1,6 +1,7 @@
 <?php
 
 use app\models\Users;
+use yii\grid\GridView;
 use yii\helpers\Html;
 
 $this->title = 'Логи системы';
@@ -22,6 +23,8 @@ td {
     padding: 2px;
 }
 </style>
+
+
 <div class="card">
     <div class="card-header">
         <?php 
