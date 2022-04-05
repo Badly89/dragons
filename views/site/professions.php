@@ -19,7 +19,7 @@ $utesProfessions = $model->utesProfessions;
 ?>
 <div class="main-block">
 
-    <div class="block-right mb-3">
+    <div class="block-right mb-3 flex-grow-1">
         <div class="accordion" id="accordionProfs">
             <div class="card card-profs">
                 <div class="card-header  card-header-profs" id="headingUnited">
