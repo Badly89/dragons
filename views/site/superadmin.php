@@ -100,7 +100,7 @@ if ($model->action == "index" || $model->action == "deleteUser") {
             <?= Html::textInput('username', null, [
                  'class' => 'form-control',
                  'id' => 'searchField',
-                 'placeholder'=> 'Введите Ник',
+                 'placeholder'=> 'Введите Ник для поиска',
                  'aria-label'=>'Ник',
                  'aria-describedby'=>'searchField',
                  ]) ?>
@@ -185,16 +185,11 @@ if ($model->action == 'userSearch') {
     </ul>
 </div>
 <?php
-        echo "<div class=\"block-right\">";
+        echo "<div class=\"block-right flex-grow-1\">";
         
         echo "<b>Найдено пользователей: " . $model->searchCount . "</b><br>";
-        echo LinkPager::widget(['pagination' => $model->pagination,
-            'firstPageLabel' => '<<',
-            'lastPageLabel' => '>>',
-            'prevPageLabel' => '<',
-            'nextPageLabel' => '>',]);
-            
-      $form = ActiveForm::begin([
+
+        $form = ActiveForm::begin([
         'method' => 'get',
         'action' => Url::to(['site/superadmin']),
         'id' => 'login-form',
@@ -211,26 +206,32 @@ if ($model->action == 'userSearch') {
     <?= Html::textInput('username', null, [
                  'class' => 'form-control',
                  'id' => 'searchField',
-                 'placeholder'=> 'Введите Ник',
+                 'placeholder'=> 'Введите Ник для поиска',
                  'aria-label'=>'Ник',
                  'aria-describedby'=>'searchField',
                  ]) ?>
 
     <div class="input-group-append">
-        <?= Html::submitButton('Найти юзера', [
-                     'class' => 'btn btn-primary',
-                     ''
+        <?= Html::submitButton('<i class="fas fa-search"></i>', [
+                     'class' => 'btn btn-primary btn-search',
+                     'title'=>'Найти юзера'
                     
                     ], 
                      ['id' => 'submit']) ?>
     </div>
 </div>
+<?php
+echo LinkPager::widget(['pagination' => $model->pagination,
+'firstPageLabel' => '<<', 'lastPageLabel'=> '>>',
+    'prevPageLabel' => '<', 'nextPageLabel'=> '>',]);
 
 
-<?php ActiveForm::end(); 
+
+
+         ActiveForm::end(); 
        
 
-        echo "<ul class=\"list-group list-group-flush mb-3\">";
+        echo "<ul class=\"list-group list-group-flush mb-3 flex-grow-1\">";
         foreach ($model->users as $user) {
             
             echo "<li class=\"list-group-item list-user \">";

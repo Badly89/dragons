@@ -117,7 +117,7 @@ if (Zayavka::findZayavkaById($model->id)) {
                 <p class="text-muted text pr-5">
                     <?php
                         echo Html::a(
-                                FAR::icon('eye-slash'), Url::to([
+                                FAR::icon('eye'), Url::to([
                                     '/site/zlist', 'action' => 'show', 'zayavka' => $zayavka->id
                                 ]), [
                             'style' => [

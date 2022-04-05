@@ -46,7 +46,7 @@ $settings->loadSettings();
                     'brandLabel' => 'Орден Драконов',
                     'brandUrl' => Yii::$app->homeUrl,
                     'options' => [
-                    'class' => 'navbar-expand-lg  navbar-dark bg-dark  top-menu',
+                    'class' => 'navbar-expand-lg  navbar-dark bg-dark  sticky-top ',
                     ],
                 ]);
     $menuItems = [];
