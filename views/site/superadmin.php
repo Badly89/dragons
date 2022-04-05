@@ -286,7 +286,7 @@ echo LinkPager::widget(['pagination' => $model->pagination,
             } else {
                 if ($user->groupId > 9) {
                     if (Users::findGroupById(Yii::$app->user->getId()) == 99) {
-                        echo Html::a('<i class="fas fa-dragon btn-make-dragon"></i> <i class="fas fa-arrow-right text-decoration-none"></i> <i class="fas fa-user-check"></i>',['/site/superadmin'],
+                        echo Html::a('<i class="fas fa-dragon btn-make-dragon text-decoration-none"></i> <i class="fas fa-arrow-right text-decoration-none text-decoration-none"></i> <i class="fas fa-user-check"></i>',['/site/superadmin'],
                         [  'class' => 'make-user',
                         'data'=> [
                         'method'=>'post',
