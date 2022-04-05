@@ -268,7 +268,7 @@ echo LinkPager::widget(['pagination' => $model->pagination,
            
              if ($user->groupId == 1 && $user->active == 1) {
                 if (Users::findGroupById(Yii::$app->user->getId()) == 99) {
-                    echo Html::a('<i class="fas fa-user-check make-user"></i> <i class="fas fa-arrow-right text-decoration-none"></i>  <i class="fas fa-dragon"></i>',['/site/superadmin'],
+                    echo Html::a('<i class="fas fa-user-check make-user text-decoration-none"></i> <i class="fas fa-arrow-right text-decoration-none"></i>  <i class="fas fa-dragon text-decoration-none"></i>',['/site/superadmin'],
                     [  'class' => 'btn-make-dragon',
                         'data'=> [
                         'method'=>'post',
